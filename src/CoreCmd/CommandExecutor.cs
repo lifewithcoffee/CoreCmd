@@ -42,6 +42,12 @@ namespace CoreCmd.Commands
 
                     object[] paramObjs = new object[parameters.Length];
                     ParameterInfo[] paramInfo = commandType.GetMethod(method).GetParameters();
+
+                    if (paramInfo.Length != parameters.Length)
+                    {
+                        throw new Exception(string.Format("Incorrect argument number, command {0}.{1} can accept {2} argument(s).", command, method, paramInfo.Length));
+                    }
+
                     for(int i=0; i< paramInfo.Length; i++)
                     {
                         switch (Type.GetTypeCode(paramInfo[i].ParameterType))
