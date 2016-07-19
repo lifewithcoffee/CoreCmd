@@ -39,7 +39,33 @@ namespace CoreCmd.Commands
                     string fullTypeWithNamespace = string.Format("{0}.Commands.{1}", typeof(Program).Namespace, command);
                     Type commandType = Type.GetType(fullTypeWithNamespace);
                     var ins = Activator.CreateInstance(commandType);
-                    commandType.GetMethod(method).Invoke(ins, new object[] { "hello2", 134 });
+
+                    object[] paramObjs = new object[parameters.Length];
+                    ParameterInfo[] paramInfo = commandType.GetMethod(method).GetParameters();
+                    for(int i=0; i< paramInfo.Length; i++)
+                    {
+                        switch (Type.GetTypeCode(paramInfo[i].ParameterType))
+                        {
+                            case TypeCode.Byte:
+                            case TypeCode.SByte:
+                            case TypeCode.UInt16:
+                            case TypeCode.UInt32:
+                            case TypeCode.UInt64:
+                            case TypeCode.Int16:
+                            case TypeCode.Int32:
+                            case TypeCode.Int64:
+                            case TypeCode.Decimal:
+                            case TypeCode.Double:
+                            case TypeCode.Single:
+                                paramObjs[i] = int.Parse(parameters[i]);
+                                break;
+                            default:
+                                paramObjs[i] = parameters[i];
+                                break;
+                        }
+                    }
+
+                    commandType.GetMethod(method).Invoke(ins, paramObjs);
                 }
                 else
                 {
