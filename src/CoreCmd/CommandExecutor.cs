@@ -73,24 +73,38 @@ namespace CoreCmd
 
                 for(int i=0; i< paramInfo.Length; i++)
                 {
-                    switch (Type.GetTypeCode(paramInfo[i].ParameterType))
+                    Type type = paramInfo[i].ParameterType;
+                    if (type.Equals(typeof(int))) 
+                    { 
+                        paramObjs[i] = int.Parse(parameters[i]);
+                    }
+                    else if (type.Equals(typeof(double)))
                     {
-                        case TypeCode.Byte:
-                        case TypeCode.SByte:
-                        case TypeCode.UInt16:
-                        case TypeCode.UInt32:
-                        case TypeCode.UInt64:
-                        case TypeCode.Int16:
-                        case TypeCode.Int32:
-                        case TypeCode.Int64:
-                        case TypeCode.Decimal:
-                        case TypeCode.Double:
-                        case TypeCode.Single:
-                            paramObjs[i] = int.Parse(parameters[i]);
-                            break;
-                        default:
-                            paramObjs[i] = parameters[i];
-                            break;
+                        paramObjs[i] = double.Parse(parameters[i]);
+                    }
+                    else if (type.Equals(typeof(uint)))
+                    {
+                        paramObjs[i] = uint.Parse(parameters[i]);
+                    }
+                    else if (type.Equals(typeof(short)))
+                    {
+                        paramObjs[i] = short.Parse(parameters[i]);
+                    }
+                    else if (type.Equals(typeof(ushort)))
+                    {
+                        paramObjs[i] = ushort.Parse(parameters[i]);
+                    }
+                    else if (type.Equals(typeof(decimal)))
+                    {
+                        paramObjs[i] = decimal.Parse(parameters[i]);
+                    }
+                    else if (type.Equals(typeof(float)))
+                    {
+                        paramObjs[i] = float.Parse(parameters[i]);
+                    }
+                    else
+                    {
+                        paramObjs[i] = parameters[i];
                     }
                 }
 
