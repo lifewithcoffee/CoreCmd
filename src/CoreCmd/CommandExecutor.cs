@@ -36,10 +36,10 @@ namespace CoreCmd
             }
         }
 
-        private bool FindCommandOf(string v)
+        private bool FindCommandOf(string command)
         {
             const string defaultNamespace = "CoreCmd.Commands";
-            Type targetType = Assembly.GetEntryAssembly().GetTypes().Where(t => t.Namespace.Equals(defaultNamespace) && t.Name.Equals(v)).FirstOrDefault();
+            Type targetType = Assembly.GetEntryAssembly().GetTypes().Where(t => t.Namespace.Equals(defaultNamespace) && t.Name.Equals(command)).FirstOrDefault();
             if(targetType != null)
             {
                 return true;
@@ -48,11 +48,6 @@ namespace CoreCmd
             {
                 return false;
             }
-        }
-
-        private bool ValidateArguments(string[] args)
-        {
-            return args.Count() > 0;
         }
 
         private void ExecuteCommand(string command, string method, string[] parameters)
