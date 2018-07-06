@@ -54,7 +54,7 @@ namespace CoreCmd
         {
             try
             {
-                string fullTypeWithNamespace = string.Format("{0}.Commands.{1}", typeof(Program).Namespace, command);
+                string fullTypeWithNamespace = string.Format("{0}.Commands.{1}", this.GetType().Namespace, command);
                 Type commandType = Type.GetType(fullTypeWithNamespace);
                 var ins = Activator.CreateInstance(commandType);
 
