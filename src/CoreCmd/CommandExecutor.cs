@@ -8,27 +8,30 @@ namespace CoreCmd
 {
     public class CommandExecutor
     {
-        internal void Execute(string[] args)
+        public void Execute(string[] args)
         {
             if (args.Length > 0)
             {
-                string command = "DefaultCommand";
+                string command = args[0];
                 string method;
                 string[] parameters;
 
-                if (FindCommandOf(args[0]))
+                Type targetType = Assembly.GetEntryAssembly().GetTypes().SingleOrDefault(t => t.Name.Equals(command));
+                //Type targetType2 = Assembly.Load(targetAssemblyName).GetTypes().SingleOrDefault(t => t.Name.Equals(command));
+                //Type targetType3 = Assembly.GetExecutingAssembly().GetTypes().SingleOrDefault(t => t.Name.Equals(command));
+                if (targetType != null)
                 {
-                    command = args[0];
                     method = args[1];
                     parameters = args.Skip(2).ToArray();
                 }
                 else
                 {
+                    command = "DefaultCommand";
                     method = args[0];
                     parameters = args.Skip(1).ToArray();
                 }
 
-                ExecuteCommand(command, method, parameters);
+                ExecuteCommand(targetType, method, parameters);
             }
             else
             {
@@ -36,26 +39,11 @@ namespace CoreCmd
             }
         }
 
-        private bool FindCommandOf(string command)
-        {
-            const string defaultNamespace = "CoreCmd.Commands";
-            Type targetType = Assembly.GetEntryAssembly().GetTypes().Where(t => t.Namespace.Equals(defaultNamespace) && t.Name.Equals(command)).FirstOrDefault();
-            if(targetType != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private void ExecuteCommand(string command, string method, string[] parameters)
+        private void ExecuteCommand(Type commandType, string method, string[] parameters)
         {
             try
             {
-                string fullTypeWithNamespace = string.Format("{0}.Commands.{1}", this.GetType().Namespace, command);
-                Type commandType = Type.GetType(fullTypeWithNamespace);
+
                 var ins = Activator.CreateInstance(commandType);
 
                 object[] paramObjs = new object[parameters.Length];
@@ -63,7 +51,7 @@ namespace CoreCmd
 
                 if (paramInfo.Length != parameters.Length)
                 {
-                    throw new Exception(string.Format("Incorrect argument number, command {0}.{1} can accept {2} argument(s).", command, method, paramInfo.Length));
+                    throw new Exception(string.Format("Incorrect argument number, command {0}.{1} can accept {2} argument(s).", commandType.Name, method, paramInfo.Length));
                 }
 
                 for(int i=0; i< paramInfo.Length; i++)

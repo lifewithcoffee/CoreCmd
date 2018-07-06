@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ExperimentalConsoleApp": {
+      "commandName": "Project",
+      "commandLineArgs": "Greeting Hello it's fun"
+    }
+  }
+}
