@@ -16,9 +16,8 @@ namespace CoreCmd
                 string method;
                 string[] parameters;
 
+                
                 Type targetType = Assembly.GetEntryAssembly().GetTypes().SingleOrDefault(t => t.Name.Equals(command));
-                //Type targetType2 = Assembly.Load(targetAssemblyName).GetTypes().SingleOrDefault(t => t.Name.Equals(command));
-                //Type targetType3 = Assembly.GetExecutingAssembly().GetTypes().SingleOrDefault(t => t.Name.Equals(command));
                 if (targetType != null)
                 {
                     method = args[1];

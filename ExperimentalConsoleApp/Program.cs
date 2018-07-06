@@ -10,7 +10,6 @@ namespace ExperimentalConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Experimantal console app start");
             new CommandExecutor().Execute(args);
         }
     }
