@@ -42,17 +42,19 @@ namespace CoreCmd
         {
             try
             {
-
-                var ins = Activator.CreateInstance(commandType);
-
-                object[] paramObjs = new object[parameters.Length];
-                ParameterInfo[] paramInfo = commandType.GetMethod(method).GetParameters();
+                var targetMethod = commandType.GetMethods().SingleOrDefault(m => m.Name.ToLower().Equals(method.ToLower()));
+                if(targetMethod == null)
+                {
+                    throw new Exception($"Can't find method: {method}");
+                }
+                ParameterInfo[] paramInfo = targetMethod.GetParameters();
 
                 if (paramInfo.Length != parameters.Length)
                 {
                     throw new Exception(string.Format("Incorrect argument number, command {0}.{1} can accept {2} argument(s).", commandType.Name, method, paramInfo.Length));
                 }
 
+                object[] paramObjs = new object[parameters.Length];
                 for(int i=0; i< paramInfo.Length; i++)
                 {
                     Type type = paramInfo[i].ParameterType;
@@ -90,7 +92,8 @@ namespace CoreCmd
                     }
                 }
 
-                commandType.GetMethod(method).Invoke(ins, paramObjs);
+                var ins = Activator.CreateInstance(commandType);
+                targetMethod.Invoke(ins, paramObjs);
             }
             catch (Exception ex)
             {
