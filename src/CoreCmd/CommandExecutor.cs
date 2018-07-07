@@ -12,12 +12,12 @@ namespace CoreCmd
         {
             if (args.Length > 0)
             {
-                string command = args[0];
+                string command = $"{args[0]}Command".ToLower();
                 string method;
                 string[] parameters;
 
                 
-                Type targetType = Assembly.GetEntryAssembly().GetTypes().SingleOrDefault(t => t.Name.Equals(command));
+                Type targetType = Assembly.GetEntryAssembly().GetTypes().SingleOrDefault(t => t.Name.ToLower().Equals(command));
                 if (targetType != null)
                 {
                     method = args[1];
