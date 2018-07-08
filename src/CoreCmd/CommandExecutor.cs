@@ -17,8 +17,9 @@ namespace CoreCmd
                 string method;
                 string[] parameters;
 
-                
-                Type targetType = Assembly.GetEntryAssembly().GetTypes().SingleOrDefault(t => LowerKebabCase(t.Name).Equals(command));
+                var allTypes = Assembly.GetEntryAssembly().GetTypes();
+
+                Type targetType = allTypes.SingleOrDefault(t => LowerKebabCase(t.Name).Equals(command));
                 if (targetType != null)
                 {
                     method = args[1];
@@ -26,7 +27,7 @@ namespace CoreCmd
                 }
                 else
                 {
-                    command = "DefaultCommand";
+                    targetType = allTypes.SingleOrDefault(t => t.Name.Equals("DefaultCommand"));
                     method = args[0];
                     parameters = args.Skip(1).ToArray();
                 }
@@ -48,6 +49,11 @@ namespace CoreCmd
         {
             try
             {
+                if(commandType == null)
+                {
+                    throw new Exception("Can't find the specified command object.");
+                }
+
                 string lowerCaseMethod = method.ToLower();
                 var targetMethod = commandType.GetMethods().SingleOrDefault(m => LowerKebabCase(m.Name).Equals(lowerCaseMethod));
                 if(targetMethod == null)
