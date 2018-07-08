@@ -11,19 +11,27 @@ namespace CoreCmd
     {
         public void Execute(string[] args)
         {
+            Console.WriteLine($"DBG: arg number = {args.Length}");
             if (args.Length > 0)
             {
                 string command = $"{args[0]}-command".ToLower();
                 string method;
-                string[] parameters;
+                string[] parameters = new string[] { };
 
                 var allTypes = Assembly.GetEntryAssembly().GetTypes();
 
                 Type targetType = allTypes.SingleOrDefault(t => LowerKebabCase(t.Name).Equals(command));
                 if (targetType != null)
                 {
-                    method = args[1];
-                    parameters = args.Skip(2).ToArray();
+                    if(args.Length > 1)
+                    {
+                        method = args[1];
+                        parameters = args.Skip(2).ToArray();
+                    }
+                    else
+                    {
+                        method = "default-method";
+                    }
                 }
                 else
                 {
