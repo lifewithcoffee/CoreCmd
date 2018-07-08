@@ -11,16 +11,14 @@ namespace CoreCmd
     {
         public void Execute(string[] args)
         {
-            Console.WriteLine($"DBG: arg number = {args.Length}");
+            var allClassTypes = GetAllClassTypes();
             if (args.Length > 0)
             {
                 string command = $"{args[0]}-command".ToLower();
                 string method;
                 string[] parameters = new string[] { };
 
-                var allTypes = Assembly.GetEntryAssembly().GetTypes();
-
-                Type targetType = allTypes.SingleOrDefault(t => LowerKebabCase(t.Name).Equals(command));
+                Type targetType = allClassTypes.SingleOrDefault(t => LowerKebabCase(t.Name).Equals(command));
                 if (targetType != null)
                 {
                     if(args.Length > 1)
@@ -35,7 +33,7 @@ namespace CoreCmd
                 }
                 else
                 {
-                    targetType = allTypes.SingleOrDefault(t => t.Name.Equals("DefaultCommand"));
+                    targetType = allClassTypes.SingleOrDefault(t => t.Name.Equals("DefaultCommand"));
                     method = args[0];
                     parameters = args.Skip(1).ToArray();
                 }
@@ -44,7 +42,22 @@ namespace CoreCmd
             }
             else
             {
-                Console.WriteLine("Subcommand is missing, please specify subcommands"); // [TODO]$0329: need to print all available subcommands here
+                Console.WriteLine("Subcommand is missing, please specify subcommands:"); // [TODO]$0329: need to print all available subcommands here
+                ListAllSubCommands(allClassTypes);
+            }
+        }
+
+        private IEnumerable<Type> GetAllClassTypes()
+        {
+            return Assembly.GetEntryAssembly().GetTypes().Where(t => t.IsClass);
+        }
+
+        private void ListAllSubCommands(IEnumerable<Type> classTypes)
+        {
+            var allCommandTypes = classTypes.Where(t => t.Name.EndsWith("Command"));
+            foreach(var cmd in allCommandTypes)
+            {
+                Console.WriteLine(LowerKebabCase(cmd.Name.Substring(0,cmd.Name.Length - "Command".Length)));
             }
         }
 
@@ -59,7 +72,7 @@ namespace CoreCmd
             {
                 if(commandType == null)
                 {
-                    throw new Exception("Can't find the specified command object.");
+                    throw new Exception("Command type is null");
                 }
 
                 string lowerCaseMethod = method.ToLower();
@@ -72,7 +85,8 @@ namespace CoreCmd
 
                 if (paramInfo.Length != parameters.Length)
                 {
-                    throw new Exception(string.Format("Incorrect argument number, command {0}.{1} can accept {2} argument(s).", commandType.Name, method, paramInfo.Length));
+                    Console.WriteLine(string.Format("Incorrect argument number, command {0}.{1} can accept {2} argument(s).", commandType.Name, method, paramInfo.Length));
+                    return;
                 }
 
                 object[] paramObjs = new object[parameters.Length];
