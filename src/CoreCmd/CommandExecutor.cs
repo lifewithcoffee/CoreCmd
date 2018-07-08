@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CoreCmd
@@ -12,12 +13,12 @@ namespace CoreCmd
         {
             if (args.Length > 0)
             {
-                string command = $"{args[0]}Command".ToLower();
+                string command = $"{args[0]}-command".ToLower();
                 string method;
                 string[] parameters;
 
                 
-                Type targetType = Assembly.GetEntryAssembly().GetTypes().SingleOrDefault(t => t.Name.ToLower().Equals(command));
+                Type targetType = Assembly.GetEntryAssembly().GetTypes().SingleOrDefault(t => LowerKebabCase(t.Name).Equals(command));
                 if (targetType != null)
                 {
                     method = args[1];
@@ -38,11 +39,17 @@ namespace CoreCmd
             }
         }
 
+        private string LowerKebabCase(string inputStr)
+        {
+            return Regex.Replace(inputStr, @"([a-z])([A-Z])", "$1-$2").ToLower();
+        }
+
         private void ExecuteCommand(Type commandType, string method, string[] parameters)
         {
             try
             {
-                var targetMethod = commandType.GetMethods().SingleOrDefault(m => m.Name.ToLower().Equals(method.ToLower()));
+                string lowerCaseMethod = method.ToLower();
+                var targetMethod = commandType.GetMethods().SingleOrDefault(m => LowerKebabCase(m.Name).Equals(lowerCaseMethod));
                 if(targetMethod == null)
                 {
                     throw new Exception($"Can't find method: {method}");
