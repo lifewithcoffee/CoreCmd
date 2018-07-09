@@ -42,7 +42,7 @@ namespace CoreCmd
             }
             else
             {
-                Console.WriteLine("Subcommand is missing, please specify subcommands:"); // [TODO]$0329: need to print all available subcommands here
+                Console.WriteLine("Subcommand is missing, please specify subcommands:");
                 ListAllSubCommands(allClassTypes);
             }
         }
