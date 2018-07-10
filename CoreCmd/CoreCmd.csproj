@@ -5,12 +5,18 @@
     <AssemblyName>CoreCmd</AssemblyName>
     <OutputType>Library</OutputType>
     <PackageId>CoreCmd</PackageId>
-    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <ApplicationIcon />
     <StartupObject />
+    <Authors>Rongcheng Li</Authors>
+    <Description>A convention based command line automatic parser.</Description>
+    <PackageProjectUrl>https://github.com/li-rongcheng/CoreCmd</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/li-rongcheng/CoreCmd/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageTags>cli;commandline;command-line;parser</PackageTags>
+    <Version>0.1.0.3</Version>
+    <RepositoryUrl>https://github.com/li-rongcheng/CoreCmd.git</RepositoryUrl>
   </PropertyGroup>
 
 </Project>

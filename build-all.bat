@@ -1,0 +1,4 @@
+dotnet pack CoreCmd\CoreCmd.csproj -c Release
+dotnet add ExperimentalConsoleApp\ExperimentalConsoleApp.csproj package corecmd
+dotnet restore ExperimentalConsoleApp
+dotnet build ExperimentalConsoleApp
