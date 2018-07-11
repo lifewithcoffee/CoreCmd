@@ -38,37 +38,21 @@ namespace CoreCmd
                 {
                     Type type = paramInfo[i].ParameterType;
                     if (type.Equals(typeof(int)))
-                    {
                         paramObjs[i] = int.Parse(this.Parameters[i]);
-                    }
                     else if (type.Equals(typeof(double)))
-                    {
                         paramObjs[i] = double.Parse(this.Parameters[i]);
-                    }
                     else if (type.Equals(typeof(uint)))
-                    {
                         paramObjs[i] = uint.Parse(this.Parameters[i]);
-                    }
                     else if (type.Equals(typeof(short)))
-                    {
                         paramObjs[i] = short.Parse(this.Parameters[i]);
-                    }
                     else if (type.Equals(typeof(ushort)))
-                    {
                         paramObjs[i] = ushort.Parse(this.Parameters[i]);
-                    }
                     else if (type.Equals(typeof(decimal)))
-                    {
                         paramObjs[i] = decimal.Parse(this.Parameters[i]);
-                    }
                     else if (type.Equals(typeof(float)))
-                    {
                         paramObjs[i] = float.Parse(this.Parameters[i]);
-                    }
                     else
-                    {
                         paramObjs[i] = this.Parameters[i];
-                    }
                 }
 
                 var ins = Activator.CreateInstance(this.CommandType);
