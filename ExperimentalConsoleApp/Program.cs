@@ -10,7 +10,6 @@ namespace ExperimentalConsoleApp
     {
         static void Main(string[] args)
         {
-            new GreetingCommand().SayHello();
             new CommandExecutor().Execute(args);
         }
     }

@@ -27,19 +27,14 @@ namespace CoreCmd
 
         private List<Type> GetCommandClassTypesFromAssembly(Assembly assembly, string commandPostfix)
         {
+            var result = new List<Type>();
+
             if (assembly != null)
-            {
-                List<Type> types = assembly.GetTypes().Where(t => t.IsClass && t.Name.ToLower().EndsWith(commandPostfix)).ToList();
-                if (types.Count() < 1)
-                    return null;
-                else
-                    return types;
-            }
+                result = assembly.GetTypes().Where(t => t.IsClass && t.Name.ToLower().EndsWith(commandPostfix)).ToList();
             else
-            {
                 Console.WriteLine("Assembly is not specified");
-                return null;
-            }
+
+            return result;
         }
 
         private List<Type> GetCommandClassTypesFromAssembly(string dll, string commandPostfix)
@@ -50,11 +45,11 @@ namespace CoreCmd
         public IEnumerable<Type> GetCommandClassTypes(string commandPostfix = "command", string assemblyPrefix = "command")
         {
             var allTypeList = new List<List<Type>>();
-            allTypeList.Append(GetCommandClassTypesFromAssembly(Assembly.GetEntryAssembly(), commandPostfix));
+            allTypeList.Add(GetCommandClassTypesFromAssembly(Assembly.GetEntryAssembly(), commandPostfix));
 
             var dlls = this.GetCommandAssembly(Directory.GetCurrentDirectory(), assemblyPrefix);
             foreach (var dll in dlls)
-                allTypeList.Append(GetCommandClassTypesFromAssembly(dll, commandPostfix));
+                allTypeList.Add(GetCommandClassTypesFromAssembly(dll, commandPostfix));
 
             return allTypeList.SelectMany(r => r);
         }
