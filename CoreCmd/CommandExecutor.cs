@@ -1,139 +1,75 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CoreCmd
 {
     public class CommandExecutor
     {
-        public void Execute(string[] args)
+        ICommandFinder _commandFinder = new CommandFinder();
+
+        private TargetCommandObject GetTargetCommandObject(IEnumerable<Type> targetTypes, string[] args)
         {
-            var allClassTypes = GetAllClassTypes();
+            TargetCommandObject result = null;
             if (args.Length > 0)
             {
+                result = new TargetCommandObject();
                 string command = $"{args[0]}-command".ToLower();
-                string method;
-                string[] parameters = new string[] { };
 
-                Type targetType = allClassTypes.SingleOrDefault(t => LowerKebabCase(t.Name).Equals(command));
+                Type targetType = targetTypes.SingleOrDefault(t => Utils.LowerKebabCase(t.Name).Equals(command));
                 if (targetType != null)
                 {
-                    if(args.Length > 1)
+                    result.CommandType = targetType;
+                    if (args.Length > 1)
                     {
-                        method = args[1];
-                        parameters = args.Skip(2).ToArray();
+                        result.MethodName = args[1];
+                        result.Parameters = args.Skip(2).ToArray();
                     }
                     else
-                    {
-                        method = "default-method";
-                    }
+                        result.MethodName = "default-method";
                 }
                 else
                 {
-                    targetType = allClassTypes.SingleOrDefault(t => t.Name.Equals("DefaultCommand"));
-                    method = args[0];
-                    parameters = args.Skip(1).ToArray();
+                    result.CommandType = targetTypes.SingleOrDefault(t => t.Name.Equals("DefaultCommand"));
+                    result.MethodName = args[0];
+                    result.Parameters = args.Skip(1).ToArray();
                 }
-
-                ExecuteCommand(targetType, method, parameters);
             }
-            else
-            {
-                Console.WriteLine("Subcommand is missing, please specify subcommands:");
-                ListAllSubCommands(allClassTypes);
-            }
+            return result;
         }
 
-        private IEnumerable<Type> GetAllClassTypes()
-        {
-            return Assembly.GetEntryAssembly().GetTypes().Where(t => t.IsClass);
-        }
-
-        private void ListAllSubCommands(IEnumerable<Type> classTypes)
-        {
-            var allCommandTypes = classTypes.Where(t => t.Name.EndsWith("Command"));
-            foreach(var cmd in allCommandTypes)
-            {
-                Console.WriteLine(LowerKebabCase(cmd.Name.Substring(0,cmd.Name.Length - "Command".Length)));
-            }
-        }
-
-        private string LowerKebabCase(string inputStr)
-        {
-            return Regex.Replace(inputStr, @"([a-z])([A-Z])", "$1-$2").ToLower();
-        }
-
-        private void ExecuteCommand(Type commandType, string method, string[] parameters)
+        public void Execute(string[] args)
         {
             try
             {
-                if(commandType == null)
+                const string commandPostfix = "command";
+                var allClassTypes = _commandFinder.GetCommandClassTypes(commandPostfix);
+                if (args.Length > 0)
                 {
-                    throw new Exception("Command type is null");
-                }
+                    var targetCommand = this.GetTargetCommandObject(allClassTypes, args);
 
-                string lowerCaseMethod = method.ToLower();
-                var targetMethod = commandType.GetMethods().SingleOrDefault(m => LowerKebabCase(m.Name).Equals(lowerCaseMethod));
-                if(targetMethod == null)
-                {
-                    throw new Exception($"Can't find method: {method}");
-                }
-                ParameterInfo[] paramInfo = targetMethod.GetParameters();
-
-                if (paramInfo.Length != parameters.Length)
-                {
-                    Console.WriteLine(string.Format("Incorrect argument number, command {0}.{1} can accept {2} argument(s).", commandType.Name, method, paramInfo.Length));
-                    return;
-                }
-
-                object[] paramObjs = new object[parameters.Length];
-                for(int i=0; i< paramInfo.Length; i++)
-                {
-                    Type type = paramInfo[i].ParameterType;
-                    if (type.Equals(typeof(int))) 
-                    { 
-                        paramObjs[i] = int.Parse(parameters[i]);
-                    }
-                    else if (type.Equals(typeof(double)))
-                    {
-                        paramObjs[i] = double.Parse(parameters[i]);
-                    }
-                    else if (type.Equals(typeof(uint)))
-                    {
-                        paramObjs[i] = uint.Parse(parameters[i]);
-                    }
-                    else if (type.Equals(typeof(short)))
-                    {
-                        paramObjs[i] = short.Parse(parameters[i]);
-                    }
-                    else if (type.Equals(typeof(ushort)))
-                    {
-                        paramObjs[i] = ushort.Parse(parameters[i]);
-                    }
-                    else if (type.Equals(typeof(decimal)))
-                    {
-                        paramObjs[i] = decimal.Parse(parameters[i]);
-                    }
-                    else if (type.Equals(typeof(float)))
-                    {
-                        paramObjs[i] = float.Parse(parameters[i]);
-                    }
+                    if(targetCommand != null)
+                        targetCommand.Execute();
                     else
-                    {
-                        paramObjs[i] = parameters[i];
-                    }
+                        Console.WriteLine("No command object found");
                 }
+                else
+                {
+                    Console.WriteLine("Subcommand is missing, please specify subcommands:");
 
-                var ins = Activator.CreateInstance(commandType);
-                targetMethod.Invoke(ins, paramObjs);
-            }
-            catch (Exception ex)
+                    // print all available commands
+                    foreach(var cmd in allClassTypes)
+                        Console.WriteLine(Utils.LowerKebabCase(cmd.Name.Substring(0,cmd.Name.Length - commandPostfix.Length)));
+                }
+            }catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
         }
+
+        
     }
 }

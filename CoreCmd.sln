@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExperimentalConsoleApp", "E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreCmd", "CoreCmd\CoreCmd.csproj", "{509F9711-02A8-416D-B55D-64C4DD7AF9A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandsInSeparateDll", "CommandsInSeparateDll\CommandsInSeparateDll.csproj", "{B53AFBD2-5985-42A1-B23D-A4B112EF29D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{509F9711-02A8-416D-B55D-64C4DD7AF9A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{509F9711-02A8-416D-B55D-64C4DD7AF9A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{509F9711-02A8-416D-B55D-64C4DD7AF9A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B53AFBD2-5985-42A1-B23D-A4B112EF29D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B53AFBD2-5985-42A1-B23D-A4B112EF29D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B53AFBD2-5985-42A1-B23D-A4B112EF29D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B53AFBD2-5985-42A1-B23D-A4B112EF29D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

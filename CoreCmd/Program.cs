@@ -1,5 +1,4 @@
-﻿using CommandsInSeparateDll;
-using CoreCmd;
+﻿using CoreCmd;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,6 @@ namespace ExperimentalConsoleApp
     {
         static void Main(string[] args)
         {
-            new GreetingCommand().SayHello();
             new CommandExecutor().Execute(args);
         }
     }

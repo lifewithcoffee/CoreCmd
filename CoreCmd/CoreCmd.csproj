@@ -3,20 +3,27 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyName>CoreCmd</AssemblyName>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <PackageId>CoreCmd</PackageId>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <ApplicationIcon />
-    <StartupObject />
+    <StartupObject></StartupObject>
     <Authors>Rongcheng Li</Authors>
     <Description>A convention based command line automatic parser.</Description>
     <PackageProjectUrl>https://github.com/li-rongcheng/CoreCmd</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/li-rongcheng/CoreCmd/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>cli;commandline;command-line;parser</PackageTags>
-    <Version>0.1.0.3</Version>
+    <Version>0.2.0.4</Version>
     <RepositoryUrl>https://github.com/li-rongcheng/CoreCmd.git</RepositoryUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="core.cmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

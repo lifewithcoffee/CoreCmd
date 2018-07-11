@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="cc.cmd">
+    <None Update="eca.cmd">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -14,6 +14,10 @@
 
   <ItemGroup>
     <PackageReference Include="CoreCmd" Version="0.1.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CommandsInSeparateDll\CommandsInSeparateDll.csproj" />
   </ItemGroup>
 
 </Project>
