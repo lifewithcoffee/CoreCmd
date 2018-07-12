@@ -3,14 +3,30 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Reflection;
+using System.Diagnostics;
 
 namespace CoreCmd
 {
     class TargetCommandObject
     {
         public Type CommandType { get; set; }
-        public string MethodName { get; set; }
+
+        /// <summary>
+        /// Lower kebab-case method name
+        /// </summary>
+        private string method_name;
+        public string MethodName {
+            get { return method_name; }
+            set { method_name = value.ToLower(); }
+        }
+
         public string[] Parameters { get; set; } = new string[] { };
+
+        public void PrintHelp()
+        {
+            var helpInfo = (HelpAttribute)this.CommandType.GetCustomAttribute(typeof(HelpAttribute));
+            Console.WriteLine(helpInfo.Description);
+        }
 
         public void Execute()
         {
@@ -19,9 +35,7 @@ namespace CoreCmd
                 if (this.CommandType == null)
                     throw new Exception("Command type is null");
 
-                string lowerCaseMethod = this.MethodName.ToLower();
-
-                var targetMethod = this.CommandType.GetMethods().SingleOrDefault(m => Utils.LowerKebabCase(m.Name).Equals(lowerCaseMethod));
+                var targetMethod = this.CommandType.GetMethods().SingleOrDefault(m => Utils.LowerKebabCase(m.Name).Equals(this.MethodName));
                 if (targetMethod == null)
                     throw new Exception($"Can't find method: {this.MethodName}");
 
