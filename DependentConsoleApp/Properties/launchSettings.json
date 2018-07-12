@@ -2,7 +2,7 @@
   "profiles": {
     "DependentConsoleApp": {
       "commandName": "Project",
-      "commandLineArgs": "test-method1 aa bb 33.124"
+      "commandLineArgs": "help show good-morning"
     }
   }
 }
