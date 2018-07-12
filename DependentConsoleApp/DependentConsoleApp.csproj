@@ -9,4 +9,11 @@
     <ProjectReference Include="..\CoreCmd\CoreCmd.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="core.cmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
