@@ -11,36 +11,6 @@ namespace CoreCmd
     {
         ICommandFinder _commandFinder = new CommandFinder();
 
-        private TargetCommandObject GetTargetCommandObject(IEnumerable<Type> targetTypes, string[] args)
-        {
-            TargetCommandObject result = null;
-            if (args.Length > 0)
-            {
-                result = new TargetCommandObject();
-                string command = $"{args[0]}-command".ToLower();
-
-                Type targetType = targetTypes.SingleOrDefault(t => Utils.LowerKebabCase(t.Name).Equals(command));
-                if (targetType != null)
-                {
-                    result.CommandType = targetType;
-                    if (args.Length > 1)
-                    {
-                        result.MethodName = args[1];
-                        result.Parameters = args.Skip(2).ToArray();
-                    }
-                    else
-                        result.MethodName = "default-method";
-                }
-                else
-                {
-                    result.CommandType = targetTypes.SingleOrDefault(t => t.Name.Equals("DefaultCommand"));
-                    result.MethodName = args[0];
-                    result.Parameters = args.Skip(1).ToArray();
-                }
-            }
-            return result;
-        }
-
         public void Execute(string[] args)
         {
             try
@@ -49,7 +19,7 @@ namespace CoreCmd
                 var allClassTypes = _commandFinder.GetCommandClassTypes(commandPostfix);
                 if (args.Length > 0)
                 {
-                    var targetCommand = this.GetTargetCommandObject(allClassTypes, args);
+                    var targetCommand = _commandFinder.GetTargetCommandObject(allClassTypes, args);
 
                     if(targetCommand != null)
                         targetCommand.Execute();
