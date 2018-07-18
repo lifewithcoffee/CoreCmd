@@ -10,7 +10,7 @@ namespace CoreCmd
     interface ICommandFinder
     {
         IEnumerable<Type> GetCommandClassTypes(string assemblyPrefix = "command", string commandPostfix = "command");
-        TargetCommandObject GetTargetCommandObject(IEnumerable<Type> targetTypes, string[] args);
+        TargetCommand GetTargetCommandObject(IEnumerable<Type> targetTypes, string[] args);
     }
 
     class CommandFinder : ICommandFinder
@@ -43,12 +43,12 @@ namespace CoreCmd
             return GetCommandClassTypesFromAssembly(Assembly.LoadFile(dll), commandPostfix);
         }
 
-        public TargetCommandObject GetTargetCommandObject(IEnumerable<Type> targetTypes, string[] args)
+        public TargetCommand GetTargetCommandObject(IEnumerable<Type> targetTypes, string[] args)
         {
-            TargetCommandObject result = null;
+            TargetCommand result = null;
             if (args.Length > 0)
             {
-                result = new TargetCommandObject();
+                result = new TargetCommand();
                 string command = $"{args[0]}-command".ToLower();
 
                 Type targetType = targetTypes.SingleOrDefault(t => Utils.LowerKebabCase(t.Name).Equals(command));
