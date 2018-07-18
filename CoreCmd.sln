@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreCmd", "CoreCmd\CoreCmd.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandsInSeparateDll", "CommandsInSeparateDll\CommandsInSeparateDll.csproj", "{B53AFBD2-5985-42A1-B23D-A4B112EF29D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependentConsoleApp", "DependentConsoleApp\DependentConsoleApp.csproj", "{448BB8CA-F5E6-4954-921E-AA3300A9B3DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependentConsoleApp", "DependentConsoleApp\DependentConsoleApp.csproj", "{448BB8CA-F5E6-4954-921E-AA3300A9B3DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreCmd.XunitTest", "CoreCmd.XunitTest\CoreCmd.XunitTest.csproj", "{C48B813D-82B5-47B6-A8BF-6581D3707E64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{448BB8CA-F5E6-4954-921E-AA3300A9B3DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{448BB8CA-F5E6-4954-921E-AA3300A9B3DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{448BB8CA-F5E6-4954-921E-AA3300A9B3DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C48B813D-82B5-47B6-A8BF-6581D3707E64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C48B813D-82B5-47B6-A8BF-6581D3707E64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C48B813D-82B5-47B6-A8BF-6581D3707E64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C48B813D-82B5-47B6-A8BF-6581D3707E64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
