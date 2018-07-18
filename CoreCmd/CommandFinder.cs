@@ -76,8 +76,14 @@ namespace CoreCmd
         public IEnumerable<Type> GetCommandClassTypes(string commandPostfix = "command", string assemblyPrefix = "command")
         {
             var allTypeList = new List<List<Type>>();
-            allTypeList.Add(GetCommandClassTypesFromAssembly(Assembly.GetEntryAssembly(), commandPostfix)); // the console app itself's assembly
-            allTypeList.Add(GetCommandClassTypesFromAssembly(Assembly.GetAssembly(typeof(CommandExecutor)),commandPostfix));    // the dependent CoreCmd package's assembly
+
+            var entryAssembly = Assembly.GetEntryAssembly();
+            var coreCmdAssembly = Assembly.GetAssembly(typeof(CommandExecutor));
+
+            allTypeList.Add(GetCommandClassTypesFromAssembly(entryAssembly, commandPostfix)); // the console app itself's assembly
+
+            if(!entryAssembly.GetName().Name.Equals(coreCmdAssembly.GetName().Name))    // it's not CoreCmd.dll itself, otherwise the commands in CoreCmd.dll will be printed twice
+                allTypeList.Add(GetCommandClassTypesFromAssembly(coreCmdAssembly,commandPostfix));    // the dependent CoreCmd package's assembly
 
             var dlls = this.GetCommandAssembly(Directory.GetCurrentDirectory(), assemblyPrefix);    // the assemblies in the current dir match some naming pattern
             foreach (var dll in dlls)

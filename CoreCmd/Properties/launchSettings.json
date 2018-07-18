@@ -1,8 +1,7 @@
 {
   "profiles": {
     "CoreCmd": {
-      "commandName": "Project",
-      "commandLineArgs": "greeting say-hello"
+      "commandName": "Project"
     }
   }
 }
