@@ -21,10 +21,10 @@ namespace CoreCmd.XunitTest
         class DummyCommand2
         {
             [Help(foo1HelpText)]
-            public void Foo1() { }
+            public void FooBar1(string hello, int num=0) { }
 
             [Help(foo2HelpText)]
-            public int Foo2() { return 123; }
+            public int FooBarBo2() { return 123; }
         }
 
         private readonly ITestOutputHelper output;

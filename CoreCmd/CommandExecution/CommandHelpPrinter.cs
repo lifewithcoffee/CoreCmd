@@ -23,11 +23,30 @@ namespace CoreCmd.CommandExecution
             }
         }
 
+        public string GetParameterListText(MethodInfo methodInfo)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            var parameters = methodInfo.GetParameters();
+            foreach(var p in parameters)
+            {
+                if (p.IsOptional)
+                    sb.Append($"  [{p.Name}]");
+                else
+                    sb.Append($"  {p.Name}");
+            }
+
+            return sb.ToString();
+        }
+
         public void PrintMethodHelp(MethodInfo methodInfo)
         {
             var helpInfo = methodInfo.GetCustomAttribute<HelpAttribute>();
-            if(helpInfo != null)
-                Console.WriteLine(helpInfo.Description);
+            if (helpInfo != null)
+            {
+                Console.WriteLine($"{Utils.LowerKebabCase(methodInfo.Name)}{GetParameterListText(methodInfo)}");
+                Console.WriteLine($"\t{helpInfo.Description}");
+            }
         }
     }
 }
