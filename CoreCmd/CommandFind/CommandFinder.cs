@@ -33,16 +33,16 @@ namespace CoreCmd.CommandFind
                     result.CommandType = targetType;
                     if (args.Length > 1)
                     {
-                        result.MethodName = args[1];
+                        result.MethodSubcommand = args[1];
                         result.Parameters = args.Skip(2).ToArray();
                     }
                     else
-                        result.MethodName = "default-method";
+                        result.MethodSubcommand = "default-method";
                 }
                 else
                 {
                     result.CommandType = targetTypes.SingleOrDefault(t => t.Name.Equals("DefaultCommand"));
-                    result.MethodName = args[0];
+                    result.MethodSubcommand = args[0];
                     result.Parameters = args.Skip(1).ToArray();
                 }
             }

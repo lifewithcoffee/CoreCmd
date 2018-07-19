@@ -23,12 +23,16 @@ namespace CoreCmd.CommandExecution
         public Type CommandType { get; set; }
 
         /// <summary>
-        /// Lower kebab-case method name
+        /// Lower kebab-case method name.
+        /// 
+        /// When receive the relevant argument from console, the format has already been
+        /// kebab-case,so when pass into the internal variable, just need to turn it into
+        /// lower case for the later comparison.
         /// </summary>
-        private string method_name;
-        public string MethodName {
-            get { return method_name; }
-            set { method_name = value.ToLower(); }
+        private string methodSubcommand;
+        public string MethodSubcommand {
+            get { return methodSubcommand; }
+            set { methodSubcommand = value.ToLower(); }
         }
 
         public string[] Parameters { get; set; } = new string[] { };
@@ -45,8 +49,8 @@ namespace CoreCmd.CommandExecution
             if (this.CommandType == null)
                 throw new Exception("Command type is null");
 
-            string errmsg = $"Can't find method: {this.MethodName}";
-            var methods = _methodMatcher.GetMethodInfo(this.CommandType, this.MethodName);
+            string errmsg = $"Can't find method: {this.MethodSubcommand}";
+            var methods = _methodMatcher.GetMethodInfo(this.CommandType, this.MethodSubcommand);
 
             if(methods == null)
                 Console.WriteLine(errmsg);

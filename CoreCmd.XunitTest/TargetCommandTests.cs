@@ -31,7 +31,7 @@ namespace CoreCmd.XunitTest
         [Fact]
         public void Execute_should_match_parameter_types_as_well()
         {
-            var cmd = new TargetCommand { CommandType = typeof(DummyCommand), MethodName = "foo-foo"};
+            var cmd = new TargetCommand { CommandType = typeof(DummyCommand), MethodSubcommand = "foo-foo"};
 
             cmd.Parameters = new string[] { "1", "hello" };
             Assert.Equal(2, cmd.Execute());

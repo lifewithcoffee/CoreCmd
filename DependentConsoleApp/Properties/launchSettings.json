@@ -2,7 +2,7 @@
   "profiles": {
     "DependentConsoleApp": {
       "commandName": "Project",
-      "commandLineArgs": "help show good-morning"
+      "commandLineArgs": "good-morning say-hello"
     }
   }
 }
