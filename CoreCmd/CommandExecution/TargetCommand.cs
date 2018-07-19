@@ -4,8 +4,8 @@ using System.Text;
 using System.Linq;
 using System.Reflection;
 using System.Diagnostics;
-using CoreCmd.Commands;
 using CoreCmd.MethodMatching;
+using CoreCmd.BuiltinCommands;
 
 namespace CoreCmd.CommandExecution
 {

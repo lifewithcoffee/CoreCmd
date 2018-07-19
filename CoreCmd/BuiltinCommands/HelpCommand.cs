@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CoreCmd.Commands
+namespace CoreCmd.BuiltinCommands
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method )]
     public class HelpAttribute : Attribute
