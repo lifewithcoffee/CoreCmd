@@ -1,8 +1,9 @@
-﻿using System;
+﻿using CoreCmd.CommandFind;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CoreCmd
+namespace CoreCmd.Commands
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method )]
     public class HelpAttribute : Attribute
@@ -23,8 +24,8 @@ namespace CoreCmd
         public void Show(string command)
         {
             const string commandPostfix = "command";
-            var allClassTypes = _commandFinder.GetCommandClassTypes(commandPostfix);
-            var targetCommand = _commandFinder.GetTargetCommandObject(allClassTypes, new string[]{ command });
+            var allClassTypes = _commandFinder.GetAllCommandClasses(commandPostfix);
+            var targetCommand = _commandFinder.GetTargetCommand(allClassTypes, new string[]{ command });
 
             if(targetCommand != null)
                 targetCommand.PrintHelp();

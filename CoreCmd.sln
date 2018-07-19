@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandsInSeparateDll", "Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependentConsoleApp", "DependentConsoleApp\DependentConsoleApp.csproj", "{448BB8CA-F5E6-4954-921E-AA3300A9B3DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreCmd.XunitTest", "CoreCmd.XunitTest\CoreCmd.XunitTest.csproj", "{C48B813D-82B5-47B6-A8BF-6581D3707E64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreCmd.XunitTest", "CoreCmd.XunitTest\CoreCmd.XunitTest.csproj", "{C48B813D-82B5-47B6-A8BF-6581D3707E64}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestClients", "TestClients", "{B6CCE93E-B536-4C6C-986F-411C77342CB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +50,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D1A7A6F3-26F7-4066-8AF9-25EA1258A1E8} = {B6CCE93E-B536-4C6C-986F-411C77342CB5}
+		{B53AFBD2-5985-42A1-B23D-A4B112EF29D1} = {B6CCE93E-B536-4C6C-986F-411C77342CB5}
+		{448BB8CA-F5E6-4954-921E-AA3300A9B3DD} = {B6CCE93E-B536-4C6C-986F-411C77342CB5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F788D715-94B3-48DF-9EB3-10FCB98B9051}

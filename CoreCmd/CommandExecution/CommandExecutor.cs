@@ -1,13 +1,19 @@
-﻿using System;
+﻿using CoreCmd.CommandFind;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace CoreCmd
+namespace CoreCmd.CommandExecution
 {
-    public class CommandExecutor
+    public interface ICommandExecutor
+    {
+        void Execute(string[] args);
+    }
+
+    public class CommandExecutor : ICommandExecutor
     {
         ICommandFinder _commandFinder = new CommandFinder();
 
@@ -16,10 +22,10 @@ namespace CoreCmd
             try
             {
                 const string commandPostfix = "command";
-                var allClassTypes = _commandFinder.GetCommandClassTypes(commandPostfix);
+                var allClassTypes = _commandFinder.GetAllCommandClasses(commandPostfix);
                 if (args.Length > 0)
                 {
-                    var targetCommand = _commandFinder.GetTargetCommandObject(allClassTypes, args);
+                    var targetCommand = _commandFinder.GetTargetCommand(allClassTypes, args);
 
                     if(targetCommand != null)
                         targetCommand.Execute();
