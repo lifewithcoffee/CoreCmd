@@ -11,7 +11,7 @@ namespace CoreCmd.CommandFind
     interface ICommandFinder
     {
         IEnumerable<Type> GetAllCommandClasses(string assemblyPrefix = "command", string commandPostfix = "command");
-        ITargetCommand GetTargetCommand(IEnumerable<Type> targetTypes, string[] args);
+        ISingleCommandExecutor GetSingleCommandExecutor(IEnumerable<Type> targetTypes, string[] args);
     }
 
     internal class CommandFinder : ICommandFinder
@@ -19,18 +19,18 @@ namespace CoreCmd.CommandFind
         IAssemblyFinder _assemblyFinder = new AssemblyFinder();
         IAssemblyCommandFinder _assemblyCommandFinder = new AssemblyCommandFinder();
 
-        public ITargetCommand GetTargetCommand(IEnumerable<Type> targetTypes, string[] args)
+        public ISingleCommandExecutor GetSingleCommandExecutor(IEnumerable<Type> targetTypes, string[] args)
         {
-            TargetCommand result = null;
+            SingleCommandExecutor result = null;
             if (args.Length > 0)
             {
-                result = new TargetCommand();
+                result = new SingleCommandExecutor();
                 string command = $"{args[0]}-command".ToLower();
 
                 Type targetType = targetTypes.SingleOrDefault(t => Utils.LowerKebabCase(t.Name).Equals(command));
                 if (targetType != null)
                 {
-                    result.CommandType = targetType;
+                    result.CommandClassType = targetType;
                     if (args.Length > 1)
                     {
                         result.MethodSubcommand = args[1];
@@ -41,7 +41,7 @@ namespace CoreCmd.CommandFind
                 }
                 else
                 {
-                    result.CommandType = targetTypes.SingleOrDefault(t => t.Name.Equals("DefaultCommand"));
+                    result.CommandClassType = targetTypes.SingleOrDefault(t => t.Name.Equals("DefaultCommand"));
                     result.MethodSubcommand = args[0];
                     result.Parameters = args.Skip(1).ToArray();
                 }
@@ -54,7 +54,7 @@ namespace CoreCmd.CommandFind
             var allTypeList = new List<List<Type>>();
 
             var entryAssembly = Assembly.GetEntryAssembly();
-            var coreCmdAssembly = Assembly.GetAssembly(typeof(CommandExecutor));
+            var coreCmdAssembly = Assembly.GetAssembly(typeof(AssemblyCommandExecutor));
 
             allTypeList.Add(_assemblyCommandFinder.GetCommandClassTypesFromAssembly(entryAssembly, commandPostfix)); // the console app itself's assembly
 

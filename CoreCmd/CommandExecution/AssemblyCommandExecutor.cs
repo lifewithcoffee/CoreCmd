@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace CoreCmd.CommandExecution
 {
-    public interface ICommandExecutor
+    public interface IAssemblyCommandExecutor
     {
         void Execute(string[] args);
     }
 
-    public class CommandExecutor : ICommandExecutor
+    public class AssemblyCommandExecutor : IAssemblyCommandExecutor
     {
         ICommandFinder _commandFinder = new CommandFinder();
 
@@ -25,10 +25,10 @@ namespace CoreCmd.CommandExecution
                 var allClassTypes = _commandFinder.GetAllCommandClasses(commandPostfix);
                 if (args.Length > 0)
                 {
-                    var targetCommand = _commandFinder.GetTargetCommand(allClassTypes, args);
+                    var singleCommandExecutor = _commandFinder.GetSingleCommandExecutor(allClassTypes, args);
 
-                    if(targetCommand != null)
-                        targetCommand.Execute();
+                    if(singleCommandExecutor != null)
+                        singleCommandExecutor.Execute();
                     else
                         Console.WriteLine("No command object found");
                 }

@@ -23,15 +23,15 @@ namespace CoreCmd.XunitTest
         }
     }
 
-    public class TargetCommandTests
+    public class SingleCommandExecutorTests
     {
         private readonly ITestOutputHelper output;
-        public TargetCommandTests(ITestOutputHelper output) { this.output = output; }
+        public SingleCommandExecutorTests(ITestOutputHelper output) { this.output = output; }
 
         [Fact]
         public void Execute_should_match_parameter_types_as_well()
         {
-            var cmd = new TargetCommand { CommandType = typeof(DummyCommand), MethodSubcommand = "foo-foo"};
+            var cmd = new SingleCommandExecutor { CommandClassType = typeof(DummyCommand), MethodSubcommand = "foo-foo"};
 
             cmd.Parameters = new string[] { "1", "hello" };
             Assert.Equal(2, cmd.Execute());

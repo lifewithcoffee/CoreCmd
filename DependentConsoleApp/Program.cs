@@ -8,7 +8,7 @@ namespace DependentConsoleApp
     {
         static void Main(string[] args)
         {
-            new CommandExecutor().Execute(args);
+            new AssemblyCommandExecutor().Execute(args);
         }
     }
 }

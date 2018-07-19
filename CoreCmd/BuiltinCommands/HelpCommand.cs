@@ -13,10 +13,10 @@ namespace CoreCmd.BuiltinCommands
         {
             const string commandPostfix = "command";
             var allClassTypes = _commandFinder.GetAllCommandClasses(commandPostfix);
-            var targetCommand = _commandFinder.GetTargetCommand(allClassTypes, new string[]{ command });
+            var singleCommandExecutor = _commandFinder.GetSingleCommandExecutor(allClassTypes, new string[]{ command });
 
-            if(targetCommand != null)
-                targetCommand.PrintHelp();
+            if(singleCommandExecutor != null)
+                singleCommandExecutor.PrintHelp();
             else
                 Console.WriteLine("No command object found");
         }

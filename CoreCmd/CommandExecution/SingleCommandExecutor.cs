@@ -9,18 +9,21 @@ using CoreCmd.BuiltinCommands;
 
 namespace CoreCmd.CommandExecution
 {
-    public interface ITargetCommand
+    public interface ISingleCommandExecutor
     {
         void PrintHelp();
         int Execute();
     }
 
-    public class TargetCommand : ITargetCommand
+    public class SingleCommandExecutor : ISingleCommandExecutor
     {
         private IMethodMatcher _methodMatcher = new MethodMatcher();
         private IParameterMatcher _parameterMatcher = new ParameterMatcher();
 
-        public Type CommandType { get; set; }
+        /// <summary>
+        /// There is no naming format required for the relevant class.
+        /// </summary>
+        public Type CommandClassType { get; set; }
 
         /// <summary>
         /// Lower kebab-case method name.
@@ -39,18 +42,18 @@ namespace CoreCmd.CommandExecution
 
         public void PrintHelp()
         {
-            var helpInfo = (HelpAttribute)this.CommandType.GetCustomAttribute(typeof(HelpAttribute));
+            var helpInfo = (HelpAttribute)this.CommandClassType.GetCustomAttribute(typeof(HelpAttribute));
             Console.WriteLine(helpInfo.Description);
         }
 
         public int Execute()
         {
             int invocationCount = 0;
-            if (this.CommandType == null)
+            if (this.CommandClassType == null)
                 throw new Exception("Command type is null");
 
             string errmsg = $"Can't find method: {this.MethodSubcommand}";
-            var methods = _methodMatcher.GetMethodInfo(this.CommandType, this.MethodSubcommand);
+            var methods = _methodMatcher.GetMethodInfo(this.CommandClassType, this.MethodSubcommand);
 
             if(methods == null)
                 Console.WriteLine(errmsg);
@@ -61,7 +64,7 @@ namespace CoreCmd.CommandExecution
                     var paramObjs = _parameterMatcher.Match(m.GetParameters(), this.Parameters);
                     if(paramObjs != null)
                     {
-                        m.Invoke(Activator.CreateInstance(this.CommandType), paramObjs);
+                        m.Invoke(Activator.CreateInstance(this.CommandClassType), paramObjs);
                         invocationCount++;
                     }
                 }
