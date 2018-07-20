@@ -22,6 +22,17 @@ namespace CoreCmd.XunitTest
         public void FooBar2(int num, string str) { AssemblyCommandExecutorTests.HitCounter.Hit("23"); }
 
         public void FooBar3(string str, int num1=1, int num2=2) { AssemblyCommandExecutorTests.HitCounter.Hit("3"); }
+
+        public void FooBar4(int num) { AssemblyCommandExecutorTests.HitCounter.Hit("41"); }
+        public void FooBar4(double num) { AssemblyCommandExecutorTests.HitCounter.Hit("42"); }
+        public void FooBar4(uint num) { AssemblyCommandExecutorTests.HitCounter.Hit("43"); }
+        public void FooBar4(short num) { AssemblyCommandExecutorTests.HitCounter.Hit("44"); }
+        public void FooBar4(ushort num) { AssemblyCommandExecutorTests.HitCounter.Hit("45"); }
+        public void FooBar4(decimal num) { AssemblyCommandExecutorTests.HitCounter.Hit("46"); }
+        public void FooBar4(float num) { AssemblyCommandExecutorTests.HitCounter.Hit("47"); }
+
+        public void FooBar5(char p) { AssemblyCommandExecutorTests.HitCounter.Hit("51"); }
+        public void FooBar5(string p) { AssemblyCommandExecutorTests.HitCounter.Hit("52"); }
     }
 
     public class AssemblyCommandExecutorTests
@@ -61,24 +72,66 @@ namespace CoreCmd.XunitTest
         }
 
         [Fact]
-        public void Method_with_default_values_1()
+        public void Parameters_with_default_values_1()
         {
             executor.Execute(new string[] { "asb-dummy", "foo-bar3", "hello" });
             Assert.Equal(1, HitCounter.GetHitCount("3"));
         }
 
         [Fact]
-        public void Method_with_default_values_2()
+        public void Parameters_with_default_values_2()
         {
             executor.Execute(new string[] { "asb-dummy", "foo-bar3", "hello", "123" });
             Assert.Equal(1, HitCounter.GetHitCount("3"));
         }
 
         [Fact]
-        public void Method_with_default_values_3()
+        public void Parameters_with_default_values_3()
         { 
             executor.Execute(new string[] { "asb-dummy", "foo-bar3", "hello", "123", "456"});
             Assert.Equal(1, HitCounter.GetHitCount("3"));
+        }
+
+        [Fact]
+        public void Number_paramter_matching_1()
+        {
+            executor.Execute(new string[] { "asb-dummy", "foo-bar4", "4"});
+            Assert.Equal(1, HitCounter.GetHitCount("41"));
+            Assert.Equal(1, HitCounter.GetHitCount("42"));
+            Assert.Equal(1, HitCounter.GetHitCount("43"));
+            Assert.Equal(1, HitCounter.GetHitCount("44"));
+            Assert.Equal(1, HitCounter.GetHitCount("45"));
+            Assert.Equal(1, HitCounter.GetHitCount("46"));
+            Assert.Equal(1, HitCounter.GetHitCount("47"));
+        }
+
+        [Fact]
+        public void Number_paramter_matching_2()
+        {
+            executor.Execute(new string[] { "asb-dummy", "foo-bar4", "4.1"});
+            Assert.Equal(0, HitCounter.GetHitCount("41"));
+            Assert.Equal(1, HitCounter.GetHitCount("42"));
+            Assert.Equal(0, HitCounter.GetHitCount("43"));
+            Assert.Equal(0, HitCounter.GetHitCount("44"));
+            Assert.Equal(0, HitCounter.GetHitCount("45"));
+            Assert.Equal(1, HitCounter.GetHitCount("46"));
+            Assert.Equal(1, HitCounter.GetHitCount("47"));
+        }
+
+        [Fact]
+        public void String_char_matching_1()
+        {
+            executor.Execute(new string[] { "asb-dummy", "foo-bar5", "1"});
+            Assert.Equal(1, HitCounter.GetHitCount("51"));
+            Assert.Equal(1, HitCounter.GetHitCount("52"));
+        }
+
+        [Fact]
+        public void String_char_matching_2()
+        {
+            executor.Execute(new string[] { "asb-dummy", "foo-bar5", "11"});
+            Assert.Equal(0, HitCounter.GetHitCount("51"));
+            Assert.Equal(1, HitCounter.GetHitCount("52"));
         }
     }
 }
