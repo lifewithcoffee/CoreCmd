@@ -1,4 +1,4 @@
-﻿using CoreCmd.BuiltinCommands;
+﻿using CoreCmd.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Reflection;

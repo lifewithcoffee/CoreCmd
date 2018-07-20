@@ -1,5 +1,5 @@
 ﻿using CoreCmd;
-using CoreCmd.BuiltinCommands;
+using CoreCmd.Attributes;
 using System;
 
 namespace DependentConsoleApp
