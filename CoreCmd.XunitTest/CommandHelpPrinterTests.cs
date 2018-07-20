@@ -26,6 +26,8 @@ namespace CoreCmd.XunitTest
 
             [Help(foo2HelpText)]
             public int FooBarBo2() { return 123; }
+            public void FooBarBo3(double a, double b) { }
+            public void FooBarBo4(float a, string b) { }
         }
 
         private readonly ITestOutputHelper output;
@@ -43,10 +45,6 @@ namespace CoreCmd.XunitTest
             var printer = new CommandHelpPrinter();
             printer.PrintClassHelp(typeof(DummyCommand2));
             printer.PrintAllMethodHelp(typeof(DummyCommand2));
-
-            //var standardOutput = new StreamWriter(Console.OpenStandardOutput());
-            //standardOutput.AutoFlush = true;
-            //Console.SetOut(standardOutput);
         }
     }
 }
