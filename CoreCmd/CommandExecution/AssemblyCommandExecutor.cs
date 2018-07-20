@@ -39,12 +39,13 @@ namespace CoreCmd.CommandExecution
                     ExecuteFirstCommand(allClassTypes);
                 else
                     PrintHelpMessage(allClassTypes, commandPostfix);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
 
-            /************** local functions **************/
+            /** local functions **/
 
             void ExecuteFirstCommand(IEnumerable<Type> allClassTypes)
             {

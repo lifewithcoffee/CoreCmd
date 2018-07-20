@@ -17,10 +17,9 @@ namespace CoreCmd.CommandFind
 
     internal class CommandFinder : ICommandFinder
     {
-        IAssemblyFinder _assemblyFinder = new AssemblyFinder();
-        IAssemblyCommandFinder _assemblyCommandFinder = new AssemblyCommandFinder();
 
         public List<Assembly> additionalAssemblies = new List<Assembly>();
+        private CommandClassLoader _commandClassLoader = new CommandClassLoader();
 
         public void SetAdditionalSearchAssembly(Assembly assembly)
         {
@@ -59,24 +58,48 @@ namespace CoreCmd.CommandFind
 
         public IEnumerable<Type> GetAllCommandClasses(string commandPostfix = "command", string assemblyPrefix = "command")
         {
-            var allTypeList = new List<List<Type>>();
+            var allTypeLists = new List<List<Type>>();
 
-            var entryAssembly = Assembly.GetEntryAssembly();
+            _commandClassLoader.LoadFromEntry(allTypeLists, commandPostfix);
+            _commandClassLoader.LoadFromCoreCmd(allTypeLists, commandPostfix);
+            _commandClassLoader.LoadFromCurrentDir(allTypeLists, assemblyPrefix, commandPostfix);
+            _commandClassLoader.LoadFromAdditionalAssemblies(allTypeLists, commandPostfix, additionalAssemblies);
+
+            return allTypeLists.SelectMany(r => r);
+        }
+    }
+
+    class CommandClassLoader
+    {
+        IAssemblyCommandFinder _assemblyCommandFinder = new AssemblyCommandFinder();
+        IAssemblyFinder _assemblyFinder = new AssemblyFinder();
+
+        public void LoadFromEntry(List<List<Type>> lists, string postfix)
+        {
+            lists.Add(_assemblyCommandFinder.GetCommandClassTypesFromAssembly(Assembly.GetEntryAssembly(), postfix));
+        }
+
+        public void LoadFromCoreCmd(List<List<Type>> lists, string postfix)
+        {
             var coreCmdAssembly = Assembly.GetAssembly(typeof(AssemblyCommandExecutor));
+            string entryAssemblyFileName = Assembly.GetEntryAssembly().GetName().Name;
 
-            allTypeList.Add(_assemblyCommandFinder.GetCommandClassTypesFromAssembly(entryAssembly, commandPostfix)); // the console app itself's assembly
+            // make sure the entry assembly is not CoreCmd.dll itself, otherwise the commands in CoreCmd.dll will be printed twice
+            if (!entryAssemblyFileName.Equals(coreCmdAssembly.GetName().Name))
+                lists.Add(_assemblyCommandFinder.GetCommandClassTypesFromAssembly(coreCmdAssembly, postfix));
+        }
 
-            if(!entryAssembly.GetName().Name.Equals(coreCmdAssembly.GetName().Name))    // it's not CoreCmd.dll itself, otherwise the commands in CoreCmd.dll will be printed twice
-                allTypeList.Add(_assemblyCommandFinder.GetCommandClassTypesFromAssembly(coreCmdAssembly,commandPostfix));    // the dependent CoreCmd package's assembly
-
+        public void LoadFromCurrentDir(List<List<Type>> lists, string assemblyPrefix, string commandPostfix)
+        {
             var dlls = _assemblyFinder.GetCommandAssembly(Directory.GetCurrentDirectory(), assemblyPrefix);    // the assemblies in the current dir match some naming pattern
             foreach (var dll in dlls)
-                allTypeList.Add(_assemblyCommandFinder.GetCommandClassTypesFromAssembly(dll, commandPostfix));
+                lists.Add(_assemblyCommandFinder.GetCommandClassTypesFromAssembly(dll, commandPostfix));
+        }
 
+        public void LoadFromAdditionalAssemblies(List<List<Type>> lists, string commandPostfix, List<Assembly> additionalAssemblies)
+        {
             foreach (var additioal in additionalAssemblies)
-                allTypeList.Add(_assemblyCommandFinder.GetCommandClassTypesFromAssembly(additioal, commandPostfix));
-
-            return allTypeList.SelectMany(r => r);
+                lists.Add(_assemblyCommandFinder.GetCommandClassTypesFromAssembly(additioal, commandPostfix));
         }
     }
 }
