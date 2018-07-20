@@ -91,7 +91,8 @@ namespace CoreCmd.CommandFind
 
         public void LoadFromCurrentDir(List<List<Type>> lists, string assemblyPrefix, string commandPostfix)
         {
-            var dlls = _assemblyFinder.GetCommandAssembly(Directory.GetCurrentDirectory(), assemblyPrefix);    // the assemblies in the current dir match some naming pattern
+            // the assemblies in the current dir need to match some naming pattern
+            var dlls = _assemblyFinder.GetCommandAssembly(Directory.GetCurrentDirectory(), assemblyPrefix);
             foreach (var dll in dlls)
                 lists.Add(_assemblyCommandFinder.GetCommandClassTypesFromAssembly(dll, commandPostfix));
         }

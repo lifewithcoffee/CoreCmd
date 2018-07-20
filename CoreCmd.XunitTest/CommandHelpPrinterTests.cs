@@ -43,6 +43,10 @@ namespace CoreCmd.XunitTest
             var printer = new CommandHelpPrinter();
             printer.PrintClassHelp(typeof(DummyCommand2));
             printer.PrintAllMethodHelp(typeof(DummyCommand2));
+
+            //var standardOutput = new StreamWriter(Console.OpenStandardOutput());
+            //standardOutput.AutoFlush = true;
+            //Console.SetOut(standardOutput);
         }
     }
 }
