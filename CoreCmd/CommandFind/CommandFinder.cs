@@ -10,6 +10,7 @@ namespace CoreCmd.CommandFind
 {
     interface ICommandFinder
     {
+        void SetAdditionalSearchAssembly(Assembly assembly);
         IEnumerable<Type> GetAllCommandClasses(string assemblyPrefix = "command", string commandPostfix = "command");
         ISingleCommandExecutor GetSingleCommandExecutor(IEnumerable<Type> targetTypes, string[] args);
     }
@@ -18,6 +19,13 @@ namespace CoreCmd.CommandFind
     {
         IAssemblyFinder _assemblyFinder = new AssemblyFinder();
         IAssemblyCommandFinder _assemblyCommandFinder = new AssemblyCommandFinder();
+
+        public List<Assembly> additionalAssemblies = new List<Assembly>();
+
+        public void SetAdditionalSearchAssembly(Assembly assembly)
+        {
+            this.additionalAssemblies.Add(assembly);
+        }
 
         public ISingleCommandExecutor GetSingleCommandExecutor(IEnumerable<Type> targetTypes, string[] args)
         {
@@ -64,6 +72,9 @@ namespace CoreCmd.CommandFind
             var dlls = _assemblyFinder.GetCommandAssembly(Directory.GetCurrentDirectory(), assemblyPrefix);    // the assemblies in the current dir match some naming pattern
             foreach (var dll in dlls)
                 allTypeList.Add(_assemblyCommandFinder.GetCommandClassTypesFromAssembly(dll, commandPostfix));
+
+            foreach (var additioal in additionalAssemblies)
+                allTypeList.Add(_assemblyCommandFinder.GetCommandClassTypesFromAssembly(additioal, commandPostfix));
 
             return allTypeList.SelectMany(r => r);
         }

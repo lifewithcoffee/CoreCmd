@@ -33,7 +33,7 @@ namespace CoreCmd.CommandExecution
                 if (p.IsOptional)
                     sb.Append($"  [{p.Name}]");
                 else
-                    sb.Append($"  {p.Name}");
+                    sb.Append($"  <{p.Name}>");
             }
 
             return sb.ToString();
