@@ -93,7 +93,7 @@ namespace CoreCmd.XunitTest
         }
 
         [Fact]
-        public void Number_paramter_matching_1()
+        public void Numeric_paramter_matching_1()
         {
             executor.Execute(new string[] { "asb-dummy", "foo-bar4", "4"});
             Assert.Equal(1, HitCounter.GetHitCount("41"));
@@ -106,7 +106,7 @@ namespace CoreCmd.XunitTest
         }
 
         [Fact]
-        public void Number_paramter_matching_2()
+        public void Numeric_paramter_matching_2()
         {
             executor.Execute(new string[] { "asb-dummy", "foo-bar4", "4.1"});
             Assert.Equal(0, HitCounter.GetHitCount("41"));
@@ -122,16 +122,16 @@ namespace CoreCmd.XunitTest
         public void String_char_matching_1()
         {
             executor.Execute(new string[] { "asb-dummy", "foo-bar5", "1"});
-            Assert.Equal(1, HitCounter.GetHitCount("51"));
-            Assert.Equal(1, HitCounter.GetHitCount("52"));
+            Assert.Equal(1, HitCounter.GetHitCount("51"));  // char
+            Assert.Equal(1, HitCounter.GetHitCount("52"));  // string
         }
 
         [Fact]
         public void String_char_matching_2()
         {
             executor.Execute(new string[] { "asb-dummy", "foo-bar5", "11"});
-            Assert.Equal(0, HitCounter.GetHitCount("51"));
-            Assert.Equal(1, HitCounter.GetHitCount("52"));
+            Assert.Equal(0, HitCounter.GetHitCount("51")); // char
+            Assert.Equal(1, HitCounter.GetHitCount("52")); // string
         }
     }
 }

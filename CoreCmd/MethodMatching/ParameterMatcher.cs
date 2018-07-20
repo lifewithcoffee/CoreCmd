@@ -23,8 +23,8 @@ namespace CoreCmd.MethodMatching
                     Type type = info[i].ParameterType;
                     if (type.Equals(typeof(string)))
                         result[i] = parameters[i];
-                    else if (type.Equals(typeof(char)) && parameters.Length == 1)
-                        result[i] = parameters[0];
+                    else if (type.Equals(typeof(char)) && parameters[i].Length == 1)
+                        result[i] = parameters[i][0];
                     else if (type.Equals(typeof(int)))
                     {
                         if (int.TryParse(parameters[i], out int p))
