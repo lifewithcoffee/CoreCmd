@@ -13,6 +13,53 @@ namespace CoreCmd.MethodMatching
 
     class ParameterMatcher : IParameterMatcher
     {
+        private object MatchOneParameter(Type type, string parameter)
+        {
+            object result = null;
+
+            if (type.Equals(typeof(string)))
+                result = parameter;
+            else if (type.Equals(typeof(char)) && parameter.Length == 1)
+                result = parameter[0];
+            else if (type.Equals(typeof(int)))
+            {
+                if (int.TryParse(parameter, out int p))
+                    result = p;
+            }
+            else if (type.Equals(typeof(double)))
+            {
+                if (double.TryParse(parameter, out double p))
+                    result = p;
+            }
+            else if (type.Equals(typeof(uint)))
+            {
+                if (uint.TryParse(parameter, out uint p))
+                    result = p;
+            }
+            else if (type.Equals(typeof(short)))
+            {
+                if (short.TryParse(parameter, out short p))
+                    result = p;
+            }
+            else if (type.Equals(typeof(ushort)))
+            {
+                if (ushort.TryParse(parameter, out ushort p))
+                    result = p;
+            }
+            else if (type.Equals(typeof(decimal)))
+            {
+                if (decimal.TryParse(parameter, out decimal p))
+                    result = p;
+            }
+            else if (type.Equals(typeof(float)))
+            {
+                if (float.TryParse(parameter, out float p))
+                    result = p;
+            }
+
+            return result;
+        }
+
         public object[] Match(ParameterInfo[] info, string[] parameters)
         {
             object[] result = null;
@@ -24,69 +71,13 @@ namespace CoreCmd.MethodMatching
                 result = new object[info.Length];
                 for (int i = 0; i < info.Length; i++)
                 {
-                    if (i >= parameters.Length) // for the missing parameters with default values
-                    {
+                    if (i >= parameters.Length) // these missing parameters may have default values
                         result[i] = info[i].DefaultValue??Type.Missing;
-                        continue;
-                    }
-
-                    Type type = info[i].ParameterType;
-                    if (type.Equals(typeof(string)))
-                        result[i] = parameters[i];
-                    else if (type.Equals(typeof(char)) && parameters[i].Length == 1)
-                        result[i] = parameters[i][0];
-                    else if (type.Equals(typeof(int)))
-                    {
-                        if (int.TryParse(parameters[i], out int p))
-                            result[i] = p;
-                        else
-                            return null;
-                    }
-                    else if (type.Equals(typeof(double)))
-                    {
-                        if (double.TryParse(parameters[i], out double p))
-                            result[i] = p;
-                        else
-                            return null;
-                    }
-                    else if (type.Equals(typeof(uint)))
-                    {
-                        if (uint.TryParse(parameters[i], out uint p))
-                            result[i] = p;
-                        else
-                            return null;
-                    }
-                    else if (type.Equals(typeof(short)))
-                    {
-                        if (short.TryParse(parameters[i], out short p))
-                            result[i] = p;
-                        else
-                            return null;
-                    }
-                    else if (type.Equals(typeof(ushort)))
-                    {
-                        if (ushort.TryParse(parameters[i], out ushort p))
-                            result[i] = p;
-                        else
-                            return null;
-                    }
-                    else if (type.Equals(typeof(decimal)))
-                    {
-                        if (decimal.TryParse(parameters[i], out decimal p))
-                            result[i] = p;
-                        else
-                            return null;
-                    }
-                    else if (type.Equals(typeof(float)))
-                    {
-                        if (float.TryParse(parameters[i], out float p))
-                            result[i] = p;
-                        else
-                            return null;
-                    }
                     else
                     {
-                        return null;
+                        result[i] = MatchOneParameter(info[i].ParameterType, parameters[i]);
+                        if (result[i] == null)
+                            return null;
                     }
                 }
             }
