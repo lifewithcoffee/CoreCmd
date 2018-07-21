@@ -123,6 +123,13 @@ namespace CoreCmd.XunitTest
         }
 
         [Fact]
+        public void Parameters_with_default_values_mismatching_case()
+        {
+            executor.Execute(new string[] { "asb-dummy", "foo-bar3", "hello", "string"});
+            Assert.Equal(0, HitCounter.GetHitCount("3"));
+        }
+
+        [Fact]
         public void Numeric_paramter_matching_1()
         {
             executor.Execute(new string[] { "asb-dummy", "foo-bar4", "4"});
