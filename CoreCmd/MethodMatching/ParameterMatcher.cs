@@ -60,28 +60,76 @@ namespace CoreCmd.MethodMatching
             return result;
         }
 
+        private IParamUtil _paramUtil = new ParamUtil();
+
+        // All optional parameters start with '-'
+        private object MatchOptionalParameters(ParameterInfo info, List<string> optionalParameters)
+        {
+            var dict = _paramUtil.GetOptionalParamDict(optionalParameters);
+            if (dict == null)
+                return null;
+            else
+            {
+                string parameterName = info.Name;
+                var param = dict.Where(d => parameterName.StartsWith(d.Key)).SingleOrDefault();
+                if (param.Equals(default(KeyValuePair<string, string>)))
+                    return MatchOneParameter(info.ParameterType, param.Value);
+                else
+                    return info.DefaultValue ?? Type.Missing;
+            }
+        }
+
         public object[] Match(ParameterInfo[] info, string[] parameters)
         {
-            object[] result = null;
+            List<object> result = new List<object>();
+            (List<string> required, List<string> optional) = _paramUtil.GroupdParameters(parameters);
 
-            int minParamNumber = info.Where(i => !i.HasDefaultValue).Count(); // parameters with default values are optional
+            int requiredParamNumber = info.Where(i => !i.HasDefaultValue).Count(); // parameters with default values are optional
+            int requiredParamCount = required.Count();
 
-            if(parameters.Length >= minParamNumber && parameters.Length <= info.Length)
+            bool requiredParamMatched = false;
+            int paramProcessedCount = 0;
+
+            // match required parameters
+            if (requiredParamCount == requiredParamNumber)
             {
-                result = new object[info.Length];
-                for (int i = 0; i < info.Length; i++)
+                foreach (string param in required)
                 {
-                    if (i >= parameters.Length) // these missing parameters may have default values
-                        result[i] = info[i].DefaultValue??Type.Missing;
+                    var paramObj = MatchOneParameter(info[paramProcessedCount].ParameterType, param);
+                    if (paramObj != null)
+                        result.Add(paramObj);
                     else
-                    {
-                        result[i] = MatchOneParameter(info[i].ParameterType, parameters[i]);
-                        if (result[i] == null)
-                            return null;
-                    }
+                        return null;
+
+                    paramProcessedCount++;
+                }
+                requiredParamMatched = true;
+            }
+            else
+                return null;
+
+            // match optional parameters, i.e. parameters with defaul values
+            if(requiredParamMatched)
+            {
+                var optionalParams = info.Where(i => i.HasDefaultValue);
+                foreach(var param in optionalParams)
+                {
+                    var paramObj = MatchOptionalParameters(info[paramProcessedCount], optional);
+
+                    if (paramObj != null)
+                        result.Add(paramObj);
+                    else
+                        result.Add(info[paramProcessedCount].DefaultValue ?? Type.Missing);
+
+                    paramProcessedCount++;
                 }
             }
-            return result;
+
+            // must return null if no result got
+            if (result.Count() == 0)
+                return null;
+            else
+                return result.ToArray();
         }
     }
 }
