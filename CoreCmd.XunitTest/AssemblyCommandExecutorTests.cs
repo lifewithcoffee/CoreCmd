@@ -10,6 +10,18 @@ using Xunit;
 
 namespace CoreCmd.XunitTest
 {
+    static class FooBar3DefaultValues
+    {
+        public static int Num1 { get; set; } = 0;
+        public static int Num2 { get; set; } = 0;
+
+        public static void Reset()
+        {
+            Num1 = 0;
+            Num2 = 0;
+        }
+    }
+
     public class AsbDummyCommand
     {
         [OptionalParam("Something", typeof(int), "aa", "bb", "cc")]
@@ -21,7 +33,13 @@ namespace CoreCmd.XunitTest
         public void FooBar2(string str, int num) { AssemblyCommandExecutorTests.HitCounter.Hit("22"); }
         public void FooBar2(int num, string str) { AssemblyCommandExecutorTests.HitCounter.Hit("23"); }
 
-        public void FooBar3(string str, int num1=1, int num2=2) { AssemblyCommandExecutorTests.HitCounter.Hit("3"); }
+        public void FooBar3(string str, int num1=1, int num2=2)
+        {
+            FooBar3DefaultValues.Num1 = num1;
+            FooBar3DefaultValues.Num2 = num2;
+
+            AssemblyCommandExecutorTests.HitCounter.Hit("3");
+        }
 
         public void FooBar4(int num) { AssemblyCommandExecutorTests.HitCounter.Hit("41"); }
         public void FooBar4(double num) { AssemblyCommandExecutorTests.HitCounter.Hit("42"); }
@@ -74,22 +92,34 @@ namespace CoreCmd.XunitTest
         [Fact]
         public void Parameters_with_default_values_1()
         {
+            FooBar3DefaultValues.Reset();
+
             executor.Execute(new string[] { "asb-dummy", "foo-bar3", "hello" });
             Assert.Equal(1, HitCounter.GetHitCount("3"));
+            Assert.Equal(1, FooBar3DefaultValues.Num1);
+            Assert.Equal(2, FooBar3DefaultValues.Num2);
         }
 
         [Fact]
         public void Parameters_with_default_values_2()
         {
+            FooBar3DefaultValues.Reset();
+
             executor.Execute(new string[] { "asb-dummy", "foo-bar3", "hello", "123" });
             Assert.Equal(1, HitCounter.GetHitCount("3"));
+            Assert.Equal(123, FooBar3DefaultValues.Num1);
+            Assert.Equal(2, FooBar3DefaultValues.Num2);
         }
 
         [Fact]
         public void Parameters_with_default_values_3()
         { 
+            FooBar3DefaultValues.Reset();
+
             executor.Execute(new string[] { "asb-dummy", "foo-bar3", "hello", "123", "456"});
             Assert.Equal(1, HitCounter.GetHitCount("3"));
+            Assert.Equal(123, FooBar3DefaultValues.Num1);
+            Assert.Equal(456, FooBar3DefaultValues.Num2);
         }
 
         [Fact]

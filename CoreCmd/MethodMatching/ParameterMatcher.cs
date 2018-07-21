@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -15,11 +16,20 @@ namespace CoreCmd.MethodMatching
         public object[] Match(ParameterInfo[] info, string[] parameters)
         {
             object[] result = null;
-            if (info.Length == parameters.Length)
+
+            int minParamNumber = info.Where(i => !i.HasDefaultValue).Count(); // parameters with default values are optional
+
+            if(parameters.Length >= minParamNumber && parameters.Length <= info.Length)
             {
                 result = new object[info.Length];
                 for (int i = 0; i < info.Length; i++)
                 {
+                    if (i >= parameters.Length) // for the missing parameters with default values
+                    {
+                        result[i] = info[i].DefaultValue??Type.Missing;
+                        continue;
+                    }
+
                     Type type = info[i].ParameterType;
                     if (type.Equals(typeof(string)))
                         result[i] = parameters[i];
