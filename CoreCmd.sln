@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreCmd.XunitTest", "CoreCm
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestClients", "TestClients", "{B6CCE93E-B536-4C6C-986F-411C77342CB5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreCmd.Mstest", "CoreCmd.Mstest\CoreCmd.Mstest.csproj", "{60195C66-921D-42AF-8BF3-65F6E2CD3902}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{C48B813D-82B5-47B6-A8BF-6581D3707E64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C48B813D-82B5-47B6-A8BF-6581D3707E64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C48B813D-82B5-47B6-A8BF-6581D3707E64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60195C66-921D-42AF-8BF3-65F6E2CD3902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60195C66-921D-42AF-8BF3-65F6E2CD3902}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60195C66-921D-42AF-8BF3-65F6E2CD3902}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60195C66-921D-42AF-8BF3-65F6E2CD3902}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

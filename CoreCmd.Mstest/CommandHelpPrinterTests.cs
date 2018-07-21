@@ -1,17 +1,16 @@
 ﻿using CoreCmd.Attributes;
 using CoreCmd.BuiltinCommands;
 using CoreCmd.CommandExecution;
-using CoreCmd.XunitTest.Utils;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using Xunit;
-using Xunit.Abstractions;
 
 namespace CoreCmd.XunitTest
 {
+    [TestClass]
     public class CommandHelpPrinterTests
     {
         const string dummyCmd2HelpText = "This is the help info for DummyCommand2";
@@ -30,17 +29,10 @@ namespace CoreCmd.XunitTest
             public void FooBarBo4(float a, string b) { }
         }
 
-        private readonly ITestOutputHelper output;
-        public CommandHelpPrinterTests(ITestOutputHelper output)
-        {
-            this.output = output;
-        }
 
-        [Fact]
+        [TestMethod]
         public void Do_test()
         {
-            var xunitTestOutputWriter = new XunitTestOutputWriter(output);
-            Console.SetOut(xunitTestOutputWriter);
 
             var printer = new CommandHelpPrinter();
             printer.PrintClassHelp(typeof(DummyCommand2));
