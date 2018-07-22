@@ -41,7 +41,7 @@ namespace CoreCmd.XunitTest
         }
 
         [Fact]
-        public void Parameters_with_default_values_mismatching_case()
+        public void Mismatch()
         {
             DefaultParameterCommand.Reset();
 
@@ -50,7 +50,7 @@ namespace CoreCmd.XunitTest
         }
 
         [Fact]
-        public void Parameters_with_default_values_omit_all_default()
+        public void Omit_all_default()
         {
             DefaultParameterCommand.Reset();
 
@@ -62,7 +62,7 @@ namespace CoreCmd.XunitTest
         }
 
         [Fact]
-        public void Parameters_with_default_values_partial_defaults()
+        public void Partially_match()
         {
             DefaultParameterCommand.Reset();
 
@@ -74,7 +74,7 @@ namespace CoreCmd.XunitTest
         }
 
         [Fact]
-        public void Parameters_with_default_values_partial_orderless_defaults()
+        public void Partially_orderless_match()
         {
             DefaultParameterCommand.Reset();
 
