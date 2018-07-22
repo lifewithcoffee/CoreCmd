@@ -5,13 +5,13 @@ using System.Text;
 
 namespace CoreCmd.MethodMatching
 {
-    interface IParamUtil
+    public interface IParamUtil
     {
         (List<string>, List<string>) GroupdParameters(string[] parameters);
         Dictionary<string, string> GetOptionalParamDict(List<string> optionalParamList);
     }
 
-    class ParamUtil : IParamUtil
+    public class ParamUtil : IParamUtil
     {
         public (List<string>, List<string>) GroupdParameters(string[] parameters)
         {
@@ -29,29 +29,49 @@ namespace CoreCmd.MethodMatching
             return (requiredParameters, optionalParameters);
         }
 
-        // All optional parameters start with '-'
-        // if found multiple parameters have the same key, an exception will be thrown out
+
+        /// <summary>
+        /// - All optional parameters start with '-'
+        /// - It doesn't matter how many '-'s are at the beginning of the parameter string
+        /// - If found multiple parameters have the same key, an exception will be thrown out
+        /// </summary>
         public Dictionary<string, string> GetOptionalParamDict(List<string> optionalParamList)
         {
             Dictionary<string, string> result = new Dictionary<string, string>();
 
-            var paramsWithoutLeadingDash = optionalParamList.Select(p => p.Substring(1, p.Length));
+            var paramsWithoutLeadingDash = optionalParamList.Select(p => p.TrimStart('-'));
             foreach (var param in paramsWithoutLeadingDash)
             {
                 int index = param.IndexOf(':');
 
                 if (index < 0)
-                    index = param.Length - 1;
+                    index = param.Length;
 
-                string key = param.Substring(0, index);
+                string key = Utils.LowerKebabCase(param.Substring(0, index));
                 if (result.ContainsKey(key))
                     throw new Exception($"Duplicated key '{key}' found when parsing optional parameters");
-                else if (index == param.Length - 1)
+                else if (index == param.Length)
                     result[key] = "";
                 else
-                    result[key] = param.Substring(index + 1, param.Length);
+                {
+                    var value = param.Substring(index + 1, param.Length - index - 1).Trim();
+                    if (value.StartsWith("'") && value.EndsWith("'")) // strip 's from a string of 'xxx'
+                    {
+                        value = value.TrimStart('\'');
+                        value = value.TrimEnd('\'');
+                    }
+                    else if (value.StartsWith("\"") && value.EndsWith("\""))    // strip "s from a string of "xxx"
+                    {
+                        value = value.TrimStart('"');
+                        value = value.TrimEnd('"');
+                    }
+
+                    if (string.IsNullOrWhiteSpace(value))
+                        value = "";
+                    result[key] = value;
+                }
             }
-            return null;
+            return result;
         }
     }
 
