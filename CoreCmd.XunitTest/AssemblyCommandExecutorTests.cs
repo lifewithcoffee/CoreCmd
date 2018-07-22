@@ -10,19 +10,6 @@ using Xunit;
 
 namespace CoreCmd.XunitTest
 {
-    static class FooBar3DefaultValues
-    {
-        public static int Num1 { get; set; } = 0;
-        public static int Num2 { get; set; } = 0;
-        public static string Code { get; set; }
-
-        public static void Reset()
-        {
-            Num1 = 0;
-            Num2 = 0;
-            Code = "";
-        }
-    }
 
     public class AsbDummyCommand
     {
@@ -35,14 +22,6 @@ namespace CoreCmd.XunitTest
         public void FooBar2(string str, int num) { AssemblyCommandExecutorTests.HitCounter.Hit("22"); }
         public void FooBar2(int num, string str) { AssemblyCommandExecutorTests.HitCounter.Hit("23"); }
 
-        public void FooBar3(string str, int num1=1, int num2=2, string code="apple")
-        {
-            FooBar3DefaultValues.Num1 = num1;
-            FooBar3DefaultValues.Num2 = num2;
-            FooBar3DefaultValues.Code = code;
-
-            AssemblyCommandExecutorTests.HitCounter.Hit("3");
-        }
 
         #region Foobar4
         public void FooBar4(int num) { AssemblyCommandExecutorTests.HitCounter.Hit("41"); }
@@ -92,49 +71,6 @@ namespace CoreCmd.XunitTest
             Assert.Equal(0, HitCounter.GetHitCount("21"));
             Assert.Equal(1, HitCounter.GetHitCount("22"));
             Assert.Equal(0, HitCounter.GetHitCount("23"));
-        }
-
-        [Fact]
-        public void Parameters_with_default_values_omit_all_default()
-        {
-            FooBar3DefaultValues.Reset();
-
-            executor.Execute(new string[] { "asb-dummy", "foo-bar3", "hello" });
-            Assert.Equal(1, HitCounter.GetHitCount("3"));
-            Assert.Equal(1, FooBar3DefaultValues.Num1);
-            Assert.Equal(2, FooBar3DefaultValues.Num2);
-            Assert.Equal("apple", FooBar3DefaultValues.Code);
-        }
-
-        [Fact]
-        public void Parameters_with_default_values_partial_defaults()
-        {
-            FooBar3DefaultValues.Reset();
-
-            executor.Execute(new string[] { "asb-dummy", "foo-bar3", "hello", "-num1:123" });
-            Assert.Equal(1, HitCounter.GetHitCount("3"));
-            Assert.Equal(123, FooBar3DefaultValues.Num1);
-            Assert.Equal(2, FooBar3DefaultValues.Num2);
-            Assert.Equal("apple", FooBar3DefaultValues.Code);
-        }
-
-        [Fact]
-        public void Parameters_with_default_values_partial_orderless_defaults()
-        { 
-            FooBar3DefaultValues.Reset();
-
-            executor.Execute(new string[] { "asb-dummy", "foo-bar3", "-num1:123", "hello", "--c:orange"});
-            Assert.Equal(1, HitCounter.GetHitCount("3"));
-            Assert.Equal(123, FooBar3DefaultValues.Num1);
-            Assert.Equal(2, FooBar3DefaultValues.Num2);
-            Assert.Equal("orange", FooBar3DefaultValues.Code);
-        }
-
-        [Fact]
-        public void Parameters_with_default_values_mismatching_case()
-        {
-            executor.Execute(new string[] { "asb-dummy", "foo-bar3", "hello", "-num1:some-string"});
-            Assert.Equal(0, HitCounter.GetHitCount("3"));
         }
 
         [Fact]

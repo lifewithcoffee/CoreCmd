@@ -43,7 +43,6 @@ namespace CoreCmd.CommandExecution
             }
             catch (Exception ex)
             {
-                Debug.Assert(false);
                 Console.WriteLine(ex.Message);
             }
 
