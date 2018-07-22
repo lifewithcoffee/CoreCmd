@@ -55,12 +55,12 @@ namespace CoreCmd.MethodMatching
                 else
                 {
                     var value = param.Substring(index + 1, param.Length - index - 1).Trim();
-                    if (value.StartsWith("'") && value.EndsWith("'")) // strip 's from a string of 'xxx'
+                    if (value.StartsWith("'") && value.EndsWith("'")) // strip single quotes (') from a string of 'xxx'
                     {
                         value = value.TrimStart('\'');
                         value = value.TrimEnd('\'');
                     }
-                    else if (value.StartsWith("\"") && value.EndsWith("\""))    // strip "s from a string of "xxx"
+                    else if (value.StartsWith("\"") && value.EndsWith("\""))    // strip double quotes (") from a string of "xxx"
                     {
                         value = value.TrimStart('"');
                         value = value.TrimEnd('"');

@@ -73,12 +73,16 @@ namespace CoreCmd.MethodMatching
                 string parameterName = info.Name;
                 var param = dict.Where(d => parameterName.StartsWith(d.Key)).SingleOrDefault();
                 if (param.Equals(default(KeyValuePair<string, string>)))
-                    return MatchOneParameter(info.ParameterType, param.Value);
-                else
                     return info.DefaultValue ?? Type.Missing;
+                else
+                    return MatchOneParameter(info.ParameterType, param.Value);
             }
         }
 
+        /// <returns>
+        /// null: parameter mismatches, indicating the relevant method should not be invoked
+        /// new object[0]: this is a method without parameters
+        /// </returns>
         public object[] Match(ParameterInfo[] info, string[] parameters)
         {
             List<object> result = new List<object>();
@@ -93,20 +97,24 @@ namespace CoreCmd.MethodMatching
             // match required parameters
             if (requiredParamCount == requiredParamNumber)
             {
+                if (requiredParamNumber == 0)
+                    return new object[0];   // there's no parameter required
+
                 foreach (string param in required)
                 {
                     var paramObj = MatchOneParameter(info[paramProcessedCount].ParameterType, param);
                     if (paramObj != null)
                         result.Add(paramObj);
                     else
-                        return null;
+                        return null;    // parameter mismatch
 
                     paramProcessedCount++;
                 }
                 requiredParamMatched = true;
             }
             else
-                return null;
+                return null; // parameter mismatch
+
 
             // match optional parameters, i.e. parameters with defaul values
             if(requiredParamMatched)
@@ -119,17 +127,14 @@ namespace CoreCmd.MethodMatching
                     if (paramObj != null)
                         result.Add(paramObj);
                     else
-                        result.Add(info[paramProcessedCount].DefaultValue ?? Type.Missing);
+                        return null;    // default parameter mismatches
 
                     paramProcessedCount++;
                 }
             }
 
             // must return null if no result got
-            if (result.Count() == 0)
-                return null;
-            else
-                return result.ToArray();
+            return result.ToArray();
         }
     }
 }

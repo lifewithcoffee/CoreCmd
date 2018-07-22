@@ -1,6 +1,7 @@
 ﻿using CoreCmd.CommandFind;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -42,6 +43,7 @@ namespace CoreCmd.CommandExecution
             }
             catch (Exception ex)
             {
+                Debug.Assert(false);
                 Console.WriteLine(ex.Message);
             }
 
