@@ -103,6 +103,7 @@ namespace CoreCmd.XunitTest
             Assert.Equal(1, HitCounter.GetHitCount("3"));
             Assert.Equal(1, FooBar3DefaultValues.Num1);
             Assert.Equal(2, FooBar3DefaultValues.Num2);
+            Assert.Equal("apple", FooBar3DefaultValues.Code);
         }
 
         [Fact]
@@ -112,6 +113,9 @@ namespace CoreCmd.XunitTest
 
             executor.Execute(new string[] { "asb-dummy", "foo-bar3", "hello", "-num1:123" });
             Assert.Equal(1, HitCounter.GetHitCount("3"));
+            Assert.Equal(123, FooBar3DefaultValues.Num1);
+            Assert.Equal(2, FooBar3DefaultValues.Num2);
+            Assert.Equal("apple", FooBar3DefaultValues.Code);
         }
 
         [Fact]
