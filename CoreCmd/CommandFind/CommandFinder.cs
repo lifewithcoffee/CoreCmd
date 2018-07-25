@@ -56,7 +56,7 @@ namespace CoreCmd.CommandFind
             return result;
         }
 
-        public IEnumerable<Type> GetAllCommandClasses(string commandPostfix = "command", string assemblyPrefix = "command")
+        public IEnumerable<Type> GetAllCommandClasses(string commandPostfix = "command", string assemblyPrefix = "corecmd.")
         {
             var allTypeLists = new List<List<Type>>();
 
