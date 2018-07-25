@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 
-namespace CoreCmd.BuiltinCommands
+namespace CoreCmd.BuildinCommands
 {
     class VersionCommand
     {

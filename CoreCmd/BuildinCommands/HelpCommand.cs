@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CoreCmd.BuiltinCommands
+namespace CoreCmd.BuildinCommands
 {
     class HelpCommand
     {
