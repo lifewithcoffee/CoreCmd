@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CoreCmd.XunitTest.Utils
+namespace CoreCmd.XunitTest.TestUtils
 {
     public class HitCounter
     {

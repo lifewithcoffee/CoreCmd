@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using Xunit.Abstractions;
 
-namespace CoreCmd.XunitTest.Utils
+namespace CoreCmd.XunitTest.TestUtils
 {
     class XunitTestOutputWriter : TextWriter
     {

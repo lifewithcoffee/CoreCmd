@@ -1,5 +1,5 @@
 ﻿using CoreCmd.CommandExecution;
-using CoreCmd.XunitTest.Utils;
+using CoreCmd.XunitTest.TestUtils;
 using System;
 using System.Collections.Generic;
 using System.Text;
