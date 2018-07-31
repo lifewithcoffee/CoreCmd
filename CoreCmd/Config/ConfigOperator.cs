@@ -22,7 +22,7 @@ namespace CoreCmd.Config
         /// </summary>
         public void AddCommandAssembly(string dllPath)
         {
-            ICommandFinder _commandFinder = new CommandFinder();
+            ICommandClassLoader _loader = new CommandClassLoader();
             IAssemblyLoadable _assemblyLoadable = new AssemblyLoadable();
 
             if (config != null)
@@ -32,7 +32,7 @@ namespace CoreCmd.Config
                 // add wehn the assembly does not exist
                 if (config.CommandAssemblies.Where(c => c.Path.ToLower().Equals(lowerPath)).FirstOrDefault() != null)
                 {
-                    var intersect = _assemblyLoadable.GetConflictComands(_commandFinder.GetAllCommandClasses(),dllPath);
+                    var intersect = _assemblyLoadable.GetConflictComands(_loader.LoadAllCommandClasses(null),dllPath);
                     if (intersect.Count() == 0)
                         config.AddCommandAssembly(dllPath);
                     else

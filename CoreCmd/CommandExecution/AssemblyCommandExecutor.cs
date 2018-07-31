@@ -16,7 +16,13 @@ namespace CoreCmd.CommandExecution
 
     public class AssemblyCommandExecutor : IAssemblyCommandExecutor
     {
-        ICommandFinder _commandFinder = new CommandFinder();
+
+        public List<Assembly> additionalAssemblies = new List<Assembly>();
+
+        public void SetAdditionalSearchAssembly(Assembly assembly)
+        {
+            this.additionalAssemblies.Add(assembly);
+        }
 
         public AssemblyCommandExecutor() { }
 
@@ -25,7 +31,7 @@ namespace CoreCmd.CommandExecution
             if (types != null)
             {
                 foreach(var type in types)
-                    this._commandFinder.SetAdditionalSearchAssembly(Assembly.GetAssembly(type));
+                    this.SetAdditionalSearchAssembly(Assembly.GetAssembly(type));
             }
         }
 
@@ -33,7 +39,9 @@ namespace CoreCmd.CommandExecution
         {
             try
             {
-                var allClassTypes = _commandFinder.GetAllCommandClasses();
+                ICommandClassLoader _loader = new CommandClassLoader();
+
+                var allClassTypes = _loader.LoadAllCommandClasses(additionalAssemblies);
 
                 if (args.Length > 0)
                     ExecuteFirstCommand(allClassTypes);
@@ -49,6 +57,7 @@ namespace CoreCmd.CommandExecution
 
             void ExecuteFirstCommand(IEnumerable<Type> allClassTypes)
             {
+                ICommandFinder _commandFinder = new CommandFinder();
                 var singleCommandExecutor = _commandFinder.GetSingleCommandExecutor(allClassTypes, args);
 
                 if (singleCommandExecutor != null)

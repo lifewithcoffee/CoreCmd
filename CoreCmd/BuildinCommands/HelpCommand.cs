@@ -7,11 +7,12 @@ namespace CoreCmd.BuildinCommands
 {
     class HelpCommand
     {
-        ICommandFinder _commandFinder = new CommandFinder();
-
         public void Show(string command)
         {
-            var allClassTypes = _commandFinder.GetAllCommandClasses();
+            ICommandFinder _commandFinder = new CommandFinder();
+            ICommandClassLoader _loader = new CommandClassLoader();
+
+            var allClassTypes = _loader.LoadAllCommandClasses(null);
             var singleCommandExecutor = _commandFinder.GetSingleCommandExecutor(allClassTypes, new string[]{ command });
 
             if(singleCommandExecutor != null)
