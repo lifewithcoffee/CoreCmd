@@ -1,5 +1,7 @@
-:: create console app and nuget package release
+:: create console app dlls
 dotnet publish CoreCmd\CoreCmd.csproj -c Release -o e:\rp\git\CoreCmd\CoreCmd\bin\Publish
+
+:: create nuget package
 dotnet pack CoreCmd\CoreCmd.csproj -c Release -o E:\rp\local-nuget-packages
 
 :: update ExperimentalConsoleApp nuget dependency
