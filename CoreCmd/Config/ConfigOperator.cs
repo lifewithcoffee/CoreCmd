@@ -9,9 +9,6 @@ namespace CoreCmd.Config
 {
     class ConfigOperator
     {
-        ICommandFinder _commandFinder = new CommandFinder();
-        IAssemblyCommandFinder _assemblyCommandFinder = new AssemblyCommandFinder();
-
         CoreCmdConfig config = null;
 
         public void LoadConfig(string path)
@@ -25,6 +22,9 @@ namespace CoreCmd.Config
         /// </summary>
         public void AddCommandAssembly(string dllPath)
         {
+            ICommandFinder _commandFinder = new CommandFinder();
+            IAssemblyLoadable _assemblyLoadable = new AssemblyLoadable();
+
             if (config != null)
             {
                 string lowerPath = dllPath.ToLower();
@@ -32,10 +32,7 @@ namespace CoreCmd.Config
                 // add wehn the assembly does not exist
                 if (config.CommandAssemblies.Where(c => c.Path.ToLower().Equals(lowerPath)).FirstOrDefault() != null)
                 {
-                    var existingCmds = _commandFinder.GetAllCommandClasses().Select(c => c.Name);
-                    var assemblyCmds = _assemblyCommandFinder.GetCommandClassTypesFromAssembly(dllPath, GlobalConsts.CommandPostFix).Select(c => c.Name);
-                    var intersect = existingCmds.Intersect(assemblyCmds);
-
+                    var intersect = _assemblyLoadable.GetConflictComands(_commandFinder.GetAllCommandClasses(),dllPath);
                     if (intersect.Count() == 0)
                         config.AddCommandAssembly(dllPath);
                     else

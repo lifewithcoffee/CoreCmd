@@ -65,8 +65,8 @@ namespace CoreCmd.CommandFind
 
             _commandClassLoader.LoadFromEntry(allTypeLists, commandPostfix);
             _commandClassLoader.LoadFromCoreCmd(allTypeLists, commandPostfix);
-            _commandClassLoader.LoadFromCurrentDir(allTypeLists, assemblyPrefix, commandPostfix);
             _commandClassLoader.LoadFromAdditionalAssemblies(allTypeLists, commandPostfix, additionalAssemblies);
+            _commandClassLoader.LoadFromCurrentDir(allTypeLists, assemblyPrefix, commandPostfix);
 
             return allTypeLists.SelectMany(r => r);
         }
@@ -75,7 +75,6 @@ namespace CoreCmd.CommandFind
     class CommandClassLoader
     {
         IAssemblyCommandFinder _assemblyCommandFinder = new AssemblyCommandFinder();
-        IAssemblyFinder _assemblyFinder = new AssemblyFinder();
 
         public void LoadFromEntry(List<List<Type>> lists, string postfix)
         {
@@ -94,10 +93,15 @@ namespace CoreCmd.CommandFind
 
         public void LoadFromCurrentDir(List<List<Type>> lists, string assemblyPrefix, string commandPostfix)
         {
-            // the assemblies in the current dir need to match some naming pattern
+            IAssemblyFinder _assemblyFinder = new AssemblyFinder();
+            IAssemblyLoadable _assemblyLoadable = new AssemblyLoadable();
+
             var dlls = _assemblyFinder.GetCommandAssembly(Directory.GetCurrentDirectory(), assemblyPrefix);
             foreach (var dll in dlls)
-                lists.Add(_assemblyCommandFinder.GetCommandClassTypesFromAssembly(dll, commandPostfix));
+            {
+                if (!_assemblyLoadable.FindConflict(lists.SelectMany(c => c), dll))
+                    lists.Add(_assemblyCommandFinder.GetCommandClassTypesFromAssembly(dll, commandPostfix));
+            }
         }
 
         public void LoadFromAdditionalAssemblies(List<List<Type>> lists, string commandPostfix, List<Assembly> additionalAssemblies)
