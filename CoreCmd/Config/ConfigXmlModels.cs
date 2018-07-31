@@ -7,7 +7,7 @@ namespace CoreCmd.Config
 {
     public class CoreCmdConfig
     {
-        List<CommandAssembly> CommandAssemblies { get; set; } = new List<CommandAssembly>();
+        public List<CommandAssembly> CommandAssemblies { get; set; } = new List<CommandAssembly>();
 
         public void AddCommandAssembly(string dllPath)
         {

@@ -20,22 +20,41 @@ namespace CoreCmd.Config
             config = xmlUtil.ReadFromFile(path);
         }
 
+        /// <summary>
+        /// If the commands in the specified dll do not exist, add the dll to the config
+        /// </summary>
         public void AddCommandAssembly(string dllPath)
         {
             if (config != null)
             {
-                var existingCmds = _commandFinder.GetAllCommandClasses().Select(c => c.Name);
-                var assemblyCmds = _assemblyCommandFinder.GetCommandClassTypesFromAssembly(dllPath, GlobalConsts.CommandPostFix).Select(c => c.Name);
+                string lowerPath = dllPath.ToLower();
 
-                var intersect = existingCmds.Intersect(assemblyCmds);
-                if(intersect.Count() == 0)
-                    config.AddCommandAssembly(dllPath);
-                else
+                // add wehn the assembly does not exist
+                if (config.CommandAssemblies.Where(c => c.Path.ToLower().Equals(lowerPath)).FirstOrDefault() != null)
                 {
-                    foreach (var cmd in intersect)
-                        Console.WriteLine($"Add command asssembly denied: {cmd} already exists");
+                    var existingCmds = _commandFinder.GetAllCommandClasses().Select(c => c.Name);
+                    var assemblyCmds = _assemblyCommandFinder.GetCommandClassTypesFromAssembly(dllPath, GlobalConsts.CommandPostFix).Select(c => c.Name);
+                    var intersect = existingCmds.Intersect(assemblyCmds);
+
+                    if (intersect.Count() == 0)
+                        config.AddCommandAssembly(dllPath);
+                    else
+                    {
+                        foreach (var cmd in intersect)
+                            Console.WriteLine($"Add command asssembly denied: {cmd} already exists");
+                    }
                 }
+                else
+                    Console.WriteLine("Command assembly already exsits.");
             }
+            else
+                Console.WriteLine("Error: configuration not loaded");
+        }
+
+        public void RemoveCommandAssembly(string dllPath)
+        {
+            if (config != null)
+                config.CommandAssemblies.RemoveAll(a => a.Path.ToLower().Equals(dllPath.ToLower()));
             else
                 Console.WriteLine("Error: configuration not loaded");
         }

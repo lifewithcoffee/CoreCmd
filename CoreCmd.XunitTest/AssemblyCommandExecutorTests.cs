@@ -13,11 +13,7 @@ namespace CoreCmd.XunitTest
 
     public class AsbDummyCommand
     {
-        [OptionalParam("Something", typeof(int), "aa", "bb", "cc")]
         public void FooBar1() { AssemblyCommandExecutorTests.HitCounter.Hit("1"); }
-
-        [OptionalParam("Something", typeof(int))]
-        [OptionalParam("Something", typeof(int))]
         public void FooBar2(string str) { AssemblyCommandExecutorTests.HitCounter.Hit("21"); }
         public void FooBar2(string str, int num) { AssemblyCommandExecutorTests.HitCounter.Hit("22"); }
         public void FooBar2(int num, string str) { AssemblyCommandExecutorTests.HitCounter.Hit("23"); }
