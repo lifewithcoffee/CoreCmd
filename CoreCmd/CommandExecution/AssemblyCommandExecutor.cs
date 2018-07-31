@@ -33,13 +33,12 @@ namespace CoreCmd.CommandExecution
         {
             try
             {
-                const string commandPostfix = "command";
-                var allClassTypes = _commandFinder.GetAllCommandClasses(commandPostfix);
+                var allClassTypes = _commandFinder.GetAllCommandClasses();
 
                 if (args.Length > 0)
                     ExecuteFirstCommand(allClassTypes);
                 else
-                    PrintHelpMessage(allClassTypes, commandPostfix);
+                    PrintHelpMessage(allClassTypes, GlobalConsts.CommandPostFix);
             }
             catch (Exception ex)
             {

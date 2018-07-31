@@ -11,8 +11,7 @@ namespace CoreCmd.BuildinCommands
 
         public void Show(string command)
         {
-            const string commandPostfix = "command";
-            var allClassTypes = _commandFinder.GetAllCommandClasses(commandPostfix);
+            var allClassTypes = _commandFinder.GetAllCommandClasses();
             var singleCommandExecutor = _commandFinder.GetSingleCommandExecutor(allClassTypes, new string[]{ command });
 
             if(singleCommandExecutor != null)

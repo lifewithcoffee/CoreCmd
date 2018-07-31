@@ -11,7 +11,7 @@ namespace CoreCmd.CommandFind
     interface ICommandFinder
     {
         void SetAdditionalSearchAssembly(Assembly assembly);
-        IEnumerable<Type> GetAllCommandClasses(string assemblyPrefix = "command", string commandPostfix = "command");
+        IEnumerable<Type> GetAllCommandClasses();
         ISingleCommandExecutor GetSingleCommandExecutor(IEnumerable<Type> targetTypes, string[] args);
     }
 
@@ -56,8 +56,11 @@ namespace CoreCmd.CommandFind
             return result;
         }
 
-        public IEnumerable<Type> GetAllCommandClasses(string commandPostfix = "command", string assemblyPrefix = "corecmd.")
+        public IEnumerable<Type> GetAllCommandClasses()
         {
+            string commandPostfix = GlobalConsts.CommandPostFix;
+            string assemblyPrefix = GlobalConsts.AssemblyPrefix;
+
             var allTypeLists = new List<List<Type>>();
 
             _commandClassLoader.LoadFromEntry(allTypeLists, commandPostfix);
