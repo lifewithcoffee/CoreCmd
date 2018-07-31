@@ -57,7 +57,7 @@ namespace CoreCmd.CommandExecution
 
             void ExecuteFirstCommand(IEnumerable<Type> allClassTypes)
             {
-                ICommandFinder _commandFinder = new CommandFinder();
+                ICommandExecutorCreate _commandFinder = new CommandExecutorCreator();
                 var singleCommandExecutor = _commandFinder.GetSingleCommandExecutor(allClassTypes, args);
 
                 if (singleCommandExecutor != null)

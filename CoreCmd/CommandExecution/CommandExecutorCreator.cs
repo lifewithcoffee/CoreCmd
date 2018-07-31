@@ -6,14 +6,14 @@ using System.Text;
 using System.Linq;
 using CoreCmd.CommandExecution;
 
-namespace CoreCmd.CommandFind
+namespace CoreCmd.CommandExecution
 {
-    interface ICommandFinder
+    interface ICommandExecutorCreate
     {
         ISingleCommandExecutor GetSingleCommandExecutor(IEnumerable<Type> targetTypes, string[] args);
     }
 
-    internal class CommandFinder : ICommandFinder
+    internal class CommandExecutorCreator : ICommandExecutorCreate
     {
         public ISingleCommandExecutor GetSingleCommandExecutor(IEnumerable<Type> targetTypes, string[] args)
         {
