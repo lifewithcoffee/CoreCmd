@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CoreCmd.CommandFind
+namespace CoreCmd.CommandLoading
 {
     interface IAssemblyLoadable
     {

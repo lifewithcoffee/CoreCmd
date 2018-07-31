@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace CoreCmd.CommandFind
+namespace CoreCmd.CommandLoading
 {
     interface IAssemblyCommandFinder
     {
