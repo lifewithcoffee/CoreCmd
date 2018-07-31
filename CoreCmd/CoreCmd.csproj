@@ -26,4 +26,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="netcoreutils" Version="0.0.1.1" />
+  </ItemGroup>
+
 </Project>

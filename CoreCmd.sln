@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A68BBA59-77EC-4552-8514-A715319CB798}"
 	ProjectSection(SolutionItems) = preProject
 		build-all.bat = build-all.bat
+		nuget.config = nuget.config
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -21,7 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreCmd.XunitTest", "CoreCm
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestClients", "TestClients", "{B6CCE93E-B536-4C6C-986F-411C77342CB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreCmd.Mstest", "CoreCmd.Mstest\CoreCmd.Mstest.csproj", "{60195C66-921D-42AF-8BF3-65F6E2CD3902}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreCmd.Mstest", "CoreCmd.Mstest\CoreCmd.Mstest.csproj", "{60195C66-921D-42AF-8BF3-65F6E2CD3902}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
