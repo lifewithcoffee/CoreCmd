@@ -1,12 +1,11 @@
-﻿using CoreCmd.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
-namespace CoreCmd.CommandExecution
+namespace CoreCmd.Help
 {
-    public class CommandHelpPrinter
+    public class HelpInfoService
     {
         public void PrintClassHelp(Type commandClassType)
         {
@@ -28,7 +27,7 @@ namespace CoreCmd.CommandExecution
                 this.PrintMethodHelp(m);
         }
 
-        public string GetParameterListText(MethodInfo methodInfo)
+        private string GetParameterListText(MethodInfo methodInfo)
         {
             StringBuilder sb = new StringBuilder();
 

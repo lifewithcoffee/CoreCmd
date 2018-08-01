@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CoreCmd.Attributes
+namespace CoreCmd.Help
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class HelpAttribute : Attribute

@@ -1,6 +1,6 @@
-﻿using CoreCmd.Attributes;
-using CoreCmd.BuildinCommands;
+﻿using CoreCmd.BuildinCommands;
 using CoreCmd.CommandExecution;
+using CoreCmd.Help;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -34,9 +34,9 @@ namespace CoreCmd.XunitTest
         public void Do_test()
         {
 
-            var printer = new CommandHelpPrinter();
-            printer.PrintClassHelp(typeof(DummyCommand2));
-            printer.PrintAllMethodHelp(typeof(DummyCommand2));
+            var helpInfo = new HelpInfoService();
+            helpInfo.PrintClassHelp(typeof(DummyCommand2));
+            helpInfo.PrintAllMethodHelp(typeof(DummyCommand2));
         }
     }
 }

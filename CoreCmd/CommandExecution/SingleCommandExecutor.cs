@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Diagnostics;
 using CoreCmd.MethodMatching;
-using CoreCmd.Attributes;
+using CoreCmd.Help;
 
 namespace CoreCmd.CommandExecution
 {
