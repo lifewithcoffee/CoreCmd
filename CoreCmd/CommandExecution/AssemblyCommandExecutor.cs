@@ -1,4 +1,5 @@
 ﻿using CoreCmd.CommandLoading;
+using CoreCmd.Help;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -44,36 +45,33 @@ namespace CoreCmd.CommandExecution
                 var allClassTypes = _loader.LoadAllCommandClasses(additionalAssemblies);
 
                 if (args.Length > 0)
-                    ExecuteFirstCommand(allClassTypes);
+                    ExecuteFirstCommand(allClassTypes, args);
                 else
-                    PrintHelpMessage(allClassTypes, GlobalConsts.CommandPostFix);
+                    PrintHelpMessage(allClassTypes);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
 
-            /** local functions **/
+        }
 
-            void ExecuteFirstCommand(IEnumerable<Type> allClassTypes)
-            {
-                ICommandExecutorCreate _commandFinder = new CommandExecutorCreator();
-                var singleCommandExecutor = _commandFinder.GetSingleCommandExecutor(allClassTypes, args);
+        private void ExecuteFirstCommand(IEnumerable<Type> allClassTypes, string[] args)
+        {
+            ICommandExecutorCreate _commandFinder = new CommandExecutorCreator();
+            var singleCommandExecutor = _commandFinder.GetSingleCommandExecutor(allClassTypes, args);
 
-                if (singleCommandExecutor != null)
-                    singleCommandExecutor.Execute();
-                else
-                    Console.WriteLine("No command object found");
-            }
+            if (singleCommandExecutor != null)
+                singleCommandExecutor.Execute();
+        }
 
-            void PrintHelpMessage(IEnumerable<Type> allClassTypes, string commandPostfix)
-            {
-                Console.WriteLine("Subcommand is missing, please specify subcommands:");
+        private void PrintHelpMessage(IEnumerable<Type> allClassTypes)
+        {
+            IHelpInfoService _helpSvc = new HelpInfoService();
 
-                // print all available commands
-                foreach (var cmd in allClassTypes)
-                    Console.WriteLine(Utils.LowerKebabCase(cmd.Name.Substring(0, cmd.Name.Length - commandPostfix.Length)));
-            }
+            Console.WriteLine("Subcommand is missing, please specify subcommands:");
+            foreach (var cmd in allClassTypes) // print all available commands
+                _helpSvc.PrintClassHelp(cmd);
         }
     }
 }

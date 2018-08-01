@@ -5,16 +5,23 @@ using System.Text;
 
 namespace CoreCmd.Help
 {
-    public class HelpInfoService
+    public interface IHelpInfoService
+    {
+        void PrintClassHelp(Type commandClassType);
+        void PrintAllMethodHelp(Type commandClassType);
+        void PrintMethodHelp(MethodInfo methodInfo);
+    }
+
+    public class HelpInfoService : IHelpInfoService
     {
         public void PrintClassHelp(Type commandClassType)
         {
             var helpInfo = commandClassType.GetCustomAttribute<HelpAttribute>();
+            string commandName = Utils.LowerKebabCase(commandClassType.Name).Replace("-command", "");
 
-            string commandName = Utils.LowerKebabCase(commandClassType.Name);
-            commandName = commandName.Replace("-command", "");
-
-            Console.WriteLine($"{commandName}: {helpInfo.Description}");
+            string helpText = helpInfo == null ? commandName : $"{commandName}: {helpInfo?.Description}";
+            Console.WriteLine(helpText);
+            this.PrintAllMethodHelp(commandClassType);
         }
 
         public void PrintAllMethodHelp(Type commandClassType)

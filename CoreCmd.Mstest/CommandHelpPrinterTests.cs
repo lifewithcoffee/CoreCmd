@@ -33,7 +33,6 @@ namespace CoreCmd.XunitTest
         [TestMethod]
         public void Do_test()
         {
-
             var helpInfo = new HelpInfoService();
             helpInfo.PrintClassHelp(typeof(DummyCommand2));
             helpInfo.PrintAllMethodHelp(typeof(DummyCommand2));

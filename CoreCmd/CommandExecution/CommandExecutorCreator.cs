@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Linq;
 using CoreCmd.CommandExecution;
+using CoreCmd.MethodMatching;
 
 namespace CoreCmd.CommandExecution
 {
@@ -17,6 +18,8 @@ namespace CoreCmd.CommandExecution
     {
         public ISingleCommandExecutor GetSingleCommandExecutor(IEnumerable<Type> targetTypes, string[] args)
         {
+            IMethodMatcher _methodMatcher = new MethodMatcher();
+
             SingleCommandExecutor result = null;
             if (args.Length > 0)
             {
@@ -30,16 +33,30 @@ namespace CoreCmd.CommandExecution
                     if (args.Length > 1)
                     {
                         result.MethodSubcommand = args[1];
-                        result.Parameters = args.Skip(2).ToArray();
+
+                        // if can't find the subcommand use default subcommand
+                        if (_methodMatcher.GetMethodInfo(result.CommandClassType, result.MethodSubcommand).Count() != 0)
+                            result.Parameters = args.Skip(2).ToArray();
+                        else
+                        {
+                            result.MethodSubcommand = GlobalConsts.DefaultSubcommandMethodName;
+                            result.Parameters = args.Skip(1).ToArray();
+                        }
                     }
                     else
-                        result.MethodSubcommand = "default-method";
+                        result.MethodSubcommand = GlobalConsts.DefaultSubcommandMethodName;
                 }
                 else
                 {
                     result.CommandClassType = targetTypes.SingleOrDefault(t => t.Name.Equals("DefaultCommand"));
                     result.MethodSubcommand = args[0];
                     result.Parameters = args.Skip(1).ToArray();
+                }
+
+                if (result.CommandClassType == null)
+                {
+                    Console.WriteLine($"Invalid command: {command.Replace("-command","")}");
+                    result = null;
                 }
             }
             return result;

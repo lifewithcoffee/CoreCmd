@@ -42,8 +42,8 @@ namespace CoreCmd.CommandExecution
 
         public void PrintHelp()
         {
-            var helpInfo = (HelpAttribute)this.CommandClassType.GetCustomAttribute(typeof(HelpAttribute));
-            Console.WriteLine(helpInfo.Description);
+            IHelpInfoService _helpSvc = new HelpInfoService();
+            _helpSvc.PrintClassHelp(this.CommandClassType);
         }
 
         public int Execute()
@@ -52,10 +52,10 @@ namespace CoreCmd.CommandExecution
             if (this.CommandClassType == null)
                 throw new Exception("Command type is null");
 
-            string errmsg = $"Can't find method: {this.MethodSubcommand}";
+            string errmsg = $"Invalid subcommand: Either there is no subcommand '{this.MethodSubcommand}' or parameter mismatches.";
             var methods = _methodMatcher.GetMethodInfo(this.CommandClassType, this.MethodSubcommand);
 
-            if(methods == null)
+            if (methods.Count() == 0)
                 Console.WriteLine(errmsg);
             else
             {

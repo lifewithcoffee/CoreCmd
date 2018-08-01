@@ -1,7 +1,8 @@
 {
   "profiles": {
     "CoreCmd": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "help 1"
     }
   }
 }
