@@ -17,6 +17,9 @@ namespace CoreCmd.Config
 
     public class CommandAssembly
     {
+        [XmlIgnore]
+        public int OrderId { get; set; }
+
         [XmlAttribute]
         public string Path { get; set; }
     }

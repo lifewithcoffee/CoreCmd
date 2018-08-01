@@ -8,5 +8,6 @@ namespace CoreCmd
     {
         public const string CommandPostFix = "command";
         public const string AssemblyPrefix = "corecmd.";
+        public const string ConfigFileName = "corecmd.config.xml";
     }
 }
