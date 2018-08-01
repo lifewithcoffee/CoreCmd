@@ -51,10 +51,15 @@ namespace CoreCmd.CommandLoading
 
         public void LoadFromAdditionalAssemblies(List<List<Type>> lists, string commandPostfix, List<Assembly> additionalAssemblies)
         {
+            IAssemblyLoadable _assemblyLoadable = new AssemblyLoadable();
+
             if( additionalAssemblies != null )
             {
-                foreach (var additioal in additionalAssemblies)
-                    lists.Add(_assemblyCommandFinder.GetCommandClassTypesFromAssembly(additioal, commandPostfix));
+                foreach (var additional in additionalAssemblies)
+                {
+                    if (!_assemblyLoadable.FindConflict(lists.SelectMany(c => c), additional))
+                        lists.Add(_assemblyCommandFinder.GetCommandClassTypesFromAssembly(additional, commandPostfix));
+                }
             }
         }
 
