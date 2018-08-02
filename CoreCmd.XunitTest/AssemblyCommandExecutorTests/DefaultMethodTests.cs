@@ -9,9 +9,9 @@ namespace AssemblyCommandExecutorTests
 {
     public class DefaultMethodTestCommand
     {
-        public void DefaultMethod() { BasicTests.HitCounter.Hit("1"); } 
-        public void DefaultMethod(string p) { BasicTests.HitCounter.Hit("2"); } 
-        public void DefaultMethod(int p) { BasicTests.HitCounter.Hit("3"); } 
+        public void DefaultMethod() { DefaultMethodTests.HitCounter.Hit("1"); } 
+        public void DefaultMethod(string p) { DefaultMethodTests.HitCounter.Hit("2"); } 
+        public void DefaultMethod(int p) { DefaultMethodTests.HitCounter.Hit("3"); } 
     }
 
     public class DefaultMethodTests
@@ -24,7 +24,7 @@ namespace AssemblyCommandExecutorTests
         [Fact]
         public void No_parameter()
         {
-            executor.Execute(new string[] { "default-method-test", "" });
+            executor.Execute(new string[] { "default-method-test" });
             Assert.Equal(1, HitCounter.GetHitCount("1"));
             Assert.Equal(0, HitCounter.GetHitCount("2"));
             Assert.Equal(0, HitCounter.GetHitCount("3"));
