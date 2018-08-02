@@ -4,9 +4,9 @@ namespace CommandsInSeparateDll
 {
     public class GreetingCommand
     {
-        public void DefaultMethod()
+        public void Default()
         {
-            Console.WriteLine("GreetingCommand.DefaultMethod() called");
+            Console.WriteLine("GreetingCommand.Default() called");
         }
 
         public void SayHello()

@@ -7,9 +7,9 @@ namespace ExperimentalConsoleApp.Commands
 {
     public class MyTestCommand
     {
-        public void DefaultMethod()
+        public void Default()
         {
-            Console.WriteLine("MyTestCommand.DefaultMethod() is called");
+            Console.WriteLine("MyTestCommand.Default() is called");
         }
 
         public void MyTestMethod(string param1, double param2)

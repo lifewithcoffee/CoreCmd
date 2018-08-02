@@ -9,9 +9,9 @@ namespace AssemblyCommandExecutorTests
 {
     public class DefaultMethodTestCommand
     {
-        public void DefaultMethod() { DefaultMethodTests.HitCounter.Hit("1"); } 
-        public void DefaultMethod(string p) { DefaultMethodTests.HitCounter.Hit("2"); } 
-        public void DefaultMethod(int p) { DefaultMethodTests.HitCounter.Hit("3"); } 
+        public void Default() { DefaultMethodTests.HitCounter.Hit("1"); } 
+        public void Default(string p) { DefaultMethodTests.HitCounter.Hit("2"); } 
+        public void Default(int p) { DefaultMethodTests.HitCounter.Hit("3"); } 
     }
 
     public class DefaultMethodTests

@@ -8,7 +8,7 @@ namespace CoreCmd.BuildinCommands
 {
     class VersionCommand
     {
-        public void DefaultMethod()
+        public void Default()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             string version= FileVersionInfo.GetVersionInfo(assembly.Location).ProductVersion;

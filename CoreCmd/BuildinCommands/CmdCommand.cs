@@ -9,7 +9,7 @@ namespace CoreCmd.BuildinCommands
 {
     class CmdCommand
     {
-        public void DefaultMethod()
+        public void Default()
         {
             this.List();
         }

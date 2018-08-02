@@ -7,9 +7,9 @@ namespace DependentConsoleApp
     [Help("This is the help info of command " + nameof(GoodMorningCommand) + ".")]
     public class GoodMorningCommand
     {
-        public void DefaultMethod()
+        public void Default()
         {
-            Console.WriteLine("GreetingCommand.DefaultMethod() called");
+            Console.WriteLine("GreetingCommand.Default() called");
         }
 
         [Help("This is the help info of method " + nameof(SayHello) + ".")]

@@ -9,7 +9,7 @@ namespace CoreCmd.BuildinCommands
 {
     class HelpCommand
     {
-        public void DefaultMethod(string command)
+        public void Default(string command)
         {
             ICommandExecutorCreate _exeCreator = new CommandExecutorCreator();
             ICommandClassLoader _loader = new CommandClassLoader();

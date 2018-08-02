@@ -48,7 +48,7 @@ namespace CoreCmd.CommandExecution
                 }
                 else
                 {
-                    result.CommandClassType = targetTypes.SingleOrDefault(t => t.Name.Equals("DefaultCommand"));
+                    result.CommandClassType = targetTypes.SingleOrDefault(t => t.Name.Equals(GlobalConsts.DefaultCommandName));
                     result.MethodSubcommand = args[0];
                     result.Parameters = args.Skip(1).ToArray();
                 }
