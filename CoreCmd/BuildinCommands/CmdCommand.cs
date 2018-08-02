@@ -17,7 +17,7 @@ namespace CoreCmd.BuildinCommands
         public void Add(string filename, bool local=false)
         {
             var userDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            var configFileFullPath = Path.Combine(userDir, filename);
+            var configFileFullPath = Path.Combine(userDir, GlobalConsts.ConfigFileName);
 
             var xmlUtil = new XmlUtil<CoreCmdConfig>();
             CoreCmdConfig config = null;
@@ -27,8 +27,15 @@ namespace CoreCmd.BuildinCommands
             else
                 config = new CoreCmdConfig();
 
-            config.CommandAssemblies.Add(new CommandAssembly { Path = configFileFullPath });
-            xmlUtil.WriteToFile(config, configFileFullPath);
+            string targetFilePath = Path.Combine(Directory.GetCurrentDirectory(), filename);
+            if (File.Exists(targetFilePath))
+            {
+                config.CommandAssemblies.Add(new CommandAssembly { Path = targetFilePath });
+                xmlUtil.WriteToFile(config, configFileFullPath);
+                Console.WriteLine($"Successfully added assembly: {targetFilePath}");
+            }
+            else
+                Console.WriteLine($"Invalid file: {targetFilePath}");
         }
 
         public void List()
