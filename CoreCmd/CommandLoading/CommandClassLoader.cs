@@ -1,4 +1,5 @@
 ﻿using CoreCmd.CommandExecution;
+using CoreCmd.Config;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,6 +30,7 @@ namespace CoreCmd.CommandLoading
             this.LoadFromCoreCmd(result, commandPostfix);
             this.LoadFromAdditionalAssemblies(result, commandPostfix, additionalAssemblies);
             this.LoadFromCurrentDir(result, assemblyPrefix, commandPostfix);
+            this.LoadFromGlobalConfig(result);
 
             return result;
         }
@@ -66,11 +68,28 @@ namespace CoreCmd.CommandLoading
 
         private void LoadFromCurrentDir(List<Type> existing, string assemblyPrefix, string commandPostfix)
         {
-            var dlls = new AssemblyFinder().GetCommandAssembly(Directory.GetCurrentDirectory(), assemblyPrefix);
+            IAssemblyFinder _assemblyFinder = new AssemblyFinder();
+
+            var dlls = _assemblyFinder.GetCommandAssembly(Directory.GetCurrentDirectory(), assemblyPrefix);
             foreach (var dll in dlls)
             {
                 var more = _assemblyCommandFinder.GetCommandClassTypesFromAssembly(dll, commandPostfix);
                 this.AddCommandsIfNotExist(existing, more);
+            }
+        }
+
+        private void LoadFromGlobalConfig(List<Type> existing)
+        {
+            IConfigOperator _configOperator = new ConfigOperator();
+
+            var dlls = _configOperator.ListCommandAssemblies();
+            if(dlls != null)
+            {
+                foreach(var dll in dlls)
+                {
+                    var more = _assemblyCommandFinder.GetCommandClassTypesFromAssembly(dll, GlobalConsts.CommandPostFix);
+                    this.AddCommandsIfNotExist(existing, more);
+                }
             }
         }
 

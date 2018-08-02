@@ -7,7 +7,7 @@ namespace DependentConsoleApp
 {
     public class DefaultCommand
     {
-        public void TestMethod1(string param1, string param2, double number)
+        public void TestMethod1(string param1, string param2, double number=1234)
         {
             Console.WriteLine("TestMethod1: param1 = {0}, param2 = {1}, number = {2}", param1, param2, number);
         }

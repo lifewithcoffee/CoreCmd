@@ -15,6 +15,10 @@ namespace CoreCmd.Config
 
         /// <param name="dllfile">Either full path or just file name with extension in the current directory</param>
         void RemoveCommandAssembly(string dllfile);
+
+        /// <returns>Full path of all registered assembly DLLs</returns>
+        IEnumerable<string> ListCommandAssemblies();
+
         void SaveChanges();
     }
 
@@ -64,6 +68,17 @@ namespace CoreCmd.Config
             }
             else
                 Console.WriteLine("Error: configuration not loaded");
+        }
+
+        public IEnumerable<string> ListCommandAssemblies()
+        {
+            if( config != null)
+                return config.CommandAssemblies.Select(a => a.Path);
+            else
+            {
+                Console.WriteLine("Error: configuration not loaded");
+                return null;
+            }
         }
 
         public void RemoveCommandAssembly(string dllPath)
