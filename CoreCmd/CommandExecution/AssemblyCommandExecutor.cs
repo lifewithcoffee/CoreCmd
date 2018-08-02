@@ -38,14 +38,19 @@ namespace CoreCmd.CommandExecution
 
         public void Execute(string[] args)
         {
+            ICommandClassLoader _loader = new CommandClassLoader();
+            ICommandExecutorCreate _commandFinder = new CommandExecutorCreator();
+
             try
             {
-                ICommandClassLoader _loader = new CommandClassLoader();
-
                 var allClassTypes = _loader.LoadAllCommandClasses(additionalAssemblies);
 
                 if (args.Length > 0)
-                    ExecuteFirstCommand(allClassTypes, args);
+                {
+                    var singleCommandExecutor = _commandFinder.GetSingleCommandExecutor(allClassTypes, args);
+                    if (singleCommandExecutor != null)
+                        singleCommandExecutor.Execute();
+                }
                 else
                     PrintHelpMessage(allClassTypes);
             }
@@ -54,15 +59,6 @@ namespace CoreCmd.CommandExecution
                 Console.WriteLine(ex.Message);
             }
 
-        }
-
-        private void ExecuteFirstCommand(IEnumerable<Type> allClassTypes, string[] args)
-        {
-            ICommandExecutorCreate _commandFinder = new CommandExecutorCreator();
-            var singleCommandExecutor = _commandFinder.GetSingleCommandExecutor(allClassTypes, args);
-
-            if (singleCommandExecutor != null)
-                singleCommandExecutor.Execute();
         }
 
         private void PrintHelpMessage(IEnumerable<Type> allClassTypes)
