@@ -16,7 +16,6 @@ namespace AssemblyCommandExecutorTests
         public void FooBar2(string str, int num) { BasicTests.HitCounter.Hit("22"); }
         public void FooBar2(int num, string str) { BasicTests.HitCounter.Hit("23"); }
 
-
         #region Foobar4
         public void FooBar4(int num) { BasicTests.HitCounter.Hit("41"); }
         public void FooBar4(double num) { BasicTests.HitCounter.Hit("42"); }
@@ -36,10 +35,7 @@ namespace AssemblyCommandExecutorTests
         static public HitCounter HitCounter { get; set; } = new HitCounter();
         AssemblyCommandExecutor executor = new AssemblyCommandExecutor(typeof(BasicTests));
 
-        public BasicTests()
-        {
-            HitCounter.ResetDict();
-        }
+        public BasicTests() { HitCounter.ResetDict(); }
 
         [Fact]
         public void Basic_usage()
