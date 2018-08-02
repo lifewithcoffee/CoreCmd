@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace CoreCmd.XunitTest
+namespace AssemblyCommandExecutorTests
 {
     public class DefaultParameterCommand
     {
@@ -31,11 +31,11 @@ namespace CoreCmd.XunitTest
         }
     }
 
-    public class AssemblyCommandExecutorTests_DefaultParameters
+    public class DefaultParameterTests
     {
-        AssemblyCommandExecutor executor = new AssemblyCommandExecutor(typeof(AssemblyCommandExecutorTests_DefaultParameters));
+        AssemblyCommandExecutor executor = new AssemblyCommandExecutor(typeof(DefaultParameterTests));
 
-        public AssemblyCommandExecutorTests_DefaultParameters()
+        public DefaultParameterTests()
         {
             DefaultParameterCommand.HitCounter.ResetDict();
         }

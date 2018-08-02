@@ -7,37 +7,36 @@ using System.Reflection;
 using System.Text;
 using Xunit;
 
-namespace CoreCmd.XunitTest
+namespace AssemblyCommandExecutorTests
 {
-
     public class AsbDummyCommand
     {
-        public void FooBar1() { AssemblyCommandExecutorTests.HitCounter.Hit("1"); }
-        public void FooBar2(string str) { AssemblyCommandExecutorTests.HitCounter.Hit("21"); }
-        public void FooBar2(string str, int num) { AssemblyCommandExecutorTests.HitCounter.Hit("22"); }
-        public void FooBar2(int num, string str) { AssemblyCommandExecutorTests.HitCounter.Hit("23"); }
+        public void FooBar1() { BasicTests.HitCounter.Hit("1"); }
+        public void FooBar2(string str) { BasicTests.HitCounter.Hit("21"); }
+        public void FooBar2(string str, int num) { BasicTests.HitCounter.Hit("22"); }
+        public void FooBar2(int num, string str) { BasicTests.HitCounter.Hit("23"); }
 
 
         #region Foobar4
-        public void FooBar4(int num) { AssemblyCommandExecutorTests.HitCounter.Hit("41"); }
-        public void FooBar4(double num) { AssemblyCommandExecutorTests.HitCounter.Hit("42"); }
-        public void FooBar4(uint num) { AssemblyCommandExecutorTests.HitCounter.Hit("43"); }
-        public void FooBar4(short num) { AssemblyCommandExecutorTests.HitCounter.Hit("44"); }
-        public void FooBar4(ushort num) { AssemblyCommandExecutorTests.HitCounter.Hit("45"); }
-        public void FooBar4(decimal num) { AssemblyCommandExecutorTests.HitCounter.Hit("46"); }
-        public void FooBar4(float num) { AssemblyCommandExecutorTests.HitCounter.Hit("47"); }
+        public void FooBar4(int num) { BasicTests.HitCounter.Hit("41"); }
+        public void FooBar4(double num) { BasicTests.HitCounter.Hit("42"); }
+        public void FooBar4(uint num) { BasicTests.HitCounter.Hit("43"); }
+        public void FooBar4(short num) { BasicTests.HitCounter.Hit("44"); }
+        public void FooBar4(ushort num) { BasicTests.HitCounter.Hit("45"); }
+        public void FooBar4(decimal num) { BasicTests.HitCounter.Hit("46"); }
+        public void FooBar4(float num) { BasicTests.HitCounter.Hit("47"); }
         #endregion
 
-        public void FooBar5(char p) { AssemblyCommandExecutorTests.HitCounter.Hit("51"); }
-        public void FooBar5(string p) { AssemblyCommandExecutorTests.HitCounter.Hit("52"); }
+        public void FooBar5(char p) { BasicTests.HitCounter.Hit("51"); }
+        public void FooBar5(string p) { BasicTests.HitCounter.Hit("52"); }
     }
 
-    public class AssemblyCommandExecutorTests
+    public class BasicTests
     {
         static public HitCounter HitCounter { get; set; } = new HitCounter();
-        AssemblyCommandExecutor executor = new AssemblyCommandExecutor(typeof(AssemblyCommandExecutorTests));
+        AssemblyCommandExecutor executor = new AssemblyCommandExecutor(typeof(BasicTests));
 
-        public AssemblyCommandExecutorTests()
+        public BasicTests()
         {
             HitCounter.ResetDict();
         }
