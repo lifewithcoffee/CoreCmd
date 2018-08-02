@@ -6,13 +6,13 @@ using System.Text;
 
 namespace CoreCmd.CommandLoading
 {
-    interface IAssemblyCommandFinder
+    interface IAssemblyCommandLoader
     {
         List<Type> GetCommandClassTypesFromAssembly(Assembly assembly, string commandPostfix);
         List<Type> GetCommandClassTypesFromAssembly(string dll, string commandPostfix);
     }
 
-    class AssemblyCommandFinder : IAssemblyCommandFinder
+    class AssemblyCommandLoader : IAssemblyCommandLoader
     {
         public List<Type> GetCommandClassTypesFromAssembly(Assembly assembly, string commandPostfix)
         {

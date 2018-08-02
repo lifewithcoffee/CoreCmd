@@ -16,7 +16,7 @@ namespace CoreCmd.CommandLoading
 
     class CommandClassLoader : ICommandClassLoader
     {
-        IAssemblyCommandFinder _assemblyCommandFinder = new AssemblyCommandFinder();
+        IAssemblyCommandLoader _assemblyCommandFinder = new AssemblyCommandLoader();
 
         public IEnumerable<Type> LoadAllCommandClasses(List<Assembly> additionalAssemblies)
         {

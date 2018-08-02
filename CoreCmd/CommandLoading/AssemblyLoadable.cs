@@ -17,7 +17,7 @@ namespace CoreCmd.CommandLoading
 
     class AssemblyLoadable : IAssemblyLoadable
     {
-        IAssemblyCommandFinder _assemblyCommandFinder = new AssemblyCommandFinder();
+        IAssemblyCommandLoader _assemblyCommandFinder = new AssemblyCommandLoader();
 
         public IEnumerable<string> GetConflictComands(IEnumerable<Type> types, string dllPath)
         {
