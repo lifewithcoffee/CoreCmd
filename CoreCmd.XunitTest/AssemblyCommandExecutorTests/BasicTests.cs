@@ -17,11 +17,21 @@ namespace AssemblyCommandExecutorTests
         public void FooBar2(int num, string str) { BasicTests.HitCounter.Hit("23"); }
 
         #region Foobar4
+        public void FooBar4(byte num) { BasicTests.HitCounter.Hit("4_byte"); }
+        public void FooBar4(sbyte num) { BasicTests.HitCounter.Hit("4_sbyte"); }
+
+        public void FooBar4(bool param) { BasicTests.HitCounter.Hit("4_bool"); }
+
+        public void FooBar4(long num) { BasicTests.HitCounter.Hit("4_long"); }
+        public void FooBar4(ulong num) { BasicTests.HitCounter.Hit("4_ulong"); }
+
         public void FooBar4(int num) { BasicTests.HitCounter.Hit("41"); }
-        public void FooBar4(double num) { BasicTests.HitCounter.Hit("42"); }
         public void FooBar4(uint num) { BasicTests.HitCounter.Hit("43"); }
+
         public void FooBar4(short num) { BasicTests.HitCounter.Hit("44"); }
         public void FooBar4(ushort num) { BasicTests.HitCounter.Hit("45"); }
+
+        public void FooBar4(double num) { BasicTests.HitCounter.Hit("42"); }
         public void FooBar4(decimal num) { BasicTests.HitCounter.Hit("46"); }
         public void FooBar4(float num) { BasicTests.HitCounter.Hit("47"); }
         #endregion
@@ -64,9 +74,28 @@ namespace AssemblyCommandExecutorTests
         }
 
         [Fact]
+        public void Bool_paramter_matching_1()
+        {
+            executor.Execute(new string[] { "asb-dummy", "foo-bar4", "true"});
+            Assert.Equal(1, HitCounter.GetHitCount("4_bool"));
+        }
+
+        [Fact]
+        public void Bool_paramter_matching_2()
+        {
+            executor.Execute(new string[] { "asb-dummy", "foo-bar4", "1"});
+            Assert.Equal(0, HitCounter.GetHitCount("4_bool"));
+        }
+
+        [Fact]
         public void Numeric_paramter_matching_1()
         {
             executor.Execute(new string[] { "asb-dummy", "foo-bar4", "4"});
+            Assert.Equal(1, HitCounter.GetHitCount("4_byte"));
+            Assert.Equal(1, HitCounter.GetHitCount("4_sbyte"));
+            Assert.Equal(1, HitCounter.GetHitCount("4_long"));
+            Assert.Equal(1, HitCounter.GetHitCount("4_ulong"));
+
             Assert.Equal(1, HitCounter.GetHitCount("41"));
             Assert.Equal(1, HitCounter.GetHitCount("42"));
             Assert.Equal(1, HitCounter.GetHitCount("43"));
@@ -80,6 +109,9 @@ namespace AssemblyCommandExecutorTests
         public void Numeric_paramter_matching_2()
         {
             executor.Execute(new string[] { "asb-dummy", "foo-bar4", "4.1"});
+            Assert.Equal(0, HitCounter.GetHitCount("4_long"));
+            Assert.Equal(0, HitCounter.GetHitCount("4_ulong"));
+
             Assert.Equal(0, HitCounter.GetHitCount("41"));
             Assert.Equal(1, HitCounter.GetHitCount("42"));
             Assert.Equal(0, HitCounter.GetHitCount("43"));

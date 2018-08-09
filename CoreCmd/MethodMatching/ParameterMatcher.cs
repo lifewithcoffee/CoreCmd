@@ -13,27 +13,43 @@ namespace CoreCmd.MethodMatching
 
     class ParameterMatcher : IParameterMatcher
     {
-        private object MatchOneParameter(Type type, string parameter)
+        private bool ParseTextParameter(Type type, string parameter, out object result)
         {
-            object result = null;
+            result = null;
 
             if (type.Equals(typeof(string)))
                 result = parameter;
             else if (type.Equals(typeof(char)) && parameter.Length == 1)
                 result = parameter[0];
-            else if (type.Equals(typeof(int)))
+
+            return result != null;
+        }
+
+        private bool ParseBooleanNumberParameter(Type type, string parameter, out object result)
+        {
+            result = null;
+
+            if (type.Equals(typeof(bool)))
             {
-                if (int.TryParse(parameter, out int p))
+                if (bool.TryParse(parameter, out bool p))
                     result = p;
             }
-            else if (type.Equals(typeof(double)))
+
+            return result != null;
+        }
+            
+        private bool ParseIntegerNumberParameter(Type type, string parameter, out object result)
+        {
+            result = null;
+
+            if (type.Equals(typeof(byte)))
             {
-                if (double.TryParse(parameter, out double p))
+                if (byte.TryParse(parameter, out byte p))
                     result = p;
             }
-            else if (type.Equals(typeof(uint)))
+            else if (type.Equals(typeof(sbyte)))
             {
-                if (uint.TryParse(parameter, out uint p))
+                if (sbyte.TryParse(parameter, out sbyte p))
                     result = p;
             }
             else if (type.Equals(typeof(short)))
@@ -46,6 +62,39 @@ namespace CoreCmd.MethodMatching
                 if (ushort.TryParse(parameter, out ushort p))
                     result = p;
             }
+            else if (type.Equals(typeof(int)))
+            {
+                if (int.TryParse(parameter, out int p))
+                    result = p;
+            }
+            else if (type.Equals(typeof(uint)))
+            {
+                if (uint.TryParse(parameter, out uint p))
+                    result = p;
+            }
+            else if(type.Equals(typeof(long)))
+            {
+                if (long.TryParse(parameter, out long p))
+                    result = p;
+            }
+            else if (type.Equals(typeof(ulong)))
+            {
+                if (ulong.TryParse(parameter, out ulong p))
+                    result = p;
+            }
+
+            return result != null;
+        }
+
+        private bool ParseFloatingNumberParameter(Type type, string parameter, out object result)
+        {
+            result = null;
+
+            if (type.Equals(typeof(double)))
+            {
+                if (double.TryParse(parameter, out double p))
+                    result = p;
+            }
             else if (type.Equals(typeof(decimal)))
             {
                 if (decimal.TryParse(parameter, out decimal p))
@@ -56,6 +105,22 @@ namespace CoreCmd.MethodMatching
                 if (float.TryParse(parameter, out float p))
                     result = p;
             }
+
+            return result != null;
+        }
+
+        private object MatchOneParameter(Type type, string parameter)
+        {
+            object result = null;
+
+            if (this.ParseBooleanNumberParameter(type, parameter, out result))
+                return result;
+            else if (this.ParseFloatingNumberParameter(type, parameter, out result))
+                return result;
+            else if (this.ParseIntegerNumberParameter(type, parameter, out result))
+                return result;
+            else if (this.ParseTextParameter(type, parameter, out result))
+                return result;
 
             return result;
         }
