@@ -12,9 +12,9 @@ namespace AssemblyCommandExecutorTests
     public class AsbDummyCommand
     {
         public void FooBar1() { BasicTests.HitCounter.Hit("1"); }
-        public void FooBar2(string str) { BasicTests.HitCounter.Hit("21"); }
-        public void FooBar2(string str, int num) { BasicTests.HitCounter.Hit("22"); }
-        public void FooBar2(int num, string str) { BasicTests.HitCounter.Hit("23"); }
+        public void FooBar2(string str) { BasicTests.HitCounter.Hit("2_string"); }
+        public void FooBar2(string str, int num) { BasicTests.HitCounter.Hit("2_string_int"); }
+        public void FooBar2(int num, string str) { BasicTests.HitCounter.Hit("2_int_string"); }
 
         #region Foobar4
         public void FooBar4(byte num) { BasicTests.HitCounter.Hit("4_byte"); }
@@ -25,19 +25,19 @@ namespace AssemblyCommandExecutorTests
         public void FooBar4(long num) { BasicTests.HitCounter.Hit("4_long"); }
         public void FooBar4(ulong num) { BasicTests.HitCounter.Hit("4_ulong"); }
 
-        public void FooBar4(int num) { BasicTests.HitCounter.Hit("41"); }
-        public void FooBar4(uint num) { BasicTests.HitCounter.Hit("43"); }
+        public void FooBar4(int num) { BasicTests.HitCounter.Hit("4_int"); }
+        public void FooBar4(uint num) { BasicTests.HitCounter.Hit("4_uint"); }
 
-        public void FooBar4(short num) { BasicTests.HitCounter.Hit("44"); }
-        public void FooBar4(ushort num) { BasicTests.HitCounter.Hit("45"); }
+        public void FooBar4(short num) { BasicTests.HitCounter.Hit("4_short"); }
+        public void FooBar4(ushort num) { BasicTests.HitCounter.Hit("4_ushort"); }
 
-        public void FooBar4(double num) { BasicTests.HitCounter.Hit("42"); }
-        public void FooBar4(decimal num) { BasicTests.HitCounter.Hit("46"); }
-        public void FooBar4(float num) { BasicTests.HitCounter.Hit("47"); }
+        public void FooBar4(double num) { BasicTests.HitCounter.Hit("4_double"); }
+        public void FooBar4(decimal num) { BasicTests.HitCounter.Hit("4_decimal"); }
+        public void FooBar4(float num) { BasicTests.HitCounter.Hit("4_float"); }
         #endregion
 
-        public void FooBar5(char p) { BasicTests.HitCounter.Hit("51"); }
-        public void FooBar5(string p) { BasicTests.HitCounter.Hit("52"); }
+        public void FooBar5(char p) { BasicTests.HitCounter.Hit("5_char"); }
+        public void FooBar5(string p) { BasicTests.HitCounter.Hit("5_string"); }
     }
 
     public class BasicTests
@@ -58,9 +58,9 @@ namespace AssemblyCommandExecutorTests
         public void Method_overloading_1()
         {
             executor.Execute(new string[] { "asb-dummy", "foo-bar2", "hello" });
-            Assert.Equal(1, HitCounter.GetHitCount("21"));
-            Assert.Equal(0, HitCounter.GetHitCount("22"));
-            Assert.Equal(0, HitCounter.GetHitCount("23"));
+            Assert.Equal(1, HitCounter.GetHitCount("2_string"));
+            Assert.Equal(0, HitCounter.GetHitCount("2_string_int"));
+            Assert.Equal(0, HitCounter.GetHitCount("2_int_string"));
         }
 
         [Fact]
@@ -68,9 +68,9 @@ namespace AssemblyCommandExecutorTests
         {
             executor.Execute(new string[] { "asb-dummy", "foo-bar2", "hello", "123" });
             Assert.Equal(0, HitCounter.GetHitCount("1"));
-            Assert.Equal(0, HitCounter.GetHitCount("21"));
-            Assert.Equal(1, HitCounter.GetHitCount("22"));
-            Assert.Equal(0, HitCounter.GetHitCount("23"));
+            Assert.Equal(0, HitCounter.GetHitCount("2_string"));
+            Assert.Equal(1, HitCounter.GetHitCount("2_string_int"));
+            Assert.Equal(0, HitCounter.GetHitCount("2_int_string"));
         }
 
         [Fact]
@@ -96,13 +96,13 @@ namespace AssemblyCommandExecutorTests
             Assert.Equal(1, HitCounter.GetHitCount("4_long"));
             Assert.Equal(1, HitCounter.GetHitCount("4_ulong"));
 
-            Assert.Equal(1, HitCounter.GetHitCount("41"));
-            Assert.Equal(1, HitCounter.GetHitCount("42"));
-            Assert.Equal(1, HitCounter.GetHitCount("43"));
-            Assert.Equal(1, HitCounter.GetHitCount("44"));
-            Assert.Equal(1, HitCounter.GetHitCount("45"));
-            Assert.Equal(1, HitCounter.GetHitCount("46"));
-            Assert.Equal(1, HitCounter.GetHitCount("47"));
+            Assert.Equal(1, HitCounter.GetHitCount("4_int"));
+            Assert.Equal(1, HitCounter.GetHitCount("4_double"));
+            Assert.Equal(1, HitCounter.GetHitCount("4_uint"));
+            Assert.Equal(1, HitCounter.GetHitCount("4_short"));
+            Assert.Equal(1, HitCounter.GetHitCount("4_ushort"));
+            Assert.Equal(1, HitCounter.GetHitCount("4_decimal"));
+            Assert.Equal(1, HitCounter.GetHitCount("4_float"));
         }
 
         [Fact]
@@ -112,29 +112,29 @@ namespace AssemblyCommandExecutorTests
             Assert.Equal(0, HitCounter.GetHitCount("4_long"));
             Assert.Equal(0, HitCounter.GetHitCount("4_ulong"));
 
-            Assert.Equal(0, HitCounter.GetHitCount("41"));
-            Assert.Equal(1, HitCounter.GetHitCount("42"));
-            Assert.Equal(0, HitCounter.GetHitCount("43"));
-            Assert.Equal(0, HitCounter.GetHitCount("44"));
-            Assert.Equal(0, HitCounter.GetHitCount("45"));
-            Assert.Equal(1, HitCounter.GetHitCount("46"));
-            Assert.Equal(1, HitCounter.GetHitCount("47"));
+            Assert.Equal(0, HitCounter.GetHitCount("4_int"));
+            Assert.Equal(1, HitCounter.GetHitCount("4_double"));
+            Assert.Equal(0, HitCounter.GetHitCount("4_uint"));
+            Assert.Equal(0, HitCounter.GetHitCount("4_short"));
+            Assert.Equal(0, HitCounter.GetHitCount("4_ushort"));
+            Assert.Equal(1, HitCounter.GetHitCount("4_decimal"));
+            Assert.Equal(1, HitCounter.GetHitCount("4_float"));
         }
 
         [Fact]
         public void String_char_matching_1()
         {
             executor.Execute(new string[] { "asb-dummy", "foo-bar5", "1"});
-            Assert.Equal(1, HitCounter.GetHitCount("51"));  // char
-            Assert.Equal(1, HitCounter.GetHitCount("52"));  // string
+            Assert.Equal(1, HitCounter.GetHitCount("5_char"));  // char
+            Assert.Equal(1, HitCounter.GetHitCount("5_string"));  // string
         }
 
         [Fact]
         public void String_char_matching_2()
         {
             executor.Execute(new string[] { "asb-dummy", "foo-bar5", "11"});
-            Assert.Equal(0, HitCounter.GetHitCount("51")); // char
-            Assert.Equal(1, HitCounter.GetHitCount("52")); // string
+            Assert.Equal(0, HitCounter.GetHitCount("5_char")); // char
+            Assert.Equal(1, HitCounter.GetHitCount("5_string")); // string
         }
     }
 }
