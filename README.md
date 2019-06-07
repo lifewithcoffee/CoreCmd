@@ -8,9 +8,14 @@
 
 ## Release notes
 
+### v0.4
+
+- Upgrade to .net core 2.2
+
 ### v0.3.0
 
 - Use Assembly.LoadFrom() instead of Assembly.LoadFile() to load DLLs
+- Change version schema to use three digits
 
 ### v0.2.5.11
 

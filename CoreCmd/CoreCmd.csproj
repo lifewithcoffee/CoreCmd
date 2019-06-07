@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssemblyName>CoreCmd</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>CoreCmd</PackageId>
@@ -15,7 +15,7 @@
     <PackageProjectUrl>https://github.com/li-rongcheng/CoreCmd</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/li-rongcheng/CoreCmd/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>cli;commandline;command-line;parser</PackageTags>
-    <Version>0.3.0</Version>
+    <Version>0.4</Version>
     <RepositoryUrl>https://github.com/li-rongcheng/CoreCmd.git</RepositoryUrl>
   </PropertyGroup>
 

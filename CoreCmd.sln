@@ -1,13 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29001.49
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A68BBA59-77EC-4552-8514-A715319CB798}"
 	ProjectSection(SolutionItems) = preProject
 		build-all.bat = build-all.bat
 		nuget.config = nuget.config
 		README.md = README.md
+		update-corecmd-package.cmd = update-corecmd-package.cmd
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExperimentalConsoleApp", "ExperimentalConsoleApp\ExperimentalConsoleApp.csproj", "{D1A7A6F3-26F7-4066-8AF9-25EA1258A1E8}"
