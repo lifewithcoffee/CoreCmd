@@ -28,7 +28,16 @@ namespace CoreCmd.CommandLoading
 
         public List<Type> GetCommandClassTypesFromAssembly(string dll, string commandPostfix)
         {
-            return GetCommandClassTypesFromAssembly(Assembly.LoadFile(dll), commandPostfix);
+            try
+            {
+                return GetCommandClassTypesFromAssembly(Assembly.LoadFrom(dll), commandPostfix);  // use LoadFrom() instead of LoadFile() as the former can also load the dependent dlls
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error:");
+                Console.WriteLine(ex.Message);
+                return new List<Type>();
+            }
         }
     }
 }

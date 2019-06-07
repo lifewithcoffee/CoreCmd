@@ -50,6 +50,12 @@ namespace CoreCmd.Help
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Print:
+        ///     {method-name}
+        ///         {method-help-info (from the [help] attribute)}
+        /// </summary>
+        /// <param name="methodInfo"></param>
         public void PrintMethodHelp(MethodInfo methodInfo)
         {
             Console.WriteLine($"\t{Utils.LowerKebabCase(methodInfo.Name)}{GetParameterListText(methodInfo)}");
