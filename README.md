@@ -8,7 +8,7 @@
 
 ## Release notes
 
-### v0.2.6
+### v0.3.0
 
 - Use Assembly.LoadFrom() instead of Assembly.LoadFile() to load DLLs
 
