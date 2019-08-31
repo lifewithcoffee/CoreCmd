@@ -181,7 +181,7 @@ namespace CoreCmd.MethodMatching
                 return null; // parameter mismatch
 
 
-            // match optional parameters, i.e. parameters with defaul values
+            // match optional parameters, i.e. parameters with default values
             if(requiredParamMatched)
             {
                 var optionalParams = info.Where(i => i.HasDefaultValue);
