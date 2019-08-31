@@ -8,6 +8,11 @@
 
 ## Release notes
 
+### v1.0-working
+
+- Add an interactive shell (activate by: `core shell`)
+- Display dll location when print command help info
+
 ### v0.4
 
 - Upgrade to .net core 2.2
