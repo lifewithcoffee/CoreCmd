@@ -9,6 +9,8 @@ namespace CoreCmd.BuildinCommands
 {
     class HelpCommand
     {
+        IHelpInfoService _helpSvc = new HelpInfoService();
+
         public void Default(string command)
         {
             ICommandExecutorCreate _exeCreator = new CommandExecutorCreator();
@@ -18,7 +20,9 @@ namespace CoreCmd.BuildinCommands
             var singleCommandExecutor = _exeCreator.GetSingleCommandExecutor(allClassTypes, new string[]{ command });
 
             if(singleCommandExecutor != null)
-                singleCommandExecutor.PrintHelp();
+            {
+                _helpSvc.PrintClassHelp(singleCommandExecutor.CommandClassType);
+            }
         }
     }
 }

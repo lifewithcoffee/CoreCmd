@@ -17,7 +17,7 @@ namespace CoreCmd.CommandExecution
 
     public class AssemblyCommandExecutor : IAssemblyCommandExecutor
     {
-
+        IHelpInfoService _helpSvc = new HelpInfoService();
         public List<Assembly> additionalAssemblies = new List<Assembly>();  // mainly for unit test
 
         public void SetAdditionalSearchAssembly(Assembly assembly)
@@ -51,23 +51,16 @@ namespace CoreCmd.CommandExecution
                     if (singleCommandExecutor != null)
                         singleCommandExecutor.Execute();
                 }
-                else
-                    PrintHelpMessage(allClassTypes);
+                else   // print all available commands
+                {
+                    Console.WriteLine("Subcommand is missing, please specify a subcommand:");
+                    _helpSvc.PrintClassHelp(allClassTypes);
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-
-        }
-
-        private void PrintHelpMessage(IEnumerable<Type> allClassTypes)
-        {
-            IHelpInfoService _helpSvc = new HelpInfoService();
-
-            Console.WriteLine("Subcommand is missing, please specify a subcommand:\n");
-            foreach (var cmd in allClassTypes) // print all available commands
-                _helpSvc.PrintClassHelp(cmd);
         }
     }
 }

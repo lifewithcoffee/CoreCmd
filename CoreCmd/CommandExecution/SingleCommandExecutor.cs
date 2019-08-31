@@ -11,7 +11,7 @@ namespace CoreCmd.CommandExecution
 {
     public interface ISingleCommandExecutor
     {
-        void PrintHelp();
+        Type CommandClassType { get; set; }
         int Execute();
     }
 
@@ -39,12 +39,6 @@ namespace CoreCmd.CommandExecution
         }
 
         public string[] Parameters { get; set; } = new string[] { };
-
-        public void PrintHelp()
-        {
-            IHelpInfoService _helpSvc = new HelpInfoService();
-            _helpSvc.PrintClassHelp(this.CommandClassType);
-        }
 
         public int Execute()
         {
