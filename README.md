@@ -8,7 +8,9 @@
 
 ## Release notes
 
-### v1.0-working
+### v1.1-working
+
+### v1.0
 
 - Add an interactive shell (activate by: `core shell`)
 - Display dll location when print command help info

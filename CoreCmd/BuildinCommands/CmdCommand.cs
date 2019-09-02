@@ -36,5 +36,10 @@ namespace CoreCmd.BuildinCommands
         {
             Console.WriteLine("Cmd.Disable() called");
         }
+
+        //public void Test(string name, string param1 = "param1", string param2 = "param2", double value = 100.25)
+        //{
+        //    Console.WriteLine($"Cmd.Test() called: name1={name}, param1={param1} ,param2={param2}, value={value}");
+        //}
     }
 }
