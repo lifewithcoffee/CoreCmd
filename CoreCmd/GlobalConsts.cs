@@ -11,5 +11,6 @@ namespace CoreCmd
         public const string ConfigFileName = "corecmd.config.xml";
         public const string DefaultSubcommandMethodName = "default";
         public const string DefaultCommandName = "DefaultCommand";
+        public const string indentSpaces = "    ";
     }
 }

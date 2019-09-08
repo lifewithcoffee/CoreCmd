@@ -23,8 +23,6 @@ namespace CoreCmd.Help
 
         public void PrintClassHelp(Type commandClassType)
         {
-            const string indentSpaces = "    ";
-
             // print command name
             string commandName = Utils.LowerKebabCase(commandClassType.Name).Replace("-command", "");
             Console.WriteLine(commandName);
@@ -33,12 +31,12 @@ namespace CoreCmd.Help
             var helpInfo = commandClassType.GetCustomAttribute<HelpAttribute>();
             string helpText = helpInfo == null ? null : $"{helpInfo?.Description}";
             if(helpText != null)
-                Console.WriteLine($"{indentSpaces}{helpText}");
+                Console.WriteLine($"{GlobalConsts.indentSpaces}{helpText}");
 
             // print dll location info
             string dllPath = commandClassType.Assembly.Location;
-            Console.WriteLine($"{indentSpaces}{dllPath}");
-            Console.WriteLine($"{indentSpaces}----- subcommands -----");
+            Console.WriteLine($"{GlobalConsts.indentSpaces}{dllPath}");
+            Console.WriteLine($"{GlobalConsts.indentSpaces}----- subcommands -----");
 
             // print subcommand info
             this.PrintAllMethodHelp(commandClassType);
