@@ -8,13 +8,19 @@ namespace CoreCmd.BuildinCommands
 {
     class VersionCommand
     {
-        public void Default()
+        private void PrintAssemblyInfo(Assembly assembly)
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
             string version= FileVersionInfo.GetVersionInfo(assembly.Location).ProductVersion;
 
             Console.WriteLine(assembly.Location);
             Console.WriteLine(version);
+        }
+
+        public void Default()
+        {
+            PrintAssemblyInfo(Assembly.GetEntryAssembly());
+            Console.WriteLine("");
+            PrintAssemblyInfo(Assembly.GetExecutingAssembly());
         }
     }
 }

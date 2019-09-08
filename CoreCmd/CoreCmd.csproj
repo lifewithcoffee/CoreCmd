@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssemblyName>CoreCmd</AssemblyName>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <PackageId>CoreCmd</PackageId>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
@@ -15,16 +15,9 @@
     <PackageProjectUrl>https://github.com/li-rongcheng/CoreCmd</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/li-rongcheng/CoreCmd/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>cli;commandline;command-line;parser</PackageTags>
-    <Version>1.1-working</Version>
+    <Version>1.1.1</Version>
     <RepositoryUrl>https://github.com/li-rongcheng/CoreCmd.git</RepositoryUrl>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Update="core.cmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="netcoreutils" Version="0.0.1.1" />
