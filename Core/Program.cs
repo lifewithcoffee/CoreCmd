@@ -9,6 +9,7 @@ namespace Core
     {
         static void Main(string[] args)
         {
+            //new AssemblyCommandExecutor("corecmd").Execute(args); // specify the config file name to be "corecmd.config.xml"
             new AssemblyCommandExecutor().Execute(args);
         }
     }

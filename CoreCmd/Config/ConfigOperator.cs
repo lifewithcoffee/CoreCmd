@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace CoreCmd.Config
@@ -32,7 +33,12 @@ namespace CoreCmd.Config
             var _xmlUtil = new XmlUtil<CoreCmdConfig>();
 
             var userDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            configFileFullPath = Path.Combine(userDir, GlobalConsts.ConfigFileName);
+
+            // load config file
+            if(string.IsNullOrWhiteSpace(GlobalConsts.ConfigFileName))
+                 GlobalConsts.ConfigFileName = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location);
+
+            configFileFullPath = Path.Combine(userDir, $"{GlobalConsts.ConfigFileName}.config.xml");
 
             if (File.Exists(configFileFullPath))
                 config = _xmlUtil.ReadFromFile(configFileFullPath);
