@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreCmd.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
@@ -25,6 +26,9 @@ namespace CoreCmd.Help
         {
             // print command name
             string commandName = Utils.LowerKebabCase(commandClassType.Name).Replace("-command", "");
+            var aliasinfo = commandClassType.GetCustomAttribute<AliasAttribute>();
+            if(aliasinfo != null)
+                commandName = $"{commandName} (alias: {aliasinfo.Alias})";
             Console.WriteLine(commandName);
 
             // print command description, if available

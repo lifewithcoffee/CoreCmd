@@ -1,10 +1,13 @@
-﻿using CoreCmd.CommandExecution;
+﻿using CoreCmd.Attributes;
+using CoreCmd.CommandExecution;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace CoreCmd.BuildinCommands
 {
+    [Help("Enable interactive mode")]
+    [Alias("sh")]
     class ShellCommand
     {
         /// <summary>

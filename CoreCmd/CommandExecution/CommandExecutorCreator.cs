@@ -6,6 +6,8 @@ using System.Text;
 using System.Linq;
 using CoreCmd.CommandExecution;
 using CoreCmd.MethodMatching;
+using CoreCmd.Help;
+using CoreCmd.Attributes;
 
 namespace CoreCmd.CommandExecution
 {
@@ -16,6 +18,22 @@ namespace CoreCmd.CommandExecution
 
     internal class CommandExecutorCreator : ICommandExecutorCreate
     {
+        private bool CommandMatched(Type commandType, string commandString)
+        {
+            string commandName = Utils.LowerKebabCase(commandType.Name);
+            if (commandName.Equals(commandString))
+                return true;
+
+            var aliasInfo = commandType.GetCustomAttribute<AliasAttribute>();
+            if (aliasInfo != null && $"{aliasInfo.Alias}-command".ToLower() == commandString)
+            {
+                Console.WriteLine($"'{commandString}' is an alias command for '{commandName}'");
+                return true;
+            }
+
+            return false;
+        }
+
         public ISingleCommandExecutor GetSingleCommandExecutor(IEnumerable<Type> targetTypes, string[] args)
         {
             IMethodMatcher _methodMatcher = new MethodMatcher();
@@ -26,7 +44,7 @@ namespace CoreCmd.CommandExecution
                 result = new SingleCommandExecutor();
                 string command = $"{args[0]}-command".ToLower();
 
-                Type targetType = targetTypes.SingleOrDefault(t => Utils.LowerKebabCase(t.Name).Equals(command));
+                Type targetType = targetTypes.SingleOrDefault(t => this.CommandMatched(t,command));
                 if (targetType != null)
                 {
                     result.CommandClassType = targetType;

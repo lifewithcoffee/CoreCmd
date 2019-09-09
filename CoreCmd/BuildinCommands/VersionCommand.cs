@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CoreCmd.Attributes;
+using CoreCmd.Help;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -7,6 +9,7 @@ using System.Text;
 
 namespace CoreCmd.BuildinCommands
 {
+    [Alias("ver")]
     class VersionCommand
     {
         private void PrintAssemblyInfo(Assembly assembly)

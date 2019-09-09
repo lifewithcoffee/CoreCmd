@@ -1,5 +1,5 @@
-﻿using CoreCmd.Config;
-using CoreCmd.Help;
+﻿using CoreCmd.Attributes;
+using CoreCmd.Config;
 using NetCoreUtils.Xml;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,5 @@
-﻿using CoreCmd.BuildinCommands;
+﻿using CoreCmd.Attributes;
+using CoreCmd.BuildinCommands;
 using CoreCmd.CommandExecution;
 using CoreCmd.Help;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
