@@ -1,4 +1,5 @@
 ﻿using CoreCmd.Config;
+using CoreCmd.Help;
 using NetCoreUtils.Xml;
 using System;
 using System.Collections.Generic;
@@ -7,22 +8,22 @@ using System.Text;
 
 namespace CoreCmd.BuildinCommands
 {
-    class CmdCommand
+    class ConfigCommand
     {
         IConfigOperator _configOperator = new ConfigOperator();
 
         public void Default()
         {
-            this.List();
+            this.ListDlls();
         }
 
-        public void Add(string filename) // need to add a parameter of "bool local=false" as well?
+        public void AddDll(string filename) // need to add a parameter of "bool local=false" as well?
         {
             _configOperator.AddCommandAssembly(filename);
             _configOperator.SaveChanges();
         }
 
-        public void List()
+        public void ListDlls()
         {
             Console.WriteLine("Registered global command assemblies:");
             var list = _configOperator.ListCommandAssemblies();
@@ -35,7 +36,7 @@ namespace CoreCmd.BuildinCommands
         /// A partial string of the target DLL's full path.
         /// If multiple DLLs are matched, no DLL will be removed, and a prompt message will be displayed.
         /// </param>
-        public void Remove(string targetDllString)
+        public void RemoveDll(string targetDllString)
         {
             Console.WriteLine($"Removing a dll containing '{targetDllString}' in its full path.");
             var lowerDllString = targetDllString.ToLower();
@@ -63,6 +64,12 @@ namespace CoreCmd.BuildinCommands
             }
             else
                 Console.WriteLine($"No DLL is matched for '{targetDllString}'.");
+        }
+
+        [Help("Display config file location")]
+        public void Location()
+        {
+            Console.WriteLine(Global.ConfigFileFullPath);
         }
 
         //public void Disable(int[] dllIds)

@@ -25,25 +25,18 @@ namespace CoreCmd.Config
 
     class ConfigOperator : IConfigOperator
     {
-        CoreCmdConfig config = null;
-        string configFileFullPath;
+        XmlUtil<CoreCmdConfig> _xmlUtil = new XmlUtil<CoreCmdConfig>();
+        CoreCmdConfig _config = null;
+        string _configFileFullPath;
 
         public ConfigOperator()
         {
-            var _xmlUtil = new XmlUtil<CoreCmdConfig>();
-
-            var userDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-
             // load config file
-            if(string.IsNullOrWhiteSpace(Global.ConfigFileName))
-                 Global.ConfigFileName = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location);
-
-            configFileFullPath = Path.Combine(userDir, $"{Global.ConfigFileName}.config.xml");
-
-            if (File.Exists(configFileFullPath))
-                config = _xmlUtil.ReadFromFile(configFileFullPath);
+            _configFileFullPath = Global.ConfigFileFullPath;
+            if (File.Exists(_configFileFullPath))
+                _config = _xmlUtil.ReadFromFile(_configFileFullPath);
             else
-                config = new CoreCmdConfig();
+                _config = new CoreCmdConfig();
         }
 
         /// <summary>
@@ -54,16 +47,16 @@ namespace CoreCmd.Config
             ICommandClassLoader _loader = new CommandClassLoader();
             IAssemblyLoadable _assemblyLoadable = new AssemblyLoadable();
 
-            if (config != null)
+            if (_config != null)
             {
                 // if dllname is not full path, compose the current dir to make a full path
                 string targetFilePath = Path.IsPathFullyQualified(dllfile) ? dllfile : Path.Combine(Directory.GetCurrentDirectory(), dllfile);
                 if (File.Exists(targetFilePath))
                 {
                     // add wehn the assembly does not exist
-                    if (config.CommandAssemblies.Where(c => c.Path.ToLower().Equals(targetFilePath.ToLower())).Count() == 0)
+                    if (_config.CommandAssemblies.Where(c => c.Path.ToLower().Equals(targetFilePath.ToLower())).Count() == 0)
                     {
-                        config.AddCommandAssembly(targetFilePath);
+                        _config.AddCommandAssembly(targetFilePath);
                         Console.WriteLine($"Successfully added assembly: {targetFilePath}");
                     }
                     else
@@ -78,8 +71,8 @@ namespace CoreCmd.Config
 
         public IEnumerable<string> ListCommandAssemblies()
         {
-            if( config != null)
-                return config.CommandAssemblies.Select(a => a.Path);
+            if( _config != null)
+                return _config.CommandAssemblies.Select(a => a.Path);
             else
             {
                 Console.WriteLine("Error: configuration not loaded");
@@ -89,8 +82,8 @@ namespace CoreCmd.Config
 
         public void RemoveCommandAssembly(string dllPath)
         {
-            if (config != null)
-                config.CommandAssemblies.RemoveAll(a => a.Path.ToLower().Equals(dllPath.ToLower()));
+            if (_config != null)
+                _config.CommandAssemblies.RemoveAll(a => a.Path.ToLower().Equals(dllPath.ToLower()));
             else
                 Console.WriteLine("Error: configuration not loaded");
         }
@@ -98,7 +91,7 @@ namespace CoreCmd.Config
         public void SaveChanges()
         {
             var _xmlUtil = new XmlUtil<CoreCmdConfig>();
-            _xmlUtil.WriteToFile(config,configFileFullPath);
+            _xmlUtil.WriteToFile(_config,_configFileFullPath);
         }
     }
 }

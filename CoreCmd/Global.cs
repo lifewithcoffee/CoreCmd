@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace CoreCmd
@@ -12,9 +14,16 @@ namespace CoreCmd
         public const string DefaultCommandName = "DefaultCommand";
         public const string indentSpaces = "    ";
 
-        /// <summary>
-        /// The extension will be ".config.xml" 
-        /// </summary>
         public static string ConfigFileName { get; set; }
+        public static string ConfigFileFullPath
+        {
+            get
+            {
+                if(string.IsNullOrWhiteSpace(Global.ConfigFileName))
+                     Global.ConfigFileName = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location);
+
+                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), $"{Global.ConfigFileName}.config.xml");
+            }
+        }
     }
 }
