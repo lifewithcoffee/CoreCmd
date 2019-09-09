@@ -6,8 +6,7 @@
 
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>core</ToolCommandName>
-    <PackageOutputPath>./bin/NuPkg</PackageOutputPath>
-    <Version>1.2.0</Version>
+    <Version>1.2.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

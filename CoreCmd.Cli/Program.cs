@@ -1,9 +1,7 @@
 ﻿using CoreCmd.CommandExecution;
 using System;
-using System.Diagnostics;
-using System.Reflection;
 
-namespace Core
+namespace CoreCmd.Cli
 {
     class Program
     {
