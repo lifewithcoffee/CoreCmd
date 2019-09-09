@@ -1,6 +1,3 @@
-:: create "cored" command publish
-dotnet publish Core\Core.csproj -c Release -o bin\Publish
-
 :: create nuget package
 dotnet pack CoreCmd\CoreCmd.csproj -c Release -o E:\rp\local-nuget-packages
 
