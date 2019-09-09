@@ -20,8 +20,8 @@ namespace CoreCmd.CommandLoading
 
         public IEnumerable<Type> LoadAllCommandClasses(List<Assembly> additionalAssemblies)
         {
-            string commandPostfix = GlobalConsts.CommandPostFix;
-            string assemblyPrefix = GlobalConsts.AssemblyPrefix;
+            string commandPostfix = Global.CommandPostFix;
+            string assemblyPrefix = Global.AssemblyPrefix;
 
             var result = new List<Type>();
 
@@ -87,7 +87,7 @@ namespace CoreCmd.CommandLoading
             {
                 foreach(var dll in dlls)
                 {
-                    var more = _assemblyCommandFinder.GetCommandClassTypesFromAssembly(dll, GlobalConsts.CommandPostFix);
+                    var more = _assemblyCommandFinder.GetCommandClassTypesFromAssembly(dll, Global.CommandPostFix);
                     this.AddCommandsIfNotExist(existing, more);
                 }
             }

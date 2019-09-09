@@ -22,14 +22,14 @@ namespace CoreCmd.CommandLoading
         public IEnumerable<string> GetConflictComands(IEnumerable<Type> types, string dllPath)
         {
             var existingCmds = types.Select(c => c.Name);
-            var assemblyCmds = _assemblyCommandFinder.GetCommandClassTypesFromAssembly(dllPath, GlobalConsts.CommandPostFix).Select(c => c.Name);
+            var assemblyCmds = _assemblyCommandFinder.GetCommandClassTypesFromAssembly(dllPath, Global.CommandPostFix).Select(c => c.Name);
             return existingCmds.Intersect(assemblyCmds);
         }
 
         public IEnumerable<string> GetConflictComands(IEnumerable<Type> types, Assembly asb)
         {
             var existingCmds = types.Select(c => c.Name);
-            var assemblyCmds = _assemblyCommandFinder.GetCommandClassTypesFromAssembly(asb, GlobalConsts.CommandPostFix).Select(c => c.Name);
+            var assemblyCmds = _assemblyCommandFinder.GetCommandClassTypesFromAssembly(asb, Global.CommandPostFix).Select(c => c.Name);
             return existingCmds.Intersect(assemblyCmds);
         }
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CoreCmd
 {
-    static class GlobalConsts
+    static class Global
     {
         public const string CommandPostFix = "command";
         public const string AssemblyPrefix = "corecmd.";

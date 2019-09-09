@@ -31,12 +31,12 @@ namespace CoreCmd.Help
             var helpInfo = commandClassType.GetCustomAttribute<HelpAttribute>();
             string helpText = helpInfo == null ? null : $"{helpInfo?.Description}";
             if(helpText != null)
-                Console.WriteLine($"{GlobalConsts.indentSpaces}{helpText}");
+                Console.WriteLine($"{Global.indentSpaces}{helpText}");
 
             // print dll location info
             string dllPath = commandClassType.Assembly.Location;
-            Console.WriteLine($"{GlobalConsts.indentSpaces}{dllPath}");
-            Console.WriteLine($"{GlobalConsts.indentSpaces}----- subcommands -----");
+            Console.WriteLine($"{Global.indentSpaces}{dllPath}");
+            Console.WriteLine($"{Global.indentSpaces}----- subcommands -----");
 
             // print subcommand info
             this.PrintAllMethodHelp(commandClassType);

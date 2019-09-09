@@ -39,16 +39,16 @@ namespace CoreCmd.CommandExecution
                             result.Parameters = args.Skip(2).ToArray();
                         else
                         {
-                            result.MethodSubcommand = GlobalConsts.DefaultSubcommandMethodName;
+                            result.MethodSubcommand = Global.DefaultSubcommandMethodName;
                             result.Parameters = args.Skip(1).ToArray();
                         }
                     }
                     else
-                        result.MethodSubcommand = GlobalConsts.DefaultSubcommandMethodName;
+                        result.MethodSubcommand = Global.DefaultSubcommandMethodName;
                 }
                 else
                 {
-                    result.CommandClassType = targetTypes.SingleOrDefault(t => t.Name.Equals(GlobalConsts.DefaultCommandName));
+                    result.CommandClassType = targetTypes.SingleOrDefault(t => t.Name.Equals(Global.DefaultCommandName));
                     result.MethodSubcommand = args[0];
                     result.Parameters = args.Skip(1).ToArray();
                 }

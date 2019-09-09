@@ -29,7 +29,7 @@ namespace CoreCmd.CommandExecution
 
         public AssemblyCommandExecutor(string configFileName)
         {
-            GlobalConsts.ConfigFileName = configFileName;
+            Global.ConfigFileName = configFileName;
         }
 
         public AssemblyCommandExecutor(params Type[] types)

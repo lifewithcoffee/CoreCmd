@@ -51,7 +51,7 @@ namespace CoreCmd.BuildinCommands
             {
                 Console.WriteLine("Multiple DLLs are matched:");
                 foreach (var dll in matchedDll)
-                    Console.WriteLine($"{GlobalConsts.indentSpaces}{dll}");
+                    Console.WriteLine($"{Global.indentSpaces}{dll}");
                 Console.WriteLine("No DLL is removed from the global command registry.");
             }
             else if(matchedDll.Count == 1)

@@ -35,10 +35,10 @@ namespace CoreCmd.Config
             var userDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
             // load config file
-            if(string.IsNullOrWhiteSpace(GlobalConsts.ConfigFileName))
-                 GlobalConsts.ConfigFileName = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location);
+            if(string.IsNullOrWhiteSpace(Global.ConfigFileName))
+                 Global.ConfigFileName = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location);
 
-            configFileFullPath = Path.Combine(userDir, $"{GlobalConsts.ConfigFileName}.config.xml");
+            configFileFullPath = Path.Combine(userDir, $"{Global.ConfigFileName}.config.xml");
 
             if (File.Exists(configFileFullPath))
                 config = _xmlUtil.ReadFromFile(configFileFullPath);
