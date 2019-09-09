@@ -93,6 +93,9 @@ namespace CoreCmd.CommandLoading
             }
         }
 
+        /// <summary>
+        /// Add new commands to the existing command list if they are not in the list
+        /// </summary>
         private void AddCommandsIfNotExist(List<Type> existingCmds, List<Type> newCmds)
         {
             var existingNames = existingCmds.Select(c => c.Name).ToList();
