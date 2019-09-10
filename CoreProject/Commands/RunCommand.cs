@@ -1,4 +1,5 @@
-﻿using CoreProject.Services;
+﻿#if DEBUG
+using CoreProject.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,3 +29,4 @@ namespace CoreProject.Commands
         }
     }
 }
+#endif
