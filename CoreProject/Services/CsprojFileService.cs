@@ -34,6 +34,25 @@ namespace CoreProject.Services
             return result;
         }
 
+        public string GetVersion(string csprojFilePath)
+        {
+            string result = null;
+            try
+            {
+                var doc = new XmlDocument();
+                doc.Load(csprojFilePath);
+
+                var root_namespace_node = doc.SelectSingleNode("//PropertyGroup/Version");
+                if (root_namespace_node != null)
+                    result = root_namespace_node.InnerText;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            return result;
+        }
+
         /// <summary>
         /// Start from the current directory and search recursively to the driver root for a .csproj file.
         /// </summary>

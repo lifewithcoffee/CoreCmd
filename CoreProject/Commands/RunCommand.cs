@@ -12,11 +12,19 @@ namespace CoreProject.Commands
             new ScaffoldingService().GenerateClassFile(className, path);
         }
 
-        public void Test()
+        public void ViewCSproj()
         {
             //new CsprojFileService().GetRootNamespace(@"e:\rp\git\CoreCmdPlayground\CoreCmdPlayground\CoreCmdPlayground.csproj");
             Console.WriteLine("Searching .csproj file...");
             Console.WriteLine(new CsprojFileService().FindCsprojFile());
+        }
+
+        public void ViewVersion()
+        {
+            var svc = new CsprojFileService();
+            var projFile = svc.FindCsprojFile();
+            var ver = svc.GetVersion(projFile);
+            Console.WriteLine($"Version from {projFile} : {ver}");
         }
     }
 }
