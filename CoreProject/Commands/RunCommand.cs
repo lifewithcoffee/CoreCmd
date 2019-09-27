@@ -1,4 +1,5 @@
 ﻿#if DEBUG
+using CoreCmd.Attributes;
 using CoreProject.Services;
 using System;
 using System.Collections.Generic;
