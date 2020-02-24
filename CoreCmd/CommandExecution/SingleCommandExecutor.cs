@@ -6,13 +6,15 @@ using System.Reflection;
 using System.Diagnostics;
 using CoreCmd.MethodMatching;
 using CoreCmd.Help;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace CoreCmd.CommandExecution
 {
     public interface ISingleCommandExecutor
     {
         Type CommandClassType { get; set; }
-        int Execute();
+        Task<int> Execute();
     }
 
     public class SingleCommandExecutor : ISingleCommandExecutor
@@ -40,7 +42,13 @@ namespace CoreCmd.CommandExecution
 
         public string[] Parameters { get; set; } = new string[] { };
 
-        public int Execute()
+        private bool IsAsyncMethod(MethodInfo method)
+        {
+            var asyncAttrib = (AsyncStateMachineAttribute)method.GetCustomAttribute(typeof(AsyncStateMachineAttribute));
+            return (asyncAttrib != null);
+        }
+
+        public async Task<int> Execute()
         {
             int invocationCount = 0;
             if (this.CommandClassType == null)
@@ -58,7 +66,13 @@ namespace CoreCmd.CommandExecution
                     var paramObjs = _parameterMatcher.Match(m.GetParameters(), this.Parameters);
                     if(paramObjs != null)
                     {
-                        m.Invoke(Activator.CreateInstance(this.CommandClassType), paramObjs);
+                        if (IsAsyncMethod(m))
+                        {
+                            Task result = (Task)m.Invoke(Activator.CreateInstance(this.CommandClassType), paramObjs);
+                            await result.ConfigureAwait(false);
+                        }
+                        else
+                            m.Invoke(Activator.CreateInstance(this.CommandClassType), paramObjs);
                         invocationCount++;
                     }
                 }
@@ -67,7 +81,7 @@ namespace CoreCmd.CommandExecution
                     Console.WriteLine(errmsg);
             }
 
-            return invocationCount;
+            return await Task.FromResult<int>(invocationCount);
         }
     }
 }
