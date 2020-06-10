@@ -44,19 +44,19 @@ namespace CoreCmd.XunitTest
             var cmd = new SingleCommandExecutor { CommandClassType = typeof(DummyCommand), MethodSubcommand = "foo-foo"};
 
             cmd.Parameters = new string[] { "1", "hello" };
-            Assert.Equal(2, await cmd.Execute());
+            Assert.Equal(2, await cmd.ExecuteAsync());
 
             cmd.Parameters = new string[] { "1.2", "hello" };
-            Assert.Equal(1, await cmd.Execute());
+            Assert.Equal(1, await cmd.ExecuteAsync());
 
             cmd.Parameters = new string[] { "3.3", "hello", "9" };
-            Assert.Equal(1, await cmd.Execute());
+            Assert.Equal(1, await cmd.ExecuteAsync());
 
             cmd.Parameters = new string[] { "hello", "hello" };
-            Assert.Equal(0, await cmd.Execute());
+            Assert.Equal(0, await cmd.ExecuteAsync());
 
             cmd.Parameters = new string[] { "123" };
-            Assert.Equal(1, await cmd.Execute());
+            Assert.Equal(1, await cmd.ExecuteAsync());
             Assert.Equal(1234, DummyCommand.State);
         }
     }

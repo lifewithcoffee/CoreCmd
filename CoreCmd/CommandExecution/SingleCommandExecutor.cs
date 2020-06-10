@@ -14,7 +14,7 @@ namespace CoreCmd.CommandExecution
     public interface ISingleCommandExecutor
     {
         Type CommandClassType { get; set; }
-        Task<int> Execute();
+        Task<int> ExecuteAsync();
     }
 
     public class SingleCommandExecutor : ISingleCommandExecutor
@@ -48,7 +48,7 @@ namespace CoreCmd.CommandExecution
             return (asyncAttrib != null);
         }
 
-        public async Task<int> Execute()
+        public async Task<int> ExecuteAsync()
         {
             int invocationCount = 0;
             if (this.CommandClassType == null)

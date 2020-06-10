@@ -12,7 +12,8 @@ namespace CoreCmd.CommandExecution
 {
     public interface IAssemblyCommandExecutor
     {
-        Task Execute(string[] args);
+        void Execute(string[] args);
+        Task ExecuteAsync(string[] args);
     }
 
     public class AssemblyCommandExecutor : IAssemblyCommandExecutor
@@ -41,7 +42,7 @@ namespace CoreCmd.CommandExecution
             }
         }
 
-        public async Task Execute(string[] args)
+        public async Task ExecuteAsync(string[] args)
         {
             ICommandClassLoader _loader = new CommandClassLoader();
             ICommandExecutorCreate _commandFinder = new CommandExecutorCreator();
@@ -54,7 +55,7 @@ namespace CoreCmd.CommandExecution
                 {
                     var singleCommandExecutor = _commandFinder.GetSingleCommandExecutor(allClassTypes, args);
                     if (singleCommandExecutor != null)
-                        await singleCommandExecutor.Execute();
+                        await singleCommandExecutor.ExecuteAsync().ConfigureAwait(false);
                 }
                 else   // print all available commands
                 {
@@ -66,6 +67,11 @@ namespace CoreCmd.CommandExecution
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        public void Execute(string[] args)
+        {
+            ExecuteAsync(args).Wait();
         }
     }
 }
