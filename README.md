@@ -1,7 +1,8 @@
 # About CoreCmd
 
-**NOTICE: CoreCmd is still an experiment project, it will be your own risk to**
-**use it in any project or product.**
+CoreCmd is a MVC-like convention based command line automatic parser.
+
+See [full document](https://li-rongcheng.github.io/CoreCmd)
 
 ## Quick Start
 
