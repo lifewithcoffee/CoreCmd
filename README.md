@@ -1,19 +1,19 @@
-# CoreCmd
+# About CoreCmd
 
 **NOTICE: CoreCmd is still an experiment project, it will be your own risk to**
 **use it in any project or product.**
 
-## Basic usage
+## Quick Start
 
 1. Build a command line project
 
-2. Install CoreCmd package:
- 
-   `dotnet add package CoreCmd`
+2. Install [CoreCmd NuGet package](https://www.nuget.org/packages/CoreCmd): 
+
+   > dotnet add package CoreCmd
 
 3. Implement the entry `Main` method in the `Program.cs` file:
 
-    ``` c#
+    ``` charp
     using CoreCmd.CommandExecution;
     using System;
 
@@ -51,7 +51,8 @@
     ```
 
 4. Execute:
-    ``` shell
+
+    ``` console
     d:\(project-output-dir)> dotnet myfancycmd.dll hello ben
     Ben() is called
     
@@ -60,40 +61,3 @@
     ```
 
 
-## Release notes
-
-### v1.2
-
-- Provide an 'alias' attribute to specify a subcommand's short name
-- Separate project CoreCmd.Cli from project CoreCmd
-- Add support to release as global dotnet tool command
-- Rename buildin command 'cmd' to 'config"
-- Display the version info of both entry dll and execution dll
-- Able to customize the global configuration file name
-
-### v1.0
-
-- Add an interactive shell (activate by: `core shell`)
-- Display dll location when print command help info
-
-### v0.4
-
-- Upgrade to .net core 2.2
-
-### v0.3.0
-
-- Use Assembly.LoadFrom() instead of Assembly.LoadFile() to load DLLs
-- Change version schema to use three digits
-
-### v0.2.5.11
-
-*Basic features:*
-
-- Customized command discovery
-  - Global command assembly registration
-- Command execution
-  - Parameter matching
-- Help information printing
-  - Subcommand and parameter listing
-  - [Help()] attribute support
-- Buildin commands (help, version, default)
