@@ -2,14 +2,16 @@
   - [Introduction](/)
   - [Release Notes](release-notes.md)
 - **Basic Features**
-  - [CLI](features/CLI.md)
-  - [Configuration File](features/configuration-file.md)
-  - [Parameter Matching](features/parameter-matching.md)
-  - [Internal Commands](features/internal-commands.md)
+  - [CLI](basic-features/CLI.md)
+  - [Configuration File](basic-features/configuration-file.md)
+  - [Parameter Matching](basic-features/parameter-matching.md)
+  - [Internal Commands](basic-features/internal-commands.md)
 - **Advanced Features**
-  - [Command DLL](features/command-dll.md)
-  - [Attributes](features/attributes.md)
-  - [Default Commands](features/default-commands.md)
+  - [Command DLL](advanced-features/command-dll.md)
+  - [Attributes](advanced-features/attributes.md)
+  - [Default Commands](advanced-features/default-commands.md)
+  - [Async Methods](advanced-features/async-methods.md)
+  - [Dependency Injection](advanced-features/dependency-injection.md)
 - **Links**
   <!-- find more icons at https://icongr.am/simple -->
   - [![Github](https://icongram.jgog.in/simple/github.svg?color=808080&size=16)Github](https://github.com/li-rongcheng/CoreCmd)
