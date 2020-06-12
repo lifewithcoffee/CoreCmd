@@ -1,9 +1,11 @@
 
 # Release Notes
 
-## CoreCmd
+## Latest Release
 
-### working
+See [GitHub Relase Page](https://github.com/li-rongcheng/CoreCmd/releases)
+
+## CoreCmd Early Release
 
 ### 1.3.0
 
@@ -45,11 +47,3 @@
   - Subcommand and parameter listing
   - [Help()] attribute support
 - Buildin commands (help, version, default)
-
-## CoreCmd.Cli
-
-### 1.3.0
-
-- upgrade to .net core 3.1
-- change Main() method to async
-
