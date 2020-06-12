@@ -2,11 +2,16 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <Authors>Rongcheng Li</Authors>
+    <Description>The executable command for CoreCmd</Description>
+    <PackageTags>cli;commandline;command-line</PackageTags>
 
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>core</ToolCommandName>
-    <Version>1.2.1</Version>
+
+    <Version>1.3.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
