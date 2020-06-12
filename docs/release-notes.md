@@ -1,7 +1,7 @@
 
 # Release Notes
 
-## Latest Release
+## Latest Releases
 
 See [GitHub Relase Page](https://github.com/li-rongcheng/CoreCmd/releases)
 
