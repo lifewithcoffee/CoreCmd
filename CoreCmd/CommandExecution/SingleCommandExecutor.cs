@@ -8,13 +8,14 @@ using CoreCmd.MethodMatching;
 using CoreCmd.Help;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CoreCmd.CommandExecution
 {
     public interface ISingleCommandExecutor
     {
         Type CommandClassType { get; set; }
-        Task<int> ExecuteAsync();
+        Task<int> ExecuteAsync(IServiceProvider serviceProvider);
     }
 
     public class SingleCommandExecutor : ISingleCommandExecutor
@@ -48,7 +49,7 @@ namespace CoreCmd.CommandExecution
             return (asyncAttrib != null);
         }
 
-        public async Task<int> ExecuteAsync()
+        public async Task<int> ExecuteAsync(IServiceProvider serviceProvider)
         {
             int invocationCount = 0;
             if (this.CommandClassType == null)
@@ -66,13 +67,15 @@ namespace CoreCmd.CommandExecution
                     var paramObjs = _parameterMatcher.Match(m.GetParameters(), this.Parameters);
                     if(paramObjs != null)
                     {
+                        //var instance = Activator.CreateInstance(this.CommandClassType);
+                        var instance = serviceProvider.GetService(this.CommandClassType);
                         if (IsAsyncMethod(m))
                         {
-                            Task result = (Task)m.Invoke(Activator.CreateInstance(this.CommandClassType), paramObjs);
+                            Task result = (Task)m.Invoke(instance, paramObjs);
                             await result.ConfigureAwait(false);
                         }
                         else
-                            m.Invoke(Activator.CreateInstance(this.CommandClassType), paramObjs);
+                            m.Invoke(instance, paramObjs);
                         invocationCount++;
                     }
                 }

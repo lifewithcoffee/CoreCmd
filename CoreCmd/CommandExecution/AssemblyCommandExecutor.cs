@@ -1,5 +1,6 @@
 ﻿using CoreCmd.CommandLoading;
 using CoreCmd.Help;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,8 +13,8 @@ namespace CoreCmd.CommandExecution
 {
     public interface IAssemblyCommandExecutor
     {
-        void Execute(string[] args);
-        Task ExecuteAsync(string[] args);
+        void Execute(string[] args, Action<IServiceCollection> configService);
+        Task ExecuteAsync(string[] args, Action<IServiceCollection> configService);
     }
 
     public class AssemblyCommandExecutor : IAssemblyCommandExecutor
@@ -42,7 +43,7 @@ namespace CoreCmd.CommandExecution
             }
         }
 
-        public async Task ExecuteAsync(string[] args)
+        public async Task ExecuteAsync(string[] args, Action<IServiceCollection> services = null )
         {
             ICommandClassLoader _loader = new CommandClassLoader();
             ICommandExecutorCreate _commandFinder = new CommandExecutorCreator();
@@ -51,11 +52,19 @@ namespace CoreCmd.CommandExecution
             {
                 var allClassTypes = _loader.LoadAllCommandClasses(additionalAssemblies);
 
+                IServiceCollection serviceCollection = new ServiceCollection();
+                foreach(var type in allClassTypes)
+                {
+                    serviceCollection.AddTransient(type);
+                }
+                services?.Invoke(serviceCollection);
+                IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
+
                 if (args.Length > 0)
                 {
                     var singleCommandExecutor = _commandFinder.GetSingleCommandExecutor(allClassTypes, args);
                     if (singleCommandExecutor != null)
-                        await singleCommandExecutor.ExecuteAsync().ConfigureAwait(false);
+                        await singleCommandExecutor.ExecuteAsync(serviceProvider).ConfigureAwait(false);
                 }
                 else   // print all available commands
                 {
@@ -69,9 +78,9 @@ namespace CoreCmd.CommandExecution
             }
         }
 
-        public void Execute(string[] args)
+        public void Execute(string[] args, Action<IServiceCollection> services = null)
         {
-            ExecuteAsync(args).Wait();
+            ExecuteAsync(args, services).Wait();
         }
     }
 }
