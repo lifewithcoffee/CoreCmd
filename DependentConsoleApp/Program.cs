@@ -1,5 +1,6 @@
 ﻿using CoreCmd;
 using CoreCmd.CommandExecution;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace DependentConsoleApp
@@ -8,7 +9,9 @@ namespace DependentConsoleApp
     {
         static void Main(string[] args)
         {
-            new AssemblyCommandExecutor().Execute(args);
+            new AssemblyCommandExecutor().Execute(args, services => {
+                services.AddScoped<IGreeting, Greeting>();  // see demo at: GoodMorningCommand.Greet();
+            });
         }
     }
 }
