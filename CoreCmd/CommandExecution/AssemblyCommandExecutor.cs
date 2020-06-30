@@ -43,7 +43,18 @@ namespace CoreCmd.CommandExecution
             }
         }
 
-        public async Task ExecuteAsync(string[] args, Action<IServiceCollection> services = null )
+        private IServiceProvider ConfigureServices(IEnumerable<Type> types, Action<IServiceCollection> configureMoreServicesAction)
+        {
+            IServiceCollection serviceCollection = new ServiceCollection();
+            foreach(var type in types)
+            {
+                serviceCollection.AddTransient(type);
+            }
+            configureMoreServicesAction?.Invoke(serviceCollection);
+            return serviceCollection.BuildServiceProvider();
+        }
+
+        public async Task ExecuteAsync(string[] args, Action<IServiceCollection> configureMoreServicesAction = null )
         {
             ICommandClassLoader _loader = new CommandClassLoader();
             ICommandExecutorCreate _commandFinder = new CommandExecutorCreator();
@@ -51,14 +62,7 @@ namespace CoreCmd.CommandExecution
             try
             {
                 var allClassTypes = _loader.LoadAllCommandClasses(additionalAssemblies);
-
-                IServiceCollection serviceCollection = new ServiceCollection();
-                foreach(var type in allClassTypes)
-                {
-                    serviceCollection.AddTransient(type);
-                }
-                services?.Invoke(serviceCollection);
-                IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
+                IServiceProvider serviceProvider = ConfigureServices(allClassTypes, configureMoreServicesAction);
 
                 if (args.Length > 0)
                 {

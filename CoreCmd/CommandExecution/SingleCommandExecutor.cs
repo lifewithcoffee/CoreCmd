@@ -49,17 +49,31 @@ namespace CoreCmd.CommandExecution
             return (asyncAttrib != null);
         }
 
+        /// <summary>
+        /// If the serviceProvider is null, this method will use normal
+        /// Activator.CreateInstance() to create an instance.
+        /// 
+        /// If the target class requires dependency injection, using
+        /// Activator.CreateInstance() may throw out an exception or have
+        /// unexpected behavior.
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <returns></returns>
         public async Task<int> ExecuteAsync(IServiceProvider serviceProvider)
         {
             int invocationCount = 0;
             if (this.CommandClassType == null)
+            {
                 throw new Exception("Command type is null");
+            }
 
             string errmsg = $"Invalid subcommand: Either there is no subcommand '{this.MethodSubcommand}' or parameter mismatches.";
             var methods = _methodMatcher.GetMethodInfo(this.CommandClassType, this.MethodSubcommand);
 
             if (methods.Count() == 0)
+            {
                 Console.WriteLine(errmsg);
+            }
             else
             {
                 foreach (var m in methods)
@@ -67,24 +81,38 @@ namespace CoreCmd.CommandExecution
                     var paramObjs = _parameterMatcher.Match(m.GetParameters(), this.Parameters);
                     if(paramObjs != null)
                     {
-                        //var instance = Activator.CreateInstance(this.CommandClassType);
-                        var instance = serviceProvider.GetService(this.CommandClassType);
+                        object instance = this.GetInstance(serviceProvider, this.CommandClassType);
+
                         if (IsAsyncMethod(m))
                         {
                             Task result = (Task)m.Invoke(instance, paramObjs);
                             await result.ConfigureAwait(false);
                         }
                         else
+                        {
                             m.Invoke(instance, paramObjs);
+                        }
                         invocationCount++;
                     }
                 }
 
                 if (invocationCount == 0)
+                {
                     Console.WriteLine(errmsg);
+                }
             }
 
             return await Task.FromResult<int>(invocationCount);
+        }
+
+        private object GetInstance(IServiceProvider serviceProvider, Type type)
+        {
+            object instance = serviceProvider?.GetService(this.CommandClassType);
+            if (instance == null)
+            {
+                instance = Activator.CreateInstance(this.CommandClassType);
+            }
+            return instance;
         }
     }
 }
