@@ -52,13 +52,18 @@ namespace CoreCmd.CommandExecution
                     {
                         result.MethodSubcommand = args[1];
 
-                        // if can't find the subcommand use default subcommand
-                        if (_methodMatcher.GetMethodInfo(result.CommandClassType, result.MethodSubcommand).Count() != 0)
-                            result.Parameters = args.Skip(2).ToArray();
-                        else
+                        if ( result.MethodSubcommand.ToLower() != "help")   // every command should have a "help" sub-command
                         {
-                            result.MethodSubcommand = Global.DefaultSubcommandMethodName;
-                            result.Parameters = args.Skip(1).ToArray();
+                            // if can't find the subcommand use default subcommand
+                            if( _methodMatcher.GetMethodInfo(result.CommandClassType, result.MethodSubcommand).Count() != 0)
+                            {
+                                result.Parameters = args.Skip(2).ToArray();
+                            }
+                            else
+                            {
+                                result.MethodSubcommand = Global.DefaultSubcommandMethodName;
+                                result.Parameters = args.Skip(1).ToArray();
+                            }
                         }
                     }
                     else

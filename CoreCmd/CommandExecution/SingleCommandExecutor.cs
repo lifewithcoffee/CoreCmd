@@ -22,6 +22,7 @@ namespace CoreCmd.CommandExecution
     {
         private IMethodMatcher _methodMatcher = new MethodMatcher();
         private IParameterMatcher _parameterMatcher = new ParameterMatcher();
+        private IHelpInfoService _helpSvc = new HelpInfoService();
 
         /// <summary>
         /// There is no naming format required for the relevant class.
@@ -65,6 +66,13 @@ namespace CoreCmd.CommandExecution
             if (this.CommandClassType == null)
             {
                 throw new Exception("Command type is null");
+            }
+
+            if(this.MethodSubcommand == "help")
+            {
+                Console.WriteLine("Help command called");
+                _helpSvc.PrintClassHelp(this.CommandClassType);
+                return await Task.FromResult<int>(1);
             }
 
             string errmsg = $"Invalid subcommand: Either there is no subcommand '{this.MethodSubcommand}' or parameter mismatches.";
