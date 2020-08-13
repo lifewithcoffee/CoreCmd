@@ -49,12 +49,17 @@ namespace CoreCmd.Help
 
         public void PrintAllMethodHelp(Type commandClassType)
         {
-            var methods = commandClassType.GetMethods( BindingFlags.DeclaredOnly
-                                                     | BindingFlags.Public
-                                                     | BindingFlags.Instance
-                                                     );
+            var methods = commandClassType.GetMethods( BindingFlags.Public | BindingFlags.Instance );
             foreach(var m in methods)
-                this.PrintMethodHelp(m);
+            {
+                if( m.Name != "GetType" 
+                    && m.Name != "ToString" 
+                    && m.Name != "Equals"
+                    && m.Name != "GetHashCode")     // exclude methods inherits from the Object class
+                {
+                    this.PrintMethodHelp(m);
+                }
+            }
         }
 
         private string GetParameterListText(MethodInfo methodInfo)

@@ -6,7 +6,15 @@ using System.Threading;
 
 namespace DependentConsoleApp
 {
-    class DemoCommand
+    class DemoCommandBase
+    {
+        public void Fn1()
+        {
+            Console.WriteLine("DemoCommandBase.Fn1() called");
+        }
+    }
+
+    class DemoCommand : DemoCommandBase
     {
         public void ProgressBar()
         {

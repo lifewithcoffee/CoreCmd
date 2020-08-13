@@ -2,7 +2,7 @@
   "profiles": {
     "DependentConsoleApp": {
       "commandName": "Project",
-      "commandLineArgs": "test-method1 hello world 34.241"
+      "commandLineArgs": "demo fn1"
     }
   }
 }
