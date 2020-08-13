@@ -5,7 +5,15 @@ using System.Threading.Tasks;
 
 namespace ExperimentalConsoleApp.Commands
 {
-    public class MyTestCommand
+    public class MyTestCommandBase
+    {
+        public void Fn1()
+        {
+            Console.WriteLine("MyTestCommandBase.Fn1() called");
+        }
+    }
+
+    public class MyTestCommand : MyTestCommandBase
     {
         public void Default()
         {
