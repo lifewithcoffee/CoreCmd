@@ -55,7 +55,8 @@ namespace CoreCmd.CommandExecution
                         if ( result.MethodSubcommand.ToLower() != "help")   // every command should have a "help" sub-command
                         {
                             // if can't find the subcommand use default subcommand
-                            if( _methodMatcher.GetMethodInfo(result.CommandClassType, result.MethodSubcommand).Count() != 0)
+                            result.MethodInfo = _methodMatcher.GetMethodInfo(result.CommandClassType, result.MethodSubcommand);
+                            if( result.MethodInfo.Count() != 0 )
                             {
                                 result.Parameters = args.Skip(2).ToArray();
                             }

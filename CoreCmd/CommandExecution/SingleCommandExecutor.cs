@@ -18,6 +18,9 @@ namespace CoreCmd.CommandExecution
         Task<int> ExecuteAsync(IServiceProvider serviceProvider);
     }
 
+    /// <summary>
+    /// Work with either "CommandClassType" or "Methods" is specified
+    /// </summary>
     public class SingleCommandExecutor : ISingleCommandExecutor
     {
         private IMethodMatcher _methodMatcher = new MethodMatcher();
@@ -42,6 +45,8 @@ namespace CoreCmd.CommandExecution
             set { methodSubcommand = value.ToLower(); }
         }
 
+        public IEnumerable<MethodInfo> MethodInfo { get; set; }
+
         public string[] Parameters { get; set; } = new string[] { };
 
         private bool IsAsyncMethod(MethodInfo method)
@@ -63,9 +68,9 @@ namespace CoreCmd.CommandExecution
         public async Task<int> ExecuteAsync(IServiceProvider serviceProvider)
         {
             int invocationCount = 0;
-            if (this.CommandClassType == null)
+            if (this.CommandClassType == null && this.MethodInfo == null)
             {
-                throw new Exception("Command type is null");
+                throw new Exception("Both command type and method info are null");  // need to specify either command type or method info
             }
 
             if(this.MethodSubcommand == "help")
@@ -76,15 +81,17 @@ namespace CoreCmd.CommandExecution
             }
 
             string errmsg = $"Invalid subcommand: Either there is no subcommand '{this.MethodSubcommand}' or parameter mismatches.";
-            var methods = _methodMatcher.GetMethodInfo(this.CommandClassType, this.MethodSubcommand);
 
-            if (methods.Count() == 0)
+            if(this.MethodInfo == null)
+                this.MethodInfo = _methodMatcher.GetMethodInfo(this.CommandClassType, this.MethodSubcommand);
+
+            if (this.MethodInfo.Count() == 0)
             {
                 Console.WriteLine(errmsg);
             }
             else
             {
-                foreach (var m in methods)
+                foreach (var m in this.MethodInfo)
                 {
                     var paramObjs = _parameterMatcher.Match(m.GetParameters(), this.Parameters);
                     if(paramObjs != null)
