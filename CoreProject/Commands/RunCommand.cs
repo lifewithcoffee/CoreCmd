@@ -23,10 +23,30 @@ namespace CoreProject.Commands
 
         public void ViewVersion()
         {
-            var svc = new CsprojFileService();
-            var projFile = svc.FindCsprojFile();
-            var ver = svc.GetVersion(projFile);
-            Console.WriteLine($"Version from {projFile} : {ver}");
+            try
+            {
+                var svc = new CsprojFileService();
+                var projFile = svc.FindCsprojFile();
+                var ver = svc.GetVersion(projFile);
+                Console.WriteLine($"Version from {projFile} : {ver}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public void ViewRootNamespace()
+        {
+            try
+            {
+                var svc = new CsprojFileService();
+                Console.WriteLine($"Version from {svc.FindCsprojFile()} : {svc.GetRootNamespace()}");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
