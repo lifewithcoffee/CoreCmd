@@ -15,11 +15,13 @@ namespace CoreProject.Services
         /// Find the <RootNamespace> element in a .csproj file and return its InnerText value;
         /// If the element is not found, return the .csproj file's name.
         /// </returns>
-        public string GetRootNamespace(string csprojFilePath)
+        public string GetRootNamespace(string csprojFilePath = "")
         {
             string result = null;
             try { 
                 var doc = new XmlDocument();
+                if (string.IsNullOrWhiteSpace(csprojFilePath))
+                    csprojFilePath = this.FindCsprojFile();
                 doc.Load(csprojFilePath);
 
                 var root_namespace_node = doc.SelectSingleNode("//RootNamespace");
