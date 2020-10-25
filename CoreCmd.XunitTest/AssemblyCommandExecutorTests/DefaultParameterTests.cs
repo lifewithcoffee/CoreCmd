@@ -21,6 +21,15 @@ namespace AssemblyCommandExecutorTests
             Code = "";
         }
 
+        // The only parameter has a default value
+        public void FooBar2(string code = "apple")
+        {
+            Num1 = 100;
+            Num2 = 200;
+            Code = code;
+            HitCounter.Hit("2");
+        }
+
         public void FooBar3(string str, int num1=1, int num2=2, string code="apple")
         {
             Num1 = num1;
@@ -38,6 +47,30 @@ namespace AssemblyCommandExecutorTests
         public DefaultParameterTests()
         {
             DefaultParameterCommand.HitCounter.ResetDict();
+        }
+
+        [Fact]
+        public void Only_parameter_with_default_value_omitted()
+        {
+            DefaultParameterCommand.Reset();
+
+            executor.Execute(new string[] { "default-parameter", "foo-bar2" });
+            Assert.Equal(1, DefaultParameterCommand.HitCounter.GetHitCount("3"));
+            Assert.Equal(100, DefaultParameterCommand.Num1);
+            Assert.Equal(200, DefaultParameterCommand.Num2);
+            Assert.Equal("apple", DefaultParameterCommand.Code);
+        }
+
+        [Fact]
+        public void Only_parameter_with_default_value_updated()
+        {
+            DefaultParameterCommand.Reset();
+
+            executor.Execute(new string[] { "default-parameter", "foo-bar2", "hello" });
+            Assert.Equal(1, DefaultParameterCommand.HitCounter.GetHitCount("3"));
+            Assert.Equal(100, DefaultParameterCommand.Num1);
+            Assert.Equal(200, DefaultParameterCommand.Num2);
+            Assert.Equal("hello", DefaultParameterCommand.Code);
         }
 
         [Fact]

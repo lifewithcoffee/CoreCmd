@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CoreCmd\CoreCmd.csproj" />
+    <ProjectReference Include="..\IndentInfoLib\IndentInfoLib.csproj" />
   </ItemGroup>
 
   <ItemGroup>
