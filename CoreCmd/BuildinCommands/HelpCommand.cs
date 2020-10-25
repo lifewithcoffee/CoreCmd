@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CoreCmd.BuildinCommands
+namespace CoreCmd.BuiltinCommands
 {
     class HelpCommand
     {

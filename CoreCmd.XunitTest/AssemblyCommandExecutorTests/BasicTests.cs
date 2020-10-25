@@ -1,4 +1,4 @@
-﻿using CoreCmd.BuildinCommands;
+﻿using CoreCmd.BuiltinCommands;
 using CoreCmd.CommandExecution;
 using CoreCmd.XunitTest.TestUtils;
 using System;

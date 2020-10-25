@@ -7,7 +7,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
-namespace CoreCmd.BuildinCommands
+namespace CoreCmd.BuiltinCommands
 {
     [Alias("ver")]
     class VersionCommand
