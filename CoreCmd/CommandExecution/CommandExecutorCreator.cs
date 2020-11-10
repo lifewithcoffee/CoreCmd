@@ -26,10 +26,7 @@ namespace CoreCmd.CommandExecution
 
             var aliasInfo = commandType.GetCustomAttribute<AliasAttribute>();
             if (aliasInfo != null && $"{aliasInfo.Alias}-command".ToLower() == commandString)
-            {
-                Console.WriteLine($"'{commandString}' is an alias command for '{commandName}'");
                 return true;
-            }
 
             return false;
         }
