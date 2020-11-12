@@ -1,5 +1,5 @@
 ﻿using CoreCmd.CommandLoading;
-using NetCoreUtils.Xml;
+using NetCoreUtils.Text.Xml;
 using System;
 using System.Collections.Generic;
 using System.IO;
