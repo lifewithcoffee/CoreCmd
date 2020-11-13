@@ -1,4 +1,5 @@
 ﻿using CoreCmd.Attributes;
+using NetCoreUtils.Text.Indent;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -28,27 +29,31 @@ namespace CoreCmd.Help
             string commandName = Utils.LowerKebabCase(commandClassType.Name).Replace("-command", "");
             var aliasinfo = commandClassType.GetCustomAttribute<AliasAttribute>();
             if(aliasinfo != null)
-                commandName = $"{commandName} (alias: {aliasinfo.Alias})";
+                commandName = $"{commandName}|{aliasinfo.Alias}";
             Console.WriteLine(commandName);
 
             // print command description, if available
             var helpInfo = commandClassType.GetCustomAttribute<HelpAttribute>();
             string helpText = helpInfo == null ? null : $"{helpInfo?.Description}";
             if(helpText != null)
+            { 
                 Console.WriteLine($"{Global.indentSpaces}{helpText}");
+                Console.WriteLine($"{Global.indentSpaces}----");
+            }
 
             // print dll location info
-            string dllPath = commandClassType.Assembly.Location;
-            Console.WriteLine($"{Global.indentSpaces}{dllPath}");
-            Console.WriteLine($"{Global.indentSpaces}----- subcommands -----");
+            //string dllPath = commandClassType.Assembly.Location;
+            //Console.WriteLine($"{Global.indentSpaces}{dllPath}");
 
             // print subcommand info
+            //Console.WriteLine($"{Global.indentSpaces}----- subcommands -----");
             this.PrintAllMethodHelp(commandClassType);
-            Console.WriteLine("");
         }
 
         public void PrintAllMethodHelp(Type commandClassType)
         {
+            Sections sections = new Sections(4);
+
             var methods = commandClassType.GetMethods( BindingFlags.Public | BindingFlags.Instance );
             foreach(var m in methods)
             {
@@ -57,11 +62,21 @@ namespace CoreCmd.Help
                     && m.Name != "Equals"
                     && m.Name != "GetHashCode")     // exclude methods inherits from the Object class
                 {
-                    this.PrintMethodHelp(m);
+                    //this.PrintMethodHelp(m);
+                    string commandName = Utils.LowerKebabCase(m.Name);
+                    string commandDescription = m.GetCustomAttribute<HelpAttribute>()?.Description;
+
+                    sections.AddSection(commandName).AddLine(commandDescription);
                 }
             }
+
+            sections.Print();
         }
 
+        /// <summary>
+        /// Example:
+        ///     <param1:String> <param2:String>
+        /// </summary>
         private string GetParameterListText(MethodInfo methodInfo)
         {
             StringBuilder sb = new StringBuilder();
