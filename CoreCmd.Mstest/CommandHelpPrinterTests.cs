@@ -36,7 +36,7 @@ namespace CoreCmd.XunitTest
         {
             var helpInfo = new HelpInfoService();
             helpInfo.PrintClassHelp(typeof(DummyCommand2));
-            helpInfo.PrintAllMethodHelp(typeof(DummyCommand2));
+            helpInfo.PrintVerboseMethodHelp(typeof(DummyCommand2));
         }
     }
 }

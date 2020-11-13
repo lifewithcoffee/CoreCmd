@@ -11,8 +11,7 @@ namespace CoreCmd.Help
     {
         void PrintClassHelp(IEnumerable<Type> commandClassTypes);
         void PrintClassHelp(Type commandClassType);
-        void PrintAllMethodHelp(Type commandClassType);
-        void PrintMethodHelp(MethodInfo methodInfo);
+        void PrintVerboseMethodHelp(Type commandClassType);
     }
 
     public class HelpInfoService : IHelpInfoService
@@ -30,16 +29,16 @@ namespace CoreCmd.Help
             var aliasinfo = commandClassType.GetCustomAttribute<AliasAttribute>();
             if(aliasinfo != null)
                 commandName = $"{commandName}|{aliasinfo.Alias}";
-            Console.WriteLine(commandName);
+            //Console.WriteLine(commandName);
 
             // print command description, if available
             var helpInfo = commandClassType.GetCustomAttribute<HelpAttribute>();
-            string helpText = helpInfo == null ? null : $"{helpInfo?.Description}";
-            if(helpText != null)
-            { 
-                Console.WriteLine($"{Global.indentSpaces}{helpText}");
-                Console.WriteLine($"{Global.indentSpaces}----");
-            }
+            //string helpText = helpInfo == null ? null : $"{helpInfo?.Description}";
+            //if(helpText != null)
+            //{ 
+            //    Console.WriteLine($"{Global.indentSpaces}{helpText}");
+            //}
+            Console.WriteLine($"{commandName,-10}\t{helpInfo?.Description}");
 
             // print dll location info
             //string dllPath = commandClassType.Assembly.Location;
@@ -47,12 +46,12 @@ namespace CoreCmd.Help
 
             // print subcommand info
             //Console.WriteLine($"{Global.indentSpaces}----- subcommands -----");
-            this.PrintAllMethodHelp(commandClassType);
+            this.PrintVerboseMethodHelp(commandClassType);
         }
 
-        public void PrintAllMethodHelp(Type commandClassType)
+        public void PrintVerboseMethodHelp(Type commandClassType)
         {
-            Sections sections = new Sections(4);
+            //Sections sections = new Sections(4);
 
             var methods = commandClassType.GetMethods( BindingFlags.Public | BindingFlags.Instance );
             foreach(var m in methods)
@@ -62,15 +61,21 @@ namespace CoreCmd.Help
                     && m.Name != "Equals"
                     && m.Name != "GetHashCode")     // exclude methods inherits from the Object class
                 {
-                    //this.PrintMethodHelp(m);
-                    string commandName = Utils.LowerKebabCase(m.Name);
-                    string commandDescription = m.GetCustomAttribute<HelpAttribute>()?.Description;
+                    this.PrintMethodHelp(m);
+                    //string commandName = Utils.LowerKebabCase(m.Name);
+                    //string commandDescription = m.GetCustomAttribute<HelpAttribute>()?.Description;
 
-                    sections.AddSection(commandName).AddLine(commandDescription);
+                    //var Content = sections.AddSection(commandName);
+
+                    //if(commandName == "default")
+                    //{
+                    //    Content.AddLine("The omissible default subcommand");
+                    //}
+                    //Content.AddLine(commandDescription);
                 }
             }
 
-            sections.Print();
+            //sections.Print();
         }
 
         /// <summary>
@@ -102,13 +107,14 @@ namespace CoreCmd.Help
         public void PrintMethodHelp(MethodInfo methodInfo)
         {
             const string indentSpaces = "    ";
-            Console.WriteLine($"{indentSpaces}{Utils.LowerKebabCase(methodInfo.Name)}{GetParameterListText(methodInfo)}");
+            //Console.WriteLine($"{indentSpaces}{Utils.LowerKebabCase(methodInfo.Name)}{GetParameterListText(methodInfo)}");
 
             var helpInfo = methodInfo.GetCustomAttribute<HelpAttribute>();
-            if (helpInfo != null)
-            {
-                Console.WriteLine($"{indentSpaces}{indentSpaces}{helpInfo.Description}");
-            }
+            //if (helpInfo != null)
+            //{
+            //    Console.WriteLine($"{indentSpaces}{indentSpaces}{helpInfo.Description}");
+            //}
+            Console.WriteLine($"{indentSpaces}{Utils.LowerKebabCase(methodInfo.Name),-10}\t{helpInfo?.Description}");
         }
     }
 }
