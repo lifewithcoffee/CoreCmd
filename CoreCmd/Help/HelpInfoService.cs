@@ -114,7 +114,13 @@ namespace CoreCmd.Help
             //{
             //    Console.WriteLine($"{indentSpaces}{indentSpaces}{helpInfo.Description}");
             //}
-            Console.WriteLine($"{indentSpaces}{Utils.LowerKebabCase(methodInfo.Name),-10}\t{helpInfo?.Description}");
+            string methodName = Utils.LowerKebabCase(methodInfo.Name);
+            string description;
+            if(methodName == "default")
+                description = "The omissible default subcommand";
+            else
+                description = helpInfo?.Description;
+            Console.WriteLine($"{indentSpaces}{methodName,-10}\t{description}");
         }
     }
 }
