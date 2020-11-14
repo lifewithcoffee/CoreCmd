@@ -9,6 +9,7 @@ using System.Text;
 
 namespace CoreCmd.BuiltinCommands
 {
+    [Help("Print the version information")]
     [Alias("ver")]
     class VersionCommand
     {

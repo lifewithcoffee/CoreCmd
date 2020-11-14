@@ -7,6 +7,7 @@ using System.Text;
 
 namespace CoreCmd.BuiltinCommands
 {
+    [Help("Subcommands for configuration file")]
     class ConfigCommand
     {
         IConfigOperator _configOperator = new ConfigOperator();
@@ -16,12 +17,14 @@ namespace CoreCmd.BuiltinCommands
             this.ListDlls();
         }
 
+        [Help("Add a command assembly")]
         public void AddDll(string filename) // need to add a parameter of "bool local=false" as well?
         {
             _configOperator.AddCommandAssembly(filename);
             _configOperator.SaveChanges();
         }
 
+        [Help("List all command assemblies")]
         public void ListDlls()
         {
             Console.WriteLine("Registered global command assemblies:");
@@ -35,6 +38,7 @@ namespace CoreCmd.BuiltinCommands
         /// A partial string of the target DLL's full path.
         /// If multiple DLLs are matched, no DLL will be removed, and a prompt message will be displayed.
         /// </param>
+        [Help("Remove a command assembly")]
         public void RemoveDll(string targetDllString)
         {
             Console.WriteLine($"Removing a dll containing '{targetDllString}' in its full path.");
@@ -65,7 +69,7 @@ namespace CoreCmd.BuiltinCommands
                 Console.WriteLine($"No DLL is matched for '{targetDllString}'.");
         }
 
-        [Help("Display config file location")]
+        [Help("Print the full path of the configuration file")]
         public void Location()
         {
             Console.WriteLine(Global.ConfigFileFullPath);

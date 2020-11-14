@@ -1,4 +1,5 @@
-﻿using CoreCmd.CommandExecution;
+﻿using CoreCmd.Attributes;
+using CoreCmd.CommandExecution;
 using CoreCmd.CommandLoading;
 using CoreCmd.Help;
 using System;
@@ -7,6 +8,7 @@ using System.Text;
 
 namespace CoreCmd.BuiltinCommands
 {
+    [Help("Print the help information")]
     class HelpCommand
     {
         IHelpInfoService _helpSvc = new HelpInfoService();
