@@ -15,7 +15,7 @@ namespace CoreCmd.BuiltinCommands
 
         public void Default(string command)
         {
-            ICommandExecutorCreate _exeCreator = new CommandExecutorCreator();
+            CommandExecutorCreator _exeCreator = new CommandExecutorCreator();
             ICommandClassLoader _loader = new CommandClassLoader();
 
             var allClassTypes = _loader.LoadAllCommandClasses(null);

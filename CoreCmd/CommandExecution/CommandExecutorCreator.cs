@@ -11,12 +11,7 @@ using CoreCmd.Attributes;
 
 namespace CoreCmd.CommandExecution
 {
-    interface ICommandExecutorCreate
-    {
-        ISingleCommandExecutor GetSingleCommandExecutor(IEnumerable<Type> targetTypes, string[] args);
-    }
-
-    internal class CommandExecutorCreator : ICommandExecutorCreate
+    public class CommandExecutorCreator
     {
         private bool CommandMatched(Type commandType, string commandString)
         {
@@ -31,7 +26,7 @@ namespace CoreCmd.CommandExecution
             return false;
         }
 
-        public ISingleCommandExecutor GetSingleCommandExecutor(IEnumerable<Type> targetTypes, string[] args)
+        public SingleCommandExecutor GetSingleCommandExecutor(IEnumerable<Type> targetTypes, string[] args)
         {
             IMethodMatcher _methodMatcher = new MethodMatcher();
 
@@ -51,27 +46,37 @@ namespace CoreCmd.CommandExecution
 
                         if ( result.MethodSubcommand.ToLower() != "help")   // every command should have a "help" sub-command
                         {
-                            // if can't find the subcommand use default subcommand
                             result.MethodInfo = _methodMatcher.GetMethodInfo(result.CommandClassType, result.MethodSubcommand);
                             if( result.MethodInfo.Count() != 0 )
                             {
+                                // this is a normal non-default subcommand
                                 result.Parameters = args.Skip(2).ToArray();
                             }
                             else
                             {
+                                // can't find the specified subcommand, try to find the "default" subcommand instead
                                 result.MethodSubcommand = Global.DefaultSubcommandMethodName;
+                                result.MethodInfo = _methodMatcher.GetMethodInfo(result.CommandClassType, result.MethodSubcommand);
                                 result.Parameters = args.Skip(1).ToArray();
                             }
                         }
                     }
                     else
+                    {
                         result.MethodSubcommand = Global.DefaultSubcommandMethodName;
+                        result.MethodInfo = _methodMatcher.GetMethodInfo(result.CommandClassType, result.MethodSubcommand);
+                    }
                 }
                 else
                 {
+                    // try to find a DefaultComand class
                     result.CommandClassType = targetTypes.SingleOrDefault(t => t.Name.Equals(Global.DefaultCommandName));
-                    result.MethodSubcommand = args[0];
-                    result.Parameters = args.Skip(1).ToArray();
+                    if(result.CommandClassType != null)
+                    {
+                        result.MethodSubcommand = args[0];
+                        result.MethodInfo = _methodMatcher.GetMethodInfo(result.CommandClassType, result.MethodSubcommand);
+                        result.Parameters = args.Skip(1).ToArray();
+                    }
                 }
 
                 if (result.CommandClassType == null)

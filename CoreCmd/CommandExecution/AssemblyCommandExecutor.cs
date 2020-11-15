@@ -57,7 +57,7 @@ namespace CoreCmd.CommandExecution
         public async Task ExecuteAsync(string[] args, Action<IServiceCollection> configureMoreServicesAction = null )
         {
             ICommandClassLoader _loader = new CommandClassLoader();
-            ICommandExecutorCreate _commandFinder = new CommandExecutorCreator();
+            CommandExecutorCreator _commandFinder = new CommandExecutorCreator();
 
             try
             {
