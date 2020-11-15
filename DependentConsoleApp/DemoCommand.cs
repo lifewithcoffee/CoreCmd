@@ -1,4 +1,5 @@
-﻿using CoreCmd.CliUtils;
+﻿using CoreCmd.Attributes;
+using CoreCmd.CliUtils;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,6 +17,7 @@ namespace DependentConsoleApp
 
     class DemoCommand : DemoCommandBase
     {
+        [Help("Demonstrate console progress bar")]
         public void ProgressBar()
         {
             Console.WriteLine("Processing...");
