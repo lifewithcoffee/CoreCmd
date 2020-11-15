@@ -18,7 +18,7 @@
     <PackageTags>cli;commandline;command-line;parser</PackageTags>
     <RepositoryUrl>https://github.com/li-rongcheng/CoreCmd.git</RepositoryUrl>
 
-    <Version>1.6</Version>
+    <Version>1.6.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
