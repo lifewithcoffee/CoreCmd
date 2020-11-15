@@ -55,7 +55,8 @@ namespace AssemblyCommandExecutorTests
             DefaultParameterCommand.Reset();
 
             executor.Execute(new string[] { "default-parameter", "foo-bar2" });
-            Assert.Equal(1, DefaultParameterCommand.HitCounter.GetHitCount("3"));
+            Assert.Equal(1, DefaultParameterCommand.HitCounter.GetHitCount("2"));
+            Assert.Equal(0, DefaultParameterCommand.HitCounter.GetHitCount("3"));
             Assert.Equal(100, DefaultParameterCommand.Num1);
             Assert.Equal(200, DefaultParameterCommand.Num2);
             Assert.Equal("apple", DefaultParameterCommand.Code);
@@ -66,8 +67,9 @@ namespace AssemblyCommandExecutorTests
         {
             DefaultParameterCommand.Reset();
 
-            executor.Execute(new string[] { "default-parameter", "foo-bar2", "hello" });
-            Assert.Equal(1, DefaultParameterCommand.HitCounter.GetHitCount("3"));
+            executor.Execute(new string[] { "default-parameter", "foo-bar2", "-c:hello" });
+            Assert.Equal(1, DefaultParameterCommand.HitCounter.GetHitCount("2"));
+            Assert.Equal(0, DefaultParameterCommand.HitCounter.GetHitCount("3"));
             Assert.Equal(100, DefaultParameterCommand.Num1);
             Assert.Equal(200, DefaultParameterCommand.Num2);
             Assert.Equal("hello", DefaultParameterCommand.Code);
