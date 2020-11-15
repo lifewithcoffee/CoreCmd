@@ -146,7 +146,6 @@ namespace CoreCmd.MethodMatching
 
         /// <returns>
         /// null: parameter mismatches, indicating the relevant method should not be invoked
-        /// new object[0]: this is a method without parameters
         /// </returns>
         public object[] Match(ParameterInfo[] info, string[] parameters)
         {
@@ -156,14 +155,19 @@ namespace CoreCmd.MethodMatching
             int requiredParamNumber = info.Where(i => !i.HasDefaultValue).Count(); // parameters with default values are optional
             int requiredParamCount = required.Count();
 
-            bool requiredParamMatched = false;
             int paramProcessedCount = 0;
 
             // match required parameters
             if (requiredParamCount == requiredParamNumber)
             {
                 if (requiredParamNumber == 0)
-                    return new object[0];   // there's no parameter required
+                {
+                    var matchedDefaultParams2 = MatchDefaultParameters(info, optional);
+                    if (matchedDefaultParams2 == null)
+                        return null;
+                    else
+                        return matchedDefaultParams2.ToArray();
+                }
 
                 foreach (string param in required)
                 {
@@ -175,31 +179,36 @@ namespace CoreCmd.MethodMatching
 
                     paramProcessedCount++;
                 }
-                requiredParamMatched = true;
+
+                // match optional parameters
+                var matchedDefaultParams = MatchDefaultParameters(info, optional);
+                if (matchedDefaultParams == null)
+                    return null;
+                else
+                    result.AddRange(matchedDefaultParams);
             }
             else
                 return null; // parameter mismatch
 
+            return result.ToArray();
+        }
 
-            // match optional parameters, i.e. parameters with default values
-            if(requiredParamMatched)
+
+        private List<object> MatchDefaultParameters(ParameterInfo[] info, List<string> optional)
+        {
+            List<object> result = new List<object>();
+            var optionalParams = info.Where(i => i.HasDefaultValue);
+            foreach (var param in optionalParams)
             {
-                var optionalParams = info.Where(i => i.HasDefaultValue);
-                foreach(var param in optionalParams)
-                {
-                    var paramObj = MatchOptionalParameters(info[paramProcessedCount], optional);
+                var paramObj = MatchOptionalParameters(param, optional);
 
-                    if (paramObj != null)
-                        result.Add(paramObj);
-                    else
-                        return null;    // default parameter mismatches
-
-                    paramProcessedCount++;
-                }
+                if (paramObj != null)
+                    result.Add(paramObj);
+                else
+                    return null;    // default parameter mismatches
             }
 
-            // must return null if no result got
-            return result.ToArray();
+            return result;
         }
     }
 }
