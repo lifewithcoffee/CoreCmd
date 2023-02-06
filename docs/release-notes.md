@@ -3,7 +3,7 @@
 ## Working (v2.0)
 
 ```
-- Upgrade to .net7
+- Upgrade framework to .net7 with other package updates
 ```
 
 ## Releases
