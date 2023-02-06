@@ -32,7 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{A11DDC7C-E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreUtils", "..\NetCoreUtils\NetCoreUtils\NetCoreUtils.csproj", "{38251A13-BE45-42AF-B7AF-838EE9083621}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Docs", "Docs\Docs.csproj", "{3F09905A-F04A-42F8-BD5E-9FBDAC15302C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "docs", "Docs\docs.csproj", "{3F09905A-F04A-42F8-BD5E-9FBDAC15302C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
