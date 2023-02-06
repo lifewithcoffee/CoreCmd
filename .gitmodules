@@ -1,0 +1,3 @@
+[submodule "SubModules/NetCoreUtils"]
+	path = SubModules/NetCoreUtils
+	url = https://github.com/lifewithcoffee/NetCoreUtils.git
