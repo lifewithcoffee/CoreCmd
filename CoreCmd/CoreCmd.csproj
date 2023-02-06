@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>CoreCmd</AssemblyName>
     <OutputType>Library</OutputType>
     <PackageId>CoreCmd</PackageId>
@@ -18,7 +18,7 @@
     <PackageTags>cli;commandline;command-line;parser</PackageTags>
     <RepositoryUrl>https://github.com/li-rongcheng/CoreCmd.git</RepositoryUrl>
 
-    <Version>1.6.0</Version>
+    <Version>2.0.0-working</Version>
   </PropertyGroup>
 
   <ItemGroup>

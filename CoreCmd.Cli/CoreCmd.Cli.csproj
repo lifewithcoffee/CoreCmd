@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
 
     <Authors>Rongcheng Li</Authors>
     <Description>The executable command for CoreCmd</Description>
@@ -11,7 +11,7 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>core</ToolCommandName>
 
-    <Version>1.6.0</Version>
+    <Version>2.0.0-working</Version>
   </PropertyGroup>
 
   <ItemGroup>
