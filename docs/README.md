@@ -1,8 +1,6 @@
-# Introduction
+# About CoreCmd
 
-## About
-
-*TODO*
+CoreCmd is a MVC-like convention based command line automatic parser.
 
 ## Quick Start
 

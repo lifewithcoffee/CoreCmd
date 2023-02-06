@@ -1,12 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29001.49
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A68BBA59-77EC-4552-8514-A715319CB798}"
 	ProjectSection(SolutionItems) = preProject
 		publish-core-command.bat = publish-core-command.bat
-		README.md = README.md
 		update-corecmd-package.cmd = update-corecmd-package.cmd
 		update-ExperimentalConsoleApp-package.cmd = update-ExperimentalConsoleApp-package.cmd
 	EndProjectSection
@@ -27,32 +26,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreCmd.Mstest", "CoreCmd.M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreCmd.Cli", "CoreCmd.Cli\CoreCmd.Cli.csproj", "{C1F729E6-045F-43BB-B85C-28C86162D10D}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "docs", "docs\", "{ABA9B5AF-6231-4290-8F09-139170A6C512}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_5672"
-		Debug.AspNetCompiler.PhysicalPath = "docs\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_5672\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_5672"
-		Release.AspNetCompiler.PhysicalPath = "docs\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_5672\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "5672"
-		SlnRelativePath = "docs\"
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{79C26CBB-D69F-4160-8465-50EB46A5A4BD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{A11DDC7C-E99D-416B-B31D-93C27FA2B6B7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreUtils", "..\NetCoreUtils\NetCoreUtils\NetCoreUtils.csproj", "{38251A13-BE45-42AF-B7AF-838EE9083621}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Docs", "Docs\Docs.csproj", "{3F09905A-F04A-42F8-BD5E-9FBDAC15302C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -88,14 +68,14 @@ Global
 		{C1F729E6-045F-43BB-B85C-28C86162D10D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1F729E6-045F-43BB-B85C-28C86162D10D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1F729E6-045F-43BB-B85C-28C86162D10D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ABA9B5AF-6231-4290-8F09-139170A6C512}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ABA9B5AF-6231-4290-8F09-139170A6C512}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ABA9B5AF-6231-4290-8F09-139170A6C512}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{ABA9B5AF-6231-4290-8F09-139170A6C512}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{38251A13-BE45-42AF-B7AF-838EE9083621}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{38251A13-BE45-42AF-B7AF-838EE9083621}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38251A13-BE45-42AF-B7AF-838EE9083621}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38251A13-BE45-42AF-B7AF-838EE9083621}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F09905A-F04A-42F8-BD5E-9FBDAC15302C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F09905A-F04A-42F8-BD5E-9FBDAC15302C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F09905A-F04A-42F8-BD5E-9FBDAC15302C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F09905A-F04A-42F8-BD5E-9FBDAC15302C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

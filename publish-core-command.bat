@@ -1,4 +1,4 @@
-SET PACK_OUTPUT_DIR=i:\rp\local-nuget-packages
+SET PACK_OUTPUT_DIR=d:\rp\local-nuget-packages
 
 :: create corecmd lib package
 dotnet pack CoreCmd\CoreCmd.csproj -c Release -o %PACK_OUTPUT_DIR%
